@@ -1,0 +1,35 @@
+<md-content id="login-content" layout-fill flex layout="row" layout-align="center center">
+
+	<md-card>
+		<md-card-content>
+
+			<h2>Login</h2>
+
+			<p>Accounts are reset on server restart from <code>server/config/seed.js</code>. Default account is <code>test@test.com</code>
+				/ <code>test</code></p>
+
+			<p>Admin account is <code>admin@admin.com</code> / <code>admin</code></p>
+
+			<form class="form" name="form" ng-submit="vm.login(form)" novalidate>
+
+				<md-text-float label="Email" ng-model="vm.user.email" name="email"></md-text-float>
+
+				<md-text-float label="Password" ng-model="vm.user.password" name="password" type="password"></md-text-float>
+				<p ng-show="form.email.$error.required && form.password.$error.required && vm.submitted">Please enter your email
+					and password.</p>
+
+				<p ng-show="form.email.$error.email && vm.submitted">Please enter a valid email.</p>
+
+				<p>{{ vm.errors.other }}</p>
+
+				<section layout="row" layout-sm="column" layout-align="center center">
+					<md-button type="submit" md-no-ink href="/signup">Register</md-button>
+					<md-button class="md-raised md-primary">Login</md-button>
+				</section>
+
+			</form>
+
+		</md-card-content>
+	</md-card>
+
+</md-content>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="GastroKEY Applications - <%= appname %> - Ant build file for Jenkins builds" default="build">
+
+	<!-- set properties for later referenced directories -->
+	<property name="build.dir">build</property>
+	<property name="build.tests"><%= '${build.dir}' %>/test-reports
+	</property>
+
+	<!-- default target - test and analyzes the project files -->
+	<target name="build" depends="clean,gulp,gulp-test-report"/>
+
+	<!-- clean target - calls targets that clean up the project -->
+	<target name="clean" description="Cleanup build artifacts" depends="gulp-clean,clean-build-dependencies"/>
+
+	<!-- perform a simple npm install -->
+	<target name="npm-install" description="Install npm dependencies">
+		<echo message="Performing npm install"/>
+		<exec executable="npm">
+			<arg value="install"/>
+		</exec>
+	</target>
+
+	<!-- Delete node_modules folder -->
+	<target name="clean-build-dependencies" description="Cleanup all build artifacts and dependencies">
+		<delete dir="<%= '${basedir}' %>/node_modules"/>
+	</target>
+
+	<!-- Call gulp with the default task -->
+	<target name="gulp" description="Perform default Gulp task" depends="npm-install">
+		<echo message="Performing default Gulp task"/>
+		<exec executable="gulp"/>
+	</target>
+
+	<!-- Call gulp with the clean task -->
+	<target name="gulp-clean" description="Perform Gulp clean task">
+		<echo message="Performing Gulp clean task"/>
+		<exec executable="gulp">
+			<arg value="clean"/>
+		</exec>
+	</target>
+
+	<!-- Call gulp with the test task -->
+	<target name="gulp-test" description="Perform Gulp test task" depends="npm-install">
+		<echo message="Performing Gulp test task"/>
+		<mkdir dir="<%= '${build.tests}' %>"/>
+		<exec executable="gulp">
+			<arg value="test"/>
+		</exec>
+	</target>
+
+	<!-- Call gulp with the test task -->
+	<target name="gulp-test-report" description="Perform Gulp test task" depends="npm-install">
+		<echo message="Performing Gulp test task"/>
+		<mkdir dir="<%= '${build.tests}' %>"/>
+		<exec executable="gulp">
+			<env key="JUNIT_REPORT_PATH" value="<%= '${build.tests}' %>/junit.xml"/>
+			<arg value="test-report"/>
+		</exec>
+	</target>
+
+	<!-- Call gulp with the coverage task to create the coverage report -->
+	<target name="gulp-coverage" description="Perform Gulp coverage task" depends="npm-install">
+		<echo message="Performing Gulp coverage task"/>
+		<exec executable="gulp">
+			<arg value="coverage"/>
+		</exec>
+	</target>
+
+	<!-- Call gulp with the analyze task to create the plato reports -->
+	<target name="gulp-analyze" description="Perform Gulp analyze task" depends="npm-install">
+		<echo message="Performing Gulp analyze task"/>
+		<exec executable="gulp">
+			<arg value="analyze"/>
+		</exec>
+	</target>
+
+</project>

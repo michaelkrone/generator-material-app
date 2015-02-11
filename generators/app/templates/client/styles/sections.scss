@@ -1,0 +1,21 @@
+.section {
+	padding: 16px;
+	font-size: 14px;
+
+	.section-title {
+		color: #999;
+		margin-bottom: 16px;
+	}
+
+	.detail-info {
+		margin: 8px 0;
+
+		span:first-child {
+			color: #555;
+		}
+
+		span {
+			color: #999;
+		}
+	}
+}

@@ -1,0 +1,98 @@
+<md-toolbar class="md-hue-1">
+
+	<span layout="row" layout-align="space-between" flex>
+		<md-button ng-click="edit.goBack()" aria-label="Open the user detail view">
+			<md-icon icon="bower_components/material-design-icons/navigation/1x_web/ic_arrow_back_black_24dp.png"></md-icon>
+		</md-button>
+
+		<md-button ng-click="edit.remove()" aria-label="Remove the user">
+			<md-icon icon="bower_components/material-design-icons/action/1x_web/ic_delete_black_24dp.png"></md-icon>
+		</md-button>
+	</span>
+
+	<span flex></span>
+
+	<h3 class="md-toolbar-tools md-toolbar-tools-bottom">
+		<span>{{edit.user.name}}</span>
+	</h3>
+
+	<md-button class="md-fab md-primary md-fab-bottom-right fab-overlap" aria-label="Save this user" ng-click="edit.update(userEditForm)">
+		<md-icon icon="bower_components/material-design-icons/action/1x_web/ic_done_black_24dp.png"></md-icon>
+	</md-button>
+
+</md-toolbar>
+
+<md-content flex id="user-edit-content">
+
+	<form name="userEditForm">
+
+		<span class="section" layout="column">
+
+			<span layout="row" layout-align="start center" layout-sm="column" layout-align-sm="start start"  class="detail-info">
+				<span flex="33">Active</span>
+				<md-switch name="active" class="no-label" aria-label="user active" ng-model="edit.user.active"></md-switch>
+			</span>
+
+		</span>
+
+		<md-divider></md-divider>
+
+		<span class="section" layout="column">
+
+			<span class="section-title">User Information</span>
+
+			<span layout="row" layout-align="start center" layout-sm="column" layout-align-sm="start start" class="detail-info">
+				<md-input-container>
+					<label>Username</label>
+					<input mongoose-error name="name" ng-model="edit.user.name" required>
+					<div ng-messages="userEditForm.name.$error">
+						<div ng-message="required">You did not enter a name</div>
+						<div ng-message="mongoose">This username is already in use</div>
+					</div>
+				</md-input-container>
+
+				<md-input-container class="md-input-has-value">
+					<label class="select-label">Usertype</label>
+					<select name="role" ng-options="role as role for role in edit.userRoles" ng-model="edit.user.role"></select>
+				</md-input-container>
+			</span>
+
+		</span>
+
+		<md-divider></md-divider>
+
+		<span class="section" layout="column">
+
+			<span class="section-title">Personal Information</span>
+
+			<span layout="row" layout-align="start center" layout-sm="column" layout-align-sm="start start" class="detail-info">
+				<md-input-container>
+					<label>Prename</label>
+					<input name="prename" ng-model="edit.user.prename">
+				</md-input-container>
+
+				<md-input-container>
+					<label>Surname</label>
+					<input name="surname" ng-model="edit.user.surname">
+				</md-input-container>
+			</span>
+
+			<span layout="row" layout-align="start center" layout-sm="column" layout-align-sm="start start" class="detail-info">
+				<md-input-container flex>
+					<label>Email</label>
+					<input name="email" ng-model="edit.user.email">
+				</md-input-container>
+			</span>
+
+			<span layout="row" layout-align="start center" layout-sm="column" layout-align-sm="start start" class="detail-info">
+				<md-input-container flex>
+					<label>Info</label>
+					<textarea name="info" ng-model="detail.user.info"></textarea>
+				</md-input-container>
+			</span>
+
+		</span>
+
+	</form>
+
+</md-content>

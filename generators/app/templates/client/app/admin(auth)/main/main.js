@@ -1,0 +1,44 @@
+(function () {
+	'use strict';
+
+	/**
+	 * Introduce the <%= scriptAppName %>.admin.main module
+	 * and configure it.
+	 *
+	 * @requires {ui.router}
+	 */
+
+	angular
+		.module('<%= scriptAppName %>.admin.main', ['ui.router'])
+		.config(configAdminMain);
+
+	// inject configAdminMain dependencies
+	configAdminMain.$inject = ['$stateProvider'];
+
+	/**
+	 * Route configuration function configuring the passed $stateProvider.
+	 * Register the user.main state with the list template for the
+	 * 'main' view paired with the UserMainController as 'main'.
+	 *
+	 * @param {$stateProvider} $stateProvider - The state provider to configure
+	 */
+	function configAdminMain($stateProvider) {
+		// The main state configuration
+		var mainState = {
+			name: 'admin.main',
+			parent: 'admin',
+			url: '/',
+			authenticate: true,
+			views: {
+				'@admin': {
+					templateUrl: 'app/admin/main/main.html',
+					controller: 'AdminMainController',
+					controllerAs: 'main'
+				}
+			}
+		};
+
+		$stateProvider.state(mainState);
+	}
+
+})();

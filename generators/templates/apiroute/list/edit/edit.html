@@ -1,0 +1,67 @@
+<md-toolbar class="md-hue-1">
+
+	<span layout="row" layout-align="space-between" flex>
+
+		<md-button ng-click="edit.goBack()" aria-label="Open the <%= name %> detail view">
+			<md-icon icon="bower_components/material-design-icons/navigation/1x_web/ic_arrow_back_black_24dp.png"></md-icon>
+		</md-button>
+
+		<md-button ng-click="edit.remove()" aria-label="Remove the <%= name %>">
+			<md-icon icon="bower_components/material-design-icons/action/1x_web/ic_delete_black_24dp.png"></md-icon>
+		</md-button>
+
+	</span>
+
+	<span flex></span>
+
+	<h3 class="md-toolbar-tools md-toolbar-tools-bottom">
+		<span>{{edit.<%= name %>.name}}</span>
+    </h3>
+
+	<md-button ng-click="edit.update(<%= name %>EditForm)" class="md-fab md-primary md-fab-bottom-right fab-overlap" aria-label="Save this <%= name %>">
+		<md-icon icon="bower_components/material-design-icons/action/1x_web/ic_done_black_24dp.png"></md-icon>
+	</md-button>
+
+</md-toolbar>
+
+<md-content flex id="<%= name %>-edit-content">
+
+	<form name="<%= name %>EditForm">
+
+		<span class="section" layout="column">
+
+			<span layout="row" layout-align="start center" layout-sm="column" layout-align-sm="start start" class="detail-info">
+				<span flex="33">Active</span>
+				<md-switch
+						name="active"
+						class="no-label"
+						aria-label="<%= name %> active"
+						ng-model="edit.<%= name %>.active">
+				</md-switch>
+			</span>
+
+		</span>
+
+		<md-divider></md-divider>
+
+		<span class="section" layout="column">
+
+			<span class="section-title"><%= classedName %> Information</span>
+
+			<md-input-container>
+				<label>Name</label>
+				<input name="name" ng-model="edit.<%= name %>.name">
+			</md-input-container>
+
+			<md-input-container>
+				<label>Info</label>
+				<textarea name="info" ng-model="edit.<%= name %>.info"></textarea>
+			</md-input-container>
+
+		</span>
+
+        <md-divider></md-divider>
+
+	</form>
+
+</md-content>

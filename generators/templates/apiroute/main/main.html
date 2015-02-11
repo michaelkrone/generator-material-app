@@ -1,0 +1,27 @@
+<section id="<%= name %>-main-content" layout="column" layout-fill flex>
+
+	<md-toolbar class="md-tall" scroll-shrink>
+		<span flex></span>
+		<span class="md-toolbar-tools md-toolbar-tools-bottom">
+			<h2>
+				<span><%= _.capitalize(name) %>s</span>
+			</h2>
+		</span>
+	</md-toolbar>
+
+	<md-content>
+		<md-card>
+			<md-card-content>
+
+			<h2><%= _.capitalize(name) %> Section</h2>
+
+			<p>
+				View your <a ui-sref="<%= name %>.list">list of <%= _.capitalize(name) %>s</a>
+				or <a ui-sref="create.<%= name %>">create a <%= _.capitalize(name) %></a>.
+			</p>
+
+			</md-card-content>
+		</md-card>
+	</md-content>
+</section>
+

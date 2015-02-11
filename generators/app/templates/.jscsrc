@@ -1,0 +1,79 @@
+{
+	"requireCurlyBraces": [
+		"if",
+		"else",
+		"for",
+		"while",
+		"do",
+		"try",
+		"catch",
+		"case",
+		"default"
+	],
+	"requireSpaceAfterKeywords": [
+		"if",
+		"else",
+		"for",
+		"while",
+		"do",
+		"switch",
+		"try",
+		"catch"
+	],
+	"requireSpaceBeforeBinaryOperators": [
+		"=",
+		"+",
+		"-",
+		"/",
+		"*",
+		"==",
+		"===",
+		"!=",
+		"!=="
+		// etc
+	],
+	"requireSpaceAfterBinaryOperators": [
+		"=",
+		",",
+		"+",
+		"-",
+		"/",
+		"*",
+		"==",
+		"===",
+		"!=",
+		"!=="
+		// etc
+	],
+	"requireSpaceBeforeBlockStatements": true,
+	"requireParenthesesAroundIIFE": true,
+	"requireCommaBeforeLineBreak": true,
+	"requireLineFeedAtFileEnd": true,
+	"requireCapitalizedConstructors": true,
+	"requireSpaceAfterLineComment": true,
+	"disallowEmptyBlocks": true,
+	"disallowSpaceAfterObjectKeys": true,
+	"disallowMultipleLineStrings": true,
+	"disallowTrailingComma": true,
+	"disallowKeywordsOnNewLine": ["else"],
+	"disallowNewlineBeforeBlockStatements": true,
+	"safeContextKeyword": ["that", "self", "vm"],
+	"validateLineBreaks": "LF",
+	"validateIndentation": "\t",
+	"requireSpacesInConditionalExpression": {
+		"afterTest": true,
+		"beforeConsequent": true,
+		"afterConsequent": true,
+		"beforeAlternate": true
+	},
+	"requireSpacesInAnonymousFunctionExpression": {
+		"beforeOpeningRoundBrace": true,
+		"beforeOpeningCurlyBrace": true
+	},
+	"requireSpacesInNamedFunctionExpression": {
+		"beforeOpeningCurlyBrace": true
+	},
+	"disallowSpacesInNamedFunctionExpression": {
+		"beforeOpeningRoundBrace": true
+	}
+}

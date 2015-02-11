@@ -1,0 +1,17 @@
+{
+	"extends": ".jshintrc",
+	"globals":	{
+		"describe": true,
+		"before":	true,
+		"after":	true,
+		"beforeEach":	true,
+		"afterEach":	true,
+		"module": true,
+		"inject": true,
+		"it": true,
+		"expect":	true,
+		"browser": true,
+		"element": true,
+		"by":	true
+	}
+}

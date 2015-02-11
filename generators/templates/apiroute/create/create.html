@@ -1,0 +1,62 @@
+<md-dialog aria-label="Create a <%= name %>">
+
+	<span id="<%= name %>-create-content">
+
+		<md-toolbar class="md-accent">
+
+			<span layout="row" layout-align="space-between" flex>
+
+				<md-button ng-click="create.hideDialog()" class="md-primary" aria-label="Hide the <%= name %> create view">
+					<md-icon icon="bower_components/material-design-icons/navigation/1x_web/ic_close_black_24dp.png"></md-icon>
+				</md-button>
+
+			</span>
+
+			<span flex></span>
+
+			<h3 class="md-toolbar-tools md-toolbar-tools-bottom" >
+				<span>Create {{create.<%= name %>.name || 'a new <%= name %>'}}</span>
+			</h3>
+
+			<md-button ng-click="create.create(<%= name %>Form)"
+					   class="md-fab md-fab-bottom-right md-primary fab-overlap"
+					   aria-label="Create a new <%= name %>">
+				<md-icon icon="bower_components/material-design-icons/action/1x_web/ic_done_black_24dp.png"></md-icon>
+			</md-button>
+
+		</md-toolbar>
+
+		<md-content flex>
+			<form name="<%= name %>Form">
+
+				<span class="section" layout="column">
+					<span layout="row" layout-align="start center" class="detail-info">
+
+						<span flex="33">Active</span>
+
+						<md-switch ng-model="create.<%= name %>.active" class="no-label" aria-label="<%= name %> active"></md-switch>
+					</span>
+				</span>
+
+				<span class="section" layout="column">
+
+					<md-input-container>
+						<label>Name</label>
+						<input ng-model="create.<%= name %>.name">
+					</md-input-container>
+
+					<md-input-container>
+						<label>Info</label>
+						<textarea ng-model="create.<%= name %>.info"></textarea>
+					</md-input-container>
+
+				</span>
+
+			</form>
+
+		</md-content>
+	</span>
+	<!--<div class="md-actions">-->
+		<!--<md-button ng-click="create.cancelDialog()">Cancel</md-button>-->
+	<!--</div>-->
+</md-dialog>

@@ -1,0 +1,12 @@
+#<%= name %>-detail-content {
+  .detail-info {
+    md-checkbox[ng-disabled] {
+      margin: 0;
+    }
+  }
+
+  md-switch.no-label .md-label,
+  md-checkbox[ng-disabled].no-label .md-label {
+    display: none;
+  }
+}

@@ -1,0 +1,82 @@
+{
+	"name": "<%= _.slugify(_.humanize(appname)) %>",
+	"version": "0.0.0",
+	"description": "Generated <%= appname %> app.",
+	"main": "server/index.js",
+	"private": true,
+	"dependencies": {
+		"express": "~4.9.0",
+		"morgan": "~1.0.0",
+		"body-parser": "~1.5.0",
+		"method-override": "~1.0.0",
+		"serve-favicon": "~2.0.1",
+		"cookie-parser": "~1.0.1",
+		"express-session": "~1.0.2",
+		"errorhandler": "~1.0.0",
+		"compression": "~1.0.1",
+		"lodash": "~2.4.1",
+		"ejs": "~0.8.4",
+		"minimist": "^1.1.0",
+		"mongoose": "~3.8.8", <% if(features.auth) { %>
+		"jsonwebtoken": "^0.3.0",
+		"express-jwt": "^0.1.3",
+		"passport": "~0.2.0",
+		"passport-local": "~0.1.6", <% }%>
+		"composable-middleware": "^0.3.0",
+		"connect-mongo": "^0.4.1"<% if(features.socketio){%>,
+		"socket.io": "^1.0.6",
+		"socket.io-client": "^1.0.6",
+		"socketio-jwt": "^2.0.2"<%}%>
+		},
+		"scripts":{
+			"start": "node bin/server.js",
+			"postinstall": "./node_modules/gulp-protractor/node_modules/protractor/bin/webdriver-manager update"
+		},
+		"repository": {
+			"type": "git",
+			"url": "git@localhost:apps/<%= _.slugify(appname) %>.git"
+		},
+		"keywords": [
+			"GastroKey",
+			"submodule",
+			"<%= appname %>"
+		],
+		"engines": {
+			"node": ">=0.10.33"
+		},
+		"author": "Gastro Instruments GmbH <info@gastro-instruments.de>",
+		"devDependencies": {
+			"browser-sync": "^1.7.3",
+			"del": "^0.1.3",
+			"event-stream": "^3.1.7",
+			"gulp": "^3.8.9",
+			"gulp-angular-filesort": "^1.0.4",
+			"gulp-autoprefixer": "^2.0.0",
+			"gulp-concat": "^2.4.2",
+			"gulp-exit": "0.0.2",
+			"gulp-istanbul": "^0.3.1",
+			"gulp-jscs": "^1.2.1",
+			"gulp-jsdoc": "^0.1.4",
+			"gulp-jshint": "^1.9.0",
+			"gulp-minify-css": "^0.3.11",
+			"gulp-mocha": "^1.1.1",
+			"gulp-nodemon": "^1.0.4",
+			"gulp-plato": "^1.0.1",
+			"gulp-ruby-sass": "^0.7.1",
+			"gulp-util": "^3.0.1",
+			"gulp-inject": "^1.0.2",
+			"gulp-if": "^1.2.5",
+			"gulp-protractor": "0.0.12",
+			"jshint-stylish": "^1.0.0",
+			"main-bower-files": "^2.4.1",
+			"mocha-jenkins-reporter": "^0.1.2",
+			"require-dir": "^0.1.0",
+			"should": "^3.3.2",
+			"supertest": "^0.13.0",
+			"karma": "^0.12.9",
+			"karma-mocha": "^0.1.10",
+			"karma-coverage": "^0.2.7",
+			"karma-chrome-launcher": "~0.1.3",
+			"karma-phantomjs-launcher": "^0.1.4"
+		}
+}

@@ -1,0 +1,66 @@
+<md-dialog aria-label="Create a user">
+
+	<span id="user-create-content">
+
+		<md-toolbar class="md-mediaum-tall md-accent">
+
+			<span layout="row" layout-align="space-between" flex>
+
+				<md-button ng-click="create.hideDialog()" class="md-primary" aria-label="Hide the user create view">
+					<md-icon icon="bower_components/material-design-icons/navigation/1x_web/ic_close_black_24dp.png"></md-icon>
+				</md-button>
+
+			</span>
+
+			<span flex></span>
+
+			<h3 class="md-toolbar-tools md-toolbar-tools-bottom" >
+				<span>Create {{create.user.name || 'a new user'}}</span>
+			</h3>
+
+			<md-button ng-click="create.create(userCreateForm)"
+					   class="md-fab md-fab-bottom-right md-primary fab-overlap"
+					   aria-label="Create a new user">
+				<md-icon icon="bower_components/material-design-icons/action/1x_web/ic_done_black_24dp.png"></md-icon>
+			</md-button>
+
+		</md-toolbar>
+
+		<md-content flex>
+			<form name="userCreateForm">
+
+				<span class="section" layout="column">
+					<span layout="row" layout-align="start center" class="detail-info">
+
+						<span flex="33">Active</span>
+
+						<md-switch ng-model="create.user.active" class="no-label" aria-label="user active"></md-switch>
+					</span>
+				</span>
+
+				<span class="section" layout="column">
+
+					<md-input-container>
+						<label>Name</label>
+						<input name="name" ng-model="create.user.name">
+						<div ng-messages="userCreateForm.name.$error">
+							<div ng-message="required">You did not enter a name</div>
+							<div ng-message="mongoose">This username is already in use</div>
+						</div>
+					</md-input-container>
+
+					<md-input-container>
+						<label>Info</label>
+						<textarea name="info" ng-model="create.user.info"></textarea>
+					</md-input-container>
+
+				</span>
+
+			</form>
+
+		</md-content>
+	</span>
+	<!--<div class="md-actions">-->
+		<!--<md-button ng-click="create.cancelDialog()">Cancel</md-button>-->
+	<!--</div>-->
+</md-dialog>

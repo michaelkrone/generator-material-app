@@ -1,0 +1,22 @@
+#<%= name %>-list-content {
+  #<%= name %>-items-content {
+    md-item {
+
+      &.selected {
+        background: rgba(0, 188, 212, 0.1);
+      }
+
+      &.list-head {
+        color: #999;
+
+        md-item-content {
+          padding-left: 64px;
+
+          * {
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+select {
+	width: 170px;
+	color: rgba(0,0,0,.87);
+	border: none;
+	border-bottom: 1px solid rgba(0,0,0,.12);
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	background: url(/bower_components/material-design-icons/navigation/1x_web/ic_arrow_drop_down_grey600_24dp.png) right no-repeat;
+	padding: 7px 24px 5px 0;
+	margin-top: -1px
+}
+
+select * {
+	padding: .9em 1em;
+	color: #000
+}
+
+select[disabled] {
+	color: rgba(0, 0, 0, .26);
+	border-bottom-width: 0
+}
+
+md-input-container > label.select-label {
+	transform: translate3d(0, -42px, 0) scale(0.75);
+	margin-bottom: -31px;
+}

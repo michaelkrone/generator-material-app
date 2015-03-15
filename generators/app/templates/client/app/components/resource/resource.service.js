@@ -1,21 +1,43 @@
+/**
+ * @ngdoc overview
+ * @name resource
+ * @requires lodash
+ * @description
+ * The gastroKey.resource module
+ */
+
+/**
+ * @ngdoc service
+ * @name resource.service:Resource
+ * @description
+ *
+ */
+
 (function () {
 	'use strict';
 
 	// register the service as Resource
 	angular
-		.module('<%= scriptAppName %>.resource', ['<%= scriptAppName %>.lodash'])
+		.module('gastroKey.resource', [
+			'ngResource',
+			'gastroKey.lodash'
+		])
 		.factory('Resource', Resource);
 
-	// add Resource dependencies to inject
-	Resource.$inject = ['$resource', '_'];
 
 	/**
-	 * Resource constructor
+	 * @ngdoc function
+	 * @name resource.provider:Resource
+	 * @description
+	 * Provider for the {@link resource.service:Resource Resource-service}
 	 *
-	 * @param $resource
-	 * @returns {createResource}
-	 * @constructor
+	 * @param {Service} $resource The resource service to use
+	 * @param {Service} _ The _ service to use
+	 * @returns {Function} Resource-factory
 	 */
+
+	Resource.$inject = ['$resource', '_'];
+
 	function Resource($resource, _) {
 		// default $resource parameter configuration for MongoDB like id's
 		var defaultParams = {
@@ -32,8 +54,7 @@
 		return createResource;
 
 		/**
-		 *
-		 * Create a resource with overwriten $save method
+		 * Create a resource with overwritten $save method
 		 *
 		 * @param url
 		 * @param params

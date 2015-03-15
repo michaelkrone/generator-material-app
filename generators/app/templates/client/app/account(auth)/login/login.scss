@@ -1,1 +1,7 @@
-#login-content {}
+#login-content {
+	max-width: 	320px;
+
+	form > div.md-warn {
+		padding-bottom: 20px;
+	}
+}

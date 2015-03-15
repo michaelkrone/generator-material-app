@@ -1,42 +1,43 @@
 <!doctype html>
-<!--[if lt IE 7]>
-<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>
-<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>
-<html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="no-js"> <!--<![endif]-->
+<html>
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<base href="/">
-	<title></title>
+	<title>GastroKEY</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
 	<!--vendor:css-->
+	<link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
 	<!-- endinject -->
 
 	<!-- app:css -->
+	<link rel="stylesheet" href="styles/app.css">
 	<!-- endinject -->
 </head>
-<body ng-app="<%= scriptAppName %>" layout="column">
+<body ng-app="gastroKey" ng-controller="AppController as appController" layout="column">
+
 <!--[if lt IE 9]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
 	your browser</a> to improve your experience.</p>
 <![endif]-->
 
-<!-- Add your site or application content here -->
-<main layout="column" layout-fill ui-view></main>
+<ng-include src="'app/components/main-menu/main-menu.html'"></ng-include>
 
-<% if(features.socketio) { %>
+<!-- Add your site or application content here -->
+<main ng-cloak layout="column" layout-fill ui-view></main>
+
 <script src="socket.io-client/socket.io.js"></script>
-<% } %>
 
 <!-- vendor:js -->
 <!-- endinject -->
+
+<!-- vendor js customization -->
+<script src="bower_components/angular-i18n/angular-locale_de-de.js"></script>
+<script src="bower_components/moment/locale/de.js"></script>
+<!-- end vendor js customization -->
 
 <!-- app:js -->
 <!-- endinject -->

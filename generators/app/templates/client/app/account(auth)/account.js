@@ -1,3 +1,12 @@
+/**
+ * @ngdoc overview
+ * @name <%= scriptAppName %>.account
+ * @description
+ * The `<%= scriptAppName %>.account` module
+ *
+ * @requires ui.router
+ */
+
 (function () {
 	'use strict';
 
@@ -11,35 +20,15 @@
 
 	// route config function configuring the passed $stateProvider
 	function configAccountRoute($stateProvider) {
-			var loginState = {
-				name: 'login',
-				url: '/login',
-				templateUrl: 'app/account/login/login.html',
-				controller: 'LoginController',
-				controllerAs: 'vm'
-			};
+		var loginState = {
+			name: 'login',
+			url: '/login',
+			templateUrl: 'app/account/login/login.html',
+			controller: 'LoginController',
+			controllerAs: 'login'
+		};
 
-		var signupState = {
-				name: 'signup',
-				url: '/signup',
-				templateUrl: 'app/account/signup/signup.html',
-				controller: 'SignupController',
-				controllerAs: 'vm'
-			};
-
-			var settingsState = {
-				name: 'settings',
-				url: '/settings',
-				templateUrl: 'app/account/settings/settings.html',
-				controller: 'SettingsController',
-				controllerAs: 'vm',
-				authenticate: true
-			};
-
-		$stateProvider
-			.state(loginState)
-			.state(signupState)
-			.state(settingsState);
+		$stateProvider.state(loginState);
 	}
 
 })();

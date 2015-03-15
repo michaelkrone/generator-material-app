@@ -122,6 +122,7 @@ module.exports = {
  * @return A Response with status 400 set
  */
 function badRequest(data, options) {
+	// jshint validthis: true
 	return this.res.status(400).sendData(data, options);
 }
 
@@ -132,6 +133,7 @@ function badRequest(data, options) {
  * @return A Response with status 401 set
  */
 function unauthorized(data, options) {
+	// jshint validthis: true
 	return this.res.status(401).sendData(data, options);
 }
 
@@ -142,6 +144,7 @@ function unauthorized(data, options) {
  * @return A Response with status 403 set
  */
 function forbidden(data, options) {
+	// jshint validthis: true
 	return this.res.status(403).sendData(data, options);
 }
 
@@ -154,6 +157,7 @@ function forbidden(data, options) {
  * redered correctly, otherwise the error object set as json body
  */
 function notFound(data, options) {
+	// jshint validthis: true
 	return this.res.status(404).sendData(data, options || '404');
 }
 
@@ -165,6 +169,7 @@ function notFound(data, options) {
  * @return A Response with status 422 set
  */
 function unprocessableEntity(data, options) {
+	// jshint validthis: true
 	return this.res.status(422).sendData(data, options);
 }
 
@@ -182,6 +187,7 @@ function unprocessableEntity(data, options) {
  */
 
 function serverError(data, options) {
+	// jshint validthis: true
 	// Get access to request and response
 	var req = this.req;
 	var res = this.res;
@@ -209,7 +215,7 @@ function serverError(data, options) {
 
 	// if a template string is given as the options param
 	// use it to render a view
-	var viewFilePath = (typeof options === 'string') ? options : options.view;
+	var viewFilePath = (typeof options === 'string') ? options : options && options.view;
 
 	// If a view was provided in options, serve it.
 	// Otherwise try to guess an appropriate view, or if that doesn't
@@ -242,24 +248,31 @@ function serverError(data, options) {
  * @return The given Response with a error status code set (defaults to 500)
  * and the error object set as response body.
  */
-function handleError(data, options) {
+function handleError(err, options) {
+	// jshint validthis: true
 	// Get access to response object
 	var res = this.res;
-	var body = data;
 	var statusCode;
-	console.log('handleError', data, options);
+
+	console.log('handleError', err, options);
+
+	if (err.name && err.name === 'ValidationError') {
+		return res.badRequest(err);
+	}
+
 	try {
-		statusCode = data.status || 500;
+		statusCode = err.status || 500;
 		// set the status as a default
 		res.status(statusCode);
 
 		if (statusCode !== 500 && typeof res[statusCode] === 'function') {
-			return res[statusCode](body);
+			return res[statusCode](err);
 		}
 	} catch (e) {
+		console.log('Exception while handling error: %s', e);
 	}
 
-	return res.serverError(body);
+	return res.serverError(err);
 }
 
 /**
@@ -272,5 +285,6 @@ function handleError(data, options) {
  * object set as json body
  */
 function notImplemented(data, options) {
+	// jshint validthis: true
 	return this.res.status(501).sendData(data, options);
 }

@@ -12,7 +12,14 @@ module.exports = function (app) {
 	// extend response with custom methods
 	app.use(middleware.extendResponse);
 
-	// Insert routes below
+	// default CUD middleware
+	app
+		.put(middleware.removeReservedSchemaKeywords)
+		.patch(middleware.removeReservedSchemaKeywords)
+		.delete(middleware.removeReservedSchemaKeywords)
+		.post(middleware.removeReservedSchemaKeywords);
+
+		// Insert routes below
 	<%if (features.auth) { %>
 	app.use('/api/users', require('./api/user'));
 	app.use('/auth', require('./lib/auth'));

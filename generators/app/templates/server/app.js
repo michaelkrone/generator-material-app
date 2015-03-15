@@ -7,54 +7,55 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var express = require('express');
-var mongoose = require('mongoose');
+var socketio = require('socket.io');
 var config = require('./config/index');
+var socketConfig = require('./config/socketio');
+var db = require('./config/mongoose');
 var app = express();
-
-// connect to mongodb
-var connection = mongoose.connect(config.mongo.uri, config.mongo.options);
-
-// @TODO add support for multiple databases
-// if connection is disconnected or disconnecting
-if (connection.state === 0 || connection.state === 3) {
-	connection.open(function (err) {
-		if (err) {
-			console.error('Open connection: Database Error: %s', err);
-			throw err; // throw error to stop application launch
-		}
-		console.log('Database Connection open.');
-	});
-}
-
-mongoose.connection.on('error', function (err) {
-	console.error('Database Error: %s', err);
-});
-
-mongoose.connection.on('open', function () {
-	console.log('Database connection open');
-	// Populate DB with sample data
-	if (config.seedDB) {
-		require('./config/seed');
-	}
-});
-<% if (features.socketio) { %>
-// create a http server and return it
-// config the socketio to use this server and apply routes
-app.startSocket = function () {
-	var server = require('http').createServer(app);
-	var socketio = require('socket.io')(server, {
-		serveClient: (config.env === 'production' ? false : true),
-		path: '/socket.io-client'
-	});
-	// Setup SocketIO
-	require('./config/socketio')(socketio);
-	return server;
-};<%} %>
-
-// Setup Express
-require('./config/express')(app);
-// Setup Routes
-require('./routes')(app);
 
 // Expose app
 exports = module.exports = app;
+
+// expose the function to start the server instance
+app.startServer = startServer;
+app.serverShutdown = serverShutdown;
+
+// Setup Express
+require('./config/express')(app);
+
+// Setup Routes
+require('./routes')(app);
+
+// register the shutdown handler to close the database connection on interrupt signals
+process
+	.on('SIGINT', serverShutdown)
+	.on('SIGTERM', serverShutdown);
+
+/**
+ * Create an express http server and return it
+ * Config the socketio service to use this server
+ * @api private
+ * @return
+ */
+function startServer() {
+	var server = require('http').createServer(app);
+	var socket = socketio(server, {
+		serveClient: (config.env !== 'production'),
+		path: '/socket.io-client'
+	});
+	// Setup SocketIO
+	socketConfig(socket);
+	return server;
+}
+
+/**
+ * Shutdown handler
+ * Closes the database connection on iterrupt and exits the process
+ * @api private
+ */
+function serverShutdown() {
+	db.connection.close(function connectionClose() {
+		console.log('Database connection disconnected through app termination');
+		process.exit(0);
+	});
+}

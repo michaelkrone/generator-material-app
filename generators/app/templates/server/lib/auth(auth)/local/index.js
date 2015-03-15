@@ -42,6 +42,7 @@ function authenticate(req, res, next) {
  * as the 'token' property.
  */
 function authCallback(err, user, info) {
+	// jshint validthis: true
 	var error = err || info;
 	if (error) {
 		return this.res.unauthorized(error);

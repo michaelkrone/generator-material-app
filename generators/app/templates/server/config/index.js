@@ -29,20 +29,33 @@ var common = {
 
 	ip: '0.0.0.0',
 
-	port: process.env.PORT || 9000,
+	port: process.env.PORT || 9001,
 
 	// Secret for session, you will want to change this and make it an environment variable
 	secrets: {
-		session: '<%= _.slugify(_.humanize(appname)) + '-secret' %>'
+		session: process.env.SESSION_SECRET || 'my-<%= appname %>-secret'
 	},
 
 	// List of user roles
 	userRoles: ['user', 'admin', 'root'],
 
+	// options passed to create mongo connections
 	mongo: {
 		options: {
 			db: {
 				safe: true
+			},
+			server: {
+				socketOptions: {
+					keepAlive: 1,
+					connectTimeoutMS: 10000
+				}
+			},
+			replset: {
+				socketOptions: {
+					keepAlive: 1,
+					connectTimeoutMS: 10000
+				}
 			}
 		}
 	}

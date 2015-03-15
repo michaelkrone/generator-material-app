@@ -24,6 +24,7 @@ module.exports = _.assign({sendData: sendData},	ok,	errors);
  * been provided in the options paramter.
  */
 function sendData(data, options) {
+	// jshint validthis: true
 	var req = this.req;
 	var res = this.res;
 

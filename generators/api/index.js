@@ -30,6 +30,37 @@ Generator.prototype.askFor = function askFor() {
 			name: 'route',
 			message: 'What shall the URI of your resource be?',
 			default: base + name
+		},
+		{
+			name: 'secure',
+			type: 'confirm',
+			message: 'May only authenticated users be able to access this route?',
+			default: base + name,
+			when: function () {
+				return this.config.get('features').auth;
+			}
+		},
+		{
+			name: 'role',
+			type: 'list',
+			message: 'What role may access thus route, Milord?',
+			default: 'user',
+			choices: [
+				{
+					name: 'Users',
+					value: 'user'
+				},
+				{
+					name: 'Administrators',
+					value: 'admin'
+				},
+				{
+					name: 'Root only',
+					value: 'root'
+				}],
+			when: function (answers) {
+				return answers.secure;
+			}
 		}
 	];
 
@@ -39,6 +70,9 @@ Generator.prototype.askFor = function askFor() {
 		}
 
 		this.route = props.route;
+		this.secure = props.secure || false;
+		this.role = props.role || false;
+
 		done();
 	}.bind(this));
 };

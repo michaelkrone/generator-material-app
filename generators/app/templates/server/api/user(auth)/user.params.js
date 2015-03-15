@@ -56,7 +56,7 @@ function registerIdParam(req, res, next, id) {
 			return next('route');
 		}
 
-		req['userObject'] = user;
+		req.user = user;
 		return next();
 	});
 }

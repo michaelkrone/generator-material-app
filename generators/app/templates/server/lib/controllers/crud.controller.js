@@ -14,15 +14,17 @@ exports = module.exports = CrudController;
  * @classdesc Controller for basic CRUD operations on mongoose models.
  * Uses the passed id name as the request parameter id to identify models.
  * @constructor
- * @extends BaseController
+ * @inherits BaseController
  * @param {Model} model - The mongoose model to operate on
- * @param {String} idName - The name of the id request parameter to use
+ * @param {String} [idName] - The name of the id request parameter to use
  */
 function CrudController(model, idName) {
 	// call super constructor
 	BaseController.call(this);
+
 	// set the model instance to work on
 	this.model = model;
+
 	// set id name if defined, defaults to 'id'
 	if (idName) {
 		this.idName = String(idName);
@@ -46,19 +48,69 @@ CrudController.prototype = {
 	/**
 	 * The id  parameter name
 	 * @type {String}
-	 * @default
+	 * @default 'id'
 	 */
 	idName: 'id',
 
+
 	/**
-	 * Get a list of documents
-	 * @param {http.IncomingMessage} req - The request message object
-	 * @param {http.ServerResponse} res - The outgoing response object the result is set to
-	 * @returns {http.ServerResponse} Array of all documents for the {@link CrudController#model} model
+	 * Flag indicating whether the index query should be performed lean
+	 * @type {Boolean}
+	 * @default true
+	 */
+	lean: true,
+
+	/**
+	 * Array of fields passed to the select statement of the index query.
+	 * The array is joined with a whitespace before passed to the select
+	 * method of the controller model.
+	 * @type {Array}
+	 * @default The empty Array
+	 */
+	select: [],
+
+	/**
+	 * Array of fields that should be omitted from the query.
+	 * The property names are stripped from the query object.
+	 * @type {Array}
+	 * @default The empty Array
+	 */
+	omit: [],
+
+	/**
+	 * Name of the property (maybe a virtual) that should be returned
+	 * (send as response) by the methods.
+	 * @type {String}
+	 * @default The empty String
+	 */
+	defaultReturn: '',
+
+	/**
+	 * Get a list of documents. If a request query is passed it is used as the
+	 * query object for the find method.
+	 * @param {IncomingMessage} req - The request message object
+	 * @param {ServerResponse} res - The outgoing response object the result is set to
+	 * @returns {ServerResponse} Array of all documents for the {@link CrudController#model} model
 	 * or the empty Array if no documents have been found
 	 */
 	index: function (req, res) {
-		this.model.find().lean().exec(function (err, documents) {
+		var query = req.query;
+
+		if (this.omit.lenght) {
+			query = _.omit(query, this.omit);
+		}
+
+		query = this.model.find(query);
+
+		if (this.lean) {
+			query.lean();
+		}
+
+		if (this.select.length) {
+			query.select(this.select.join(' '));
+		}
+
+		query.exec(function (err, documents) {
 			if (err) {
 				return res.handleError(err);
 			}
@@ -69,53 +121,54 @@ CrudController.prototype = {
 	/**
 	 * Get a single document. The requested document id is read from the request parameters
 	 * by using the {@link CrudController#idName} property.
-	 * @param {http.IncomingMessage} req - The request message object the id is read from
-	 * @param {http.ServerResponse} res - The outgoing response object
-	 * @returns {http.ServerResponse} A single document or NOT FOUND if no document has been found
+	 * @param {IncomingMessage} req - The request message object the id is read from
+	 * @param {ServerResponse} res - The outgoing response object
+	 * @returns {ServerResponse} A single document or NOT FOUND if no document has been found
 	 */
 	show: function (req, res) {
-		this.model.findById(req.params[this.idName], function (err, document) {
+		this.model.findOne({'_id': req.params[this.idName]}, function (err, document) {
 			if (err) {
 				return res.handleError(err);
 			}
 			if (!document) {
 				return res.notFound();
 			}
-			return res.ok(document);
+			return res.ok(this.getResponseObject(document));
 		});
 	},
 
 	/**
 	 * Creates a new document in the DB.
-	 * @param {http.IncomingMessage} req - The request message object containing the json document data
-	 * @param {http.ServerResponse} res - The outgoing response object
-	 * @returns {http.ServerResponse} The response status 201 CREATED or an error response
+	 * @param {IncomingMessage} req - The request message object containing the json document data
+	 * @param {ServerResponse} res - The outgoing response object
+	 * @returns {ServerResponse} The response status 201 CREATED or an error response
 	 */
 	create: function (req, res) {
 		this.model.create(req.body, function (err, document) {
 			if (err) {
 				return res.handleError(err);
 			}
-			return res.created(document);
+			return res.created(this.getResponseObject(document));
 		});
 	},
 
 	/**
 	 * Updates an existing document in the DB. The requested document id is read from the
 	 * request parameters by using the {@link CrudController#idName} property.
-	 * @param {http.IncomingMessage} req - The request message object the id is read from
-	 * @param {http.ServerResponse} res - The outgoing response object
-	 * @returns {http.ServerResponse} The updated document or NOT FOUND if no document has been found
+	 * @param {IncomingMessage} req - The request message object the id is read from
+	 * @param {ServerResponse} res - The outgoing response object
+	 * @returns {ServerResponse} The updated document or NOT FOUND if no document has been found
 	 */
 	update: function (req, res) {
 		if (req.body._id) {
 			delete req.body._id;
 		}
 
-		this.model.findById(req.params[this.idName], function (err, document) {
+		this.model.findOne({'_id': req.params[this.idName]}, function (err, document) {
 			if (err) {
 				return res.handleError(err);
 			}
+
 			if (!document) {
 				return res.notFound();
 			}
@@ -125,7 +178,7 @@ CrudController.prototype = {
 				if (err) {
 					return res.handleError(err);
 				}
-				return res.ok(updated);
+				return res.ok(this.getResponseObject(document));
 			});
 		});
 	},
@@ -133,13 +186,13 @@ CrudController.prototype = {
 	/**
 	 * Deletes a document from the DB. The requested document id is read from the
 	 * request parameters by using the {@link CrudController#idName} property.
-	 * @param {http.IncomingMessage} req - The request message object the id is read from
-	 * @param {http.ServerResponse} res - The outgoing response object
-	 * @returns {http.ServerResponse} A NO CONTENT response or NOT FOUND if no document has
+	 * @param {IncomingMessage} req - The request message object the id is read from
+	 * @param {ServerResponse} res - The outgoing response object
+	 * @returns {ServerResponse} A NO CONTENT response or NOT FOUND if no document has
 	 * been found for the given id
 	 */
 	destroy: function (req, res) {
-		this.model.findById(req.params[this.idName], function (err, document) {
+		this.model.findOne({'_id': req.params[this.idName]}, function (err, document) {
 			if (err) {
 				return res.handleError(err);
 			}
@@ -153,6 +206,10 @@ CrudController.prototype = {
 				return res.noContent();
 			});
 		});
+	},
+
+	getResponseObject: function (obj) {
+		return this.defaultReturn && obj[this.defaultReturn] || obj;
 	}
 };
 

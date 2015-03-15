@@ -20,24 +20,31 @@ if ('production' === env) {
 
 /*
  * Insert dummy data to test the application
- */
+ */<% if (features.auth) { %>
+exports.users = [{
+	provider: 'local',
+	name: 'Test User',
+	password: 'password',
+	active: true
+}, {
+	provider: 'local',
+	role: 'admin',
+	name: 'Admin',
+	password: 'password',
+	active: true
+}, {
+	provider: 'local',
+	role: 'root',
+	name: 'Root',
+	password: 'password',
+	active: true
+}];<% } %>
 
 if ('development' === env) {
 	console.log('Populating test and development data ...');
 <% if (features.auth) { %>
 	User.find({}).remove(function () {
-		User.create({
-			provider: 'local',
-			name: 'Test User',
-			email: 'test@test.com',
-			password: 'test'
-		}, {
-			provider: 'local',
-			role: 'admin',
-			name: 'Admin',
-			email: 'admin@admin.com',
-			password: 'admin'
-		}, function (err) {
+		User.create(exports.users, function (err) {
 			if (err) {
 				console.error('Error while populating users: %s', err);
 			} else {

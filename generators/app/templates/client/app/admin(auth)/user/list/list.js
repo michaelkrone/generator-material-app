@@ -10,6 +10,7 @@
 	 * @requires ngResource
 	 * @requires <%= scriptAppName %>.socket
 	 * @requires <%= scriptAppName %>.mainMenu
+	 * @requires components/toggleComponent
 	 * @requires <%= scriptAppName %>.admin.user.list.detail
 	 * @requires <%= scriptAppName %>.admin.user.list.edit
 	 * @requires <%= scriptAppName %>.admin.user.list.items
@@ -22,6 +23,7 @@
 			'ui.router',
 			'<%= scriptAppName %>.socket',
 			'<%= scriptAppName %>.mainMenu',
+			'<%= scriptAppName %>.toggleComponent',
 			'<%= scriptAppName %>.admin.user.list.detail',
 			'<%= scriptAppName %>.admin.user.list.edit',
 			'<%= scriptAppName %>.admin.user.list.items'

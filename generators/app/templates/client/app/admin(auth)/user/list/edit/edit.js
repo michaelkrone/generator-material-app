@@ -11,7 +11,6 @@
  * @requires ngMessages
  * @requires components/auth
  * @requires components/repeatInput
- * @requires components/validatePassword
  * @requires components/toast
  * @requires components/mongooseError
  * @requires components/remoteUnique
@@ -27,7 +26,6 @@
 			'ngMessages',
 			'<%= scriptAppName %>.auth',
 			'<%= scriptAppName %>.repeatInput',
-			'<%= scriptAppName %>.validatePassword',
 			'<%= scriptAppName %>.toast',
 			'<%= scriptAppName %>.mongooseError',
 			'<%= scriptAppName %>.remoteUnique'

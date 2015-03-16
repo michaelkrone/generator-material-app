@@ -55,22 +55,6 @@ describe('User Model', function () {
 		});
 	});
 
-	it('should fail when saving without a forename', function (done) {
-		user.forename = '';
-		user.save(function (err) {
-			should.exist(err);
-			done();
-		});
-	});
-
-	it('should fail when saving without a surname', function (done) {
-		user.surname = '';
-		user.save(function (err) {
-			should.exist(err);
-			done();
-		});
-	});
-
 	it('should fail when saving with a blank role', function (done) {
 		user.role = '';
 		user.save(function (err) {
@@ -91,22 +75,6 @@ describe('User Model', function () {
 		delete user.role;
 		user.save(function (err, data) {
 			should.exist(data);
-			done();
-		});
-	});
-
-	it('should fail when saving with an invalid email', function (done) {
-		user.email = 'blah';
-		user.save(function (err) {
-			should.exist(err);
-			done();
-		});
-	});
-
-	it('should fail when saving with an invalid password', function (done) {
-		user.password = 'blah';
-		user.save(function (err) {
-			should.exist(err);
 			done();
 		});
 	});

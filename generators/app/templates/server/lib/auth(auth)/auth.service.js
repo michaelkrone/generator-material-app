@@ -11,7 +11,7 @@ var expressJwt = require('express-jwt');
 var compose = require('composable-middleware');
 var roles = require('./roles');
 var config = require('../../config');
-var contextService = require('../service/context.service');
+var contextService = require('request-context');
 
 var validateJwt = expressJwt({secret: config.secrets.session});
 

@@ -35,12 +35,13 @@
 	<% if(features.auth) { %>
 		$httpProvider.interceptors.push('AuthInterceptor');<% } %>
 
+
+		// set the default palette name
+		var defaultPalette = 'light-blue';
 		// define a palette to darken the background of components
 		var grayBackgroundMap = $mdThemingProvider.extendPalette(defaultPalette, {'A100': 'fafafa'});
-		$mdThemingProvider.definePalette('gray-background', grayBackgroundMap);
 
-		// set the default theme as standard
-		var defaultPalette = 'ligh-blue';
+		$mdThemingProvider.definePalette('gray-background', grayBackgroundMap);
 		$mdThemingProvider.setDefaultTheme(defaultPalette);
 
 		// customize the theme

@@ -110,10 +110,13 @@ module.exports = yeoman.generators.Base.extend({
 		// app modules
 
 		ngModules.push(appModule('lodash'));
-		ngModules.push(appModule('mongooseError'));
-		ngModules.push(appModule('resource'));
-		ngModules.push(appModule('listImage'));
-		ngModules.push(appModule('toggleComponent'));
+		ngModules.push(appModule('mainMenu'));
+		// ngModules.push(appModule('mongooseError'));
+		// ngModules.push(appModule('listImage'));
+		// ngModules.push(appModule('resource'));
+		// ngModules.push(appModule('toggleComponent'));
+		// ngModules.push(appModule('toast'));
+		// ngModules.push(appModule('remoteUnique'));
 
 		if (this.features.socketio) {
 			ngModules.push(appModule('io'));

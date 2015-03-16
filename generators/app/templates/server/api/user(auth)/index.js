@@ -36,7 +36,7 @@ var controller = new UserController();
 // add context for auth sensitive resources
 var addRequestContext = contextService.middleware('request');
 
-// add the authenticated user to the created acl context
+// add the authenticated user to the created request context
 var addUserContext = auth.addAuthContext('request:acl.user');
 
 // check if the authenticated user has at least the 'admin' role
@@ -45,33 +45,31 @@ var isAdmin = auth.hasRole('admin');
 // register user route parameters
 registerUserParameters(router);
 
-// apply to all CUD routes
+// wrap in domain, check authentication and attach userInfo object, set user request context
 router.route('*')
-	.put(addRequestContext)
-	.post(addRequestContext)
-	.patch(addRequestContext);
+	.all(addRequestContext, auth.isAuthenticated(), addUserContext);
 
 // register user routes
 router.route('/')
 	.get(isAdmin, controller.index)
-	.post(isAdmin, addUserContext, controller.create);
+	.post(isAdmin, controller.create);
 
 // fetch authenticated user info
 router.route('/me')
-	.get(auth.isAuthenticated(), controller.me);
+	.get(controller.me);
 
 router.route('/:id')
 	.get(isAdmin, controller.show)
 	.delete(isAdmin, controller.destroy)
-	.put(isAdmin, addUserContext, controller.update)
-	.patch(isAdmin, addUserContext, controller.update);
+	.put(isAdmin, controller.update)
+	.patch(isAdmin, controller.update);
 
 // set the password for a user
 router.route('/:id/password')
-	.put(auth.isAuthenticated(), addUserContext, controller.changePassword)
-	.patch(auth.isAuthenticated(), addUserContext, controller.changePassword);
+	.put(controller.changePassword)
+	.patch(controller.changePassword);
 
-// administrative tasks for a user resource (force set password)
+// admin only - administrative tasks for a user resource (force set password)
 router.route('/:id/admin')
-	.put(isAdmin, addUserContext, controller.setPassword)
-	.patch(isAdmin, addUserContext, controller.setPassword);
+	.put(isAdmin, controller.setPassword)
+	.patch(isAdmin, controller.setPassword);

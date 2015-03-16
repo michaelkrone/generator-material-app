@@ -28,29 +28,21 @@
 	function AppController(Auth, $mdSidenav) {
 		var vm = this;
 
-		/**
-		 * @ngdoc property
-		 * @name sidenavId
-		 * @propertyOf gastroKey.controller:AppController
-		 * @description
-		 * the component id of the main sidenav (bound once)
-		 * @returns {String} component id
-		 */
 		vm.sidenavId = 'mainMenu';
 
 		/**
 		 * @ngdoc function
 		 * @name logout
-		 * @methodOf gastroKey.controller:AppController
+		 * @methodOf <%= scriptAppName %>.controller:AppController
 		 * @description
 		 * Logout the current user
 		 */
-		vm.logout = logout;
+		vm.logout = Auth.logout;
 
 		/**
 		 * @ngdoc function
 		 * @name isLoggedIn
-		 * @methodOf gastroKey.controller:AppController
+		 * @methodOf <%= scriptAppName %>.controller:AppController
 		 * @description
 		 * See {@link components/auth.service:Auth#isLoggedIn isLoggedIn} of the Auth service
 		 */
@@ -59,7 +51,7 @@
 		/**
 		 * @ngdoc function
 		 * @name closeMainMenu
-		 * @methodOf gastroKey.controller:AppController
+		 * @methodOf <%= scriptAppName %>.controller:AppController
 		 * @description
 		 * Close the main menu sidenav component
 		 * @returns {Promise} The promise from mdSidenav
@@ -69,7 +61,7 @@
 		/**
 		 * @ngdoc function
 		 * @name openMainMenu
-		 * @methodOf gastroKey.controller:AppController
+		 * @methodOf <%= scriptAppName %>.controller:AppController
 		 * @description
 		 * Open the main menu sidenav component
 		 * @returns {Promise} The promise from mdSidenav
@@ -79,18 +71,11 @@
 		/**
 		 * @ngdoc function
 		 * @name currentUser
-		 * @methodOf gastroKey.controller:AppController
+		 * @methodOf <%= scriptAppName %>.controller:AppController
 		 * @description
 		 * See {@link components/auth.service:Auth#getCurrentUser getCurrentUser} of the Auth service
 		 */
 		vm.currentUser = Auth.getCurrentUser();
-
-		/**
-		 * Logout the current user
-		 */
-		function logout() {
-			vm.closeMainMenu().then(Auth.logout);
-		}
 
 		/**
 		 * Close the main menu sidenav component

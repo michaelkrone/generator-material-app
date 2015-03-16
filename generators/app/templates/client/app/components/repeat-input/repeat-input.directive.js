@@ -3,7 +3,7 @@
 
 	// register the service as RepeatInput
 	angular
-		.module('gastroKey.repeatInput', [])
+		.module('<%= scriptAppName %>.repeatInput', [])
 		.directive('repeatInput', RepeatInput);
 
 	// add RepeatInput dependencies to inject

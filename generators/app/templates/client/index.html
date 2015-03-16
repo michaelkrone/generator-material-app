@@ -4,27 +4,25 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<base href="/">
-	<title>GastroKEY</title>
+	<title><%= name %></title>
 	<meta name="description" content="">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
 	<!--vendor:css-->
-	<link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
 	<!-- endinject -->
 
 	<!-- app:css -->
-	<link rel="stylesheet" href="styles/app.css">
 	<!-- endinject -->
 </head>
-<body ng-app="gastroKey" ng-controller="AppController as appController" layout="column">
+<body ng-app="<%= scriptAppName %>" ng-controller="AppController as appController" layout="column">
 
 <!--[if lt IE 9]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
 	your browser</a> to improve your experience.</p>
 <![endif]-->
 
-<ng-include src="'app/components/main-menu/main-menu.html'"></ng-include>
+<main-menu <%if (features.auth) {%>ng-show="appController.isLoggedIn()"<% } %>></main-menu>
 
 <!-- Add your site or application content here -->
 <main ng-cloak layout="column" layout-fill ui-view></main>
@@ -35,8 +33,6 @@
 <!-- endinject -->
 
 <!-- vendor js customization -->
-<script src="bower_components/angular-i18n/angular-locale_de-de.js"></script>
-<script src="bower_components/moment/locale/de.js"></script>
 <!-- end vendor js customization -->
 
 <!-- app:js -->

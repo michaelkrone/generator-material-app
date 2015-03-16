@@ -39,14 +39,13 @@
 			"url": "git@localhost:apps/<%= _.slugify(appname) %>.git"
 		},
 		"keywords": [
-			"GastroKey",
-			"submodule",
+			"material design",
 			"<%= appname %>"
 		],
 		"engines": {
 			"node": ">=0.10.33"
 		},
-		"author": "Gastro Instruments GmbH <info@gastro-instruments.de>",
+		"author": "",
 		"devDependencies": {
 			"browser-sync": "^1.7.3",
 			"minimist": "^1.1.0",

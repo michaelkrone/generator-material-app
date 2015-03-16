@@ -3,7 +3,7 @@
  * @name resource
  * @requires lodash
  * @description
- * The gastroKey.resource module
+ * The <%= scriptAppName %>.resource module
  */
 
 /**
@@ -18,9 +18,9 @@
 
 	// register the service as Resource
 	angular
-		.module('gastroKey.resource', [
+		.module('<%= scriptAppName %>.resource', [
 			'ngResource',
-			'gastroKey.lodash'
+			'<%= scriptAppName %>.lodash'
 		])
 		.factory('Resource', Resource);
 

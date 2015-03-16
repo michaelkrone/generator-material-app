@@ -1,5 +1,5 @@
 /**
- * Module defining connect middleware to use in the gastroKey application.
+ * Module defining connect middleware to use in the <%= scriptAppName %> application.
  * @module {Object} middleware
  * @requires {@link responses}
  */

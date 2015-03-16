@@ -4,7 +4,7 @@
 describe('Directive: RepeatInput', function () {
 
 	// load the directive's module
-	beforeEach(module('gastroKey.repeatInput'));
+	beforeEach(module('<%= scriptAppName %>.repeatInput'));
 
 	var element, scope, form;
 

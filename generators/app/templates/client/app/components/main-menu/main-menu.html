@@ -1,0 +1,32 @@
+<!-- main sidenav menu -->
+<md-sidenav
+	ng-controller="MainMenuController as menu"
+	md-component-id="mainMenu"
+	class="md-sidenav-left md-whiteframe-z2"
+	layout="column">
+
+	<md-toolbar>
+		<span class="md-toolbar-tools md-toolbar-tools-top" layout="column">
+			<h1>{{::title}}</h1>
+		</span>
+	</md-toolbar>
+
+	<md-content flex>
+		<ul>
+			<li>
+				<md-button ng-click="menu.logout()">Logout</md-button>
+			</li>
+		</ul>
+		<ul ng-repeat="item in menu.items">
+			<li>
+				<md-button ui-sref-active="md-primary" ui-sref="{{item.state}}" >{{item.name}}</md-button>
+				<ul ng-if="item.subItems" ng-repeat="subItem in item.subItems">
+					<li>
+						<md-button ui-sref-active="md-primary" ui-sref="{{subItem.state}}" >{{subItem.name}}</md-button>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</md-content>
+
+</md-sidenav>

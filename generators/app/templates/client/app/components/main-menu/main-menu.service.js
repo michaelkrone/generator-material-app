@@ -31,6 +31,7 @@
 		// public configuration API
 		this.setMenu = setMenu;
 		this.addMenuItem = addMenuItem;
+		this.addSubMenuItem = addSubMenuItem;
 
 		/**
 		 * @ngdoc function
@@ -54,6 +55,23 @@
 		 */
 		function addMenuItem(menuData) {
 			menu.push(menuData);
+		}
+
+		/**
+		 * @ngdoc function
+		 * @name addSubMenuItem
+		 * @methodOf mainMenu.service:mainMenu
+		 * @description
+		 * Adds a new submenu item to a parent menu
+		 * @param {String} parent The state of the parent element
+		 * @param {*} menuData The menu data to add
+		 */
+		function addSubMenuItem(parent, menuData) {
+			var menuItem = _.find(menu, {state: parent});
+			if (menuItem) {
+				menuItem.subItems = menuItem.subItems || [];
+				menuItem.subItems.push(menuData);
+			}
 		}
 
 		// a private constructor

@@ -1,21 +1,39 @@
+/**
+ * @ngdoc overview
+ * @name <%= scriptAppName %>.admin.user.list.edit
+ * @description
+ * The `<%= scriptAppName %>.admin.user.list.edit` module which provides:
+ *
+ * - {@link <%= scriptAppName %>.admin.user.list.items.controller:UserItemsController UserItemsController}
+ *
+ * @requires ui.router
+ * @requires ngMaterial
+ * @requires ngMessages
+ * @requires components/auth
+ * @requires components/repeatInput
+ * @requires components/validatePassword
+ * @requires components/toast
+ * @requires components/mongooseError
+ * @requires components/remoteUnique
+ */
+
 (function () {
 	'use strict';
 
-	/**
-	 * Introduce the <%= scriptAppName %>.admin.user.list.edit module
-	 * and configure it.
-	 *
-	 * @requires {<%= scriptAppName %>.auth.user}
-	 */
-
 	angular
 		.module('<%= scriptAppName %>.admin.user.list.edit', [
-			'<%= scriptAppName %>.auth.user'
+			'ui.router',
+			'ngMaterial',
+			'ngMessages',
+			'<%= scriptAppName %>.auth',
+			'<%= scriptAppName %>.repeatInput',
+			'<%= scriptAppName %>.validatePassword',
+			'<%= scriptAppName %>.toast',
+			'<%= scriptAppName %>.mongooseError',
+			'<%= scriptAppName %>.remoteUnique'
 		])
 		.config(configureUserListEdit);
 
-	// inject configUserListEdit dependencies
-	configureUserListEdit.$inject = ['$stateProvider'];
 
 	/**
 	 * Route configuration function configuring the passed $stateProvider.
@@ -27,15 +45,19 @@
 	 *
 	 * @param {$stateProvider} $stateProvider - The state provider to configure
 	 */
+
+	configureUserListEdit.$inject = ['$stateProvider'];
+
 	function configureUserListEdit($stateProvider) {
 		// The edit state configuration.
 		var editState = {
 			name: 'admin.user.list.edit',
 			parent: 'admin.user.list',
 			url: 'edit/:id',
+			authenticate: true,
+			role: 'admin',
 			onEnter: onEnterUserListEdit,
 			views: {
-
 				'detail@admin.user.list': {
 					templateUrl: 'app/admin/user/list/edit/edit.html',
 					controller: 'UserEditController',
@@ -48,8 +70,6 @@
 		$stateProvider.state(editState);
 	}
 
-	// inject onUserListEditEnter dependencies
-	onEnterUserListEdit.$inject = ['$timeout', 'ToggleComponent'];
 
 	/**
 	 * Executed when entering the admin.user.list.detail state. Open the component
@@ -57,7 +77,11 @@
 	 *
 	 * @params {$timeout} $timeout - The $timeout service to wait for view initialization
 	 * @params {ToggleComponent} ToggleComponent - The service to toggle the detail view
+	 * @params {Auth} Auth - The auth service to check user rights with
 	 */
+
+	onEnterUserListEdit.$inject = ['$timeout', 'ToggleComponent', 'Auth'];
+
 	function onEnterUserListEdit($timeout, ToggleComponent) {
 		$timeout(showDetails, 0, false);
 
@@ -66,9 +90,6 @@
 		}
 	}
 
-	// inject resolveUserDetailRoute dependencies
-	resolveUserFromArray.$inject = ['users', '$stateParams', '_'];
-
 	/**
 	 * Resolve dependencies for the admin.user.list.edit state
 	 *
@@ -76,6 +97,9 @@
 	 * @params {$stateParams} $stateParams - The $stateParams to read the user id from
 	 * @returns {Object|null} The user whose value of the _id property equals $stateParams._id
 	 */
+
+	resolveUserFromArray.$inject = ['users', '$stateParams', '_'];
+
 	function resolveUserFromArray(users, $stateParams, _) {
 		return _.find(users, {'_id': $stateParams.id});
 	}
@@ -89,9 +113,10 @@
 	 * @params {User} User - The service to query the user with
 	 * @params {$stateParams} $stateParams - The $stateParams to read the user id from
 	 * @returns {Object|null} The user whose value of the _id property equals $stateParams._id
+
+	 function resolveUser(User, $stateParams) {
+	 return User.get({id: $stateParams.id}).$promise;
+	 }
 	 */
-	// function resolveUser(User, $stateParams) {
-	//	return User.get({id: $stateParams.id}).$promise;
-	// }
 
 })();

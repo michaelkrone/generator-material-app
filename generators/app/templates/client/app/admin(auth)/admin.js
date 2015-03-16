@@ -6,7 +6,8 @@
 		.module('<%= scriptAppName %>.admin', [
 			'ui.router',
 			'<%= scriptAppName %>.admin.main',
-			'<%= scriptAppName %>.admin.user'
+			'<%= scriptAppName %>.admin.user',
+			'<%= scriptAppName %>.mainMenu'
 		])
 		.config(configAdminRoute);
 

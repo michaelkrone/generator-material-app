@@ -1,74 +1,73 @@
-<md-toolbar class="md-hue-1">
+<md-toolbar class="md-hue-1 md-tall" id="user-detail-toolbar">
 
-	<span layout="row" layout-align="space-between" flex>
-
-		<md-button ng-click="detail.goBack()" aria-label="Hide user detail view">
-			<md-icon icon="bower_components/material-design-icons/navigation/1x_web/ic_close_black_24dp.png"></md-icon>
+	<span layout="row" layout-align="space-between" class="md-toolbar-tools md-toolbar-tools-top">
+		<md-button ng-click="detail.goBack()" aria-label="Close detail view">
+			<md-icon md-svg-icon="navigation:ic_close_24px"></md-icon>
 		</md-button>
-
-		<md-button ng-click="detail.edit()" aria-label="Edit user" class="md-primary">
-			<md-icon icon="bower_components/material-design-icons/content/1x_web/ic_create_black_24dp.png"></md-icon>
+		<md-button ng-show="!detail.isRoot || detail.currentIsRoot" ng-click="detail.edit()" aria-label="Edit user">
+			<md-icon md-svg-icon="content:ic_create_24px"></md-icon>
 		</md-button>
-
 	</span>
 
-	<span flex></span>
-
-	<h3 class="md-toolbar-tools md-toolbar-tools-bottom">
-		<span>{{detail.user.name}}</span>
-	</h3>
+	<span class="md-toolbar-tools md-toolbar-tools-bottom" layout="column">
+		<h3>{{::detail.user.name}}</h3>
+	</span>
 
 </md-toolbar>
 
-<md-content flex id="#user-detail-content">
+<md-content class="md-padding" flex id="user-detail-content">
 
-	<span class="section" layout="column">
-		<span layout="row" layout-align="start center" layout="row" layout-align="start center" layout-sm="column" layout-align-sm="start start" class="detail-info">
-			<span flex="33">Active</span>
-				<md-checkbox class="no-label" ng-disabled="true" aria-label="user active" ng-model="detail.user.active"></md-checkbox>
-		</span>
-	</span>
+	<section class="section" layout="column">
 
-	<md-divider></md-divider>
+		<span class="section-title">User data</span>
 
-	<span class="section" layout="column">
-
-		<span class="section-title">User Information</span>
-
-		<span layout="row" layout-align="start center" layout="row" layout-align="start center" layout-sm="column" layout-align-sm="start start" class="detail-info">
-			<span flex="33">Username</span>
-			<span flex>{{detail.user.name}}</span>
+		<span layout="row" layout-sm="column" class="detail-info">
+			<span flex="45">Username</span>
+			<span flex>{{::detail.user.name}}</span>
 		</span>
 
-		<span layout="row" layout-align="start center" layout="row" layout-align="start center" layout-sm="column" layout-align-sm="start start" class="detail-info">
-			<span flex="33">Usertype</span>
-			<span flex>{{detail.user.role}}</span>
+		<span layout="row" layout-sm="column" class="detail-info">
+			<span flex="45">Userrole</span>
+			<span flex>{{detail.userRole}}</span>
 		</span>
 
-	</span>
-
-	<md-divider></md-divider>
-
-	<span class="section" layout="column">
-
-		<span class="section-title">Personal Information</span>
-
-		<span layout="row" layout-align="start center" layout="row" layout-align="start center" layout-sm="column" layout-align-sm="start start" class="detail-info">
-			<span flex="33">Name</span>
-			<span flex>{{detail.user.prename}} {{detail.user.surname}}</span>
+		<span layout="row" layout-align="start center" class="detail-info">
+			<span flex="45">Active</span>
+			<span flex>
+				<md-icon ng-show="detail.user.active" class="list-info" md-svg-icon="toggle:ic_check_box_24px"></md-icon>
+				<md-icon ng-show="!detail.user.active" class="list-info" md-svg-icon="toggle:ic_check_box_outline_blank_24px"></md-icon>
+			</span>
 		</span>
 
-		<span layout="row" layout-align="start center" layout="row" layout-align="start center" layout-sm="column" layout-align-sm="start start" class="detail-info">
-			<span flex="33">Email</span>
-			<span flex>{{detail.user.email}}</span>
+	</section>
+
+	<section class="section" layout="column">
+		<span ng-if="detail.user.info" layout="row" layout-sm="column" class="detail-info">
+			<span flex="45">Info</span>
+			<span flex>{{::detail.user.info}}</span>
 		</span>
 
-		<span layout="row" layout-align="start center" layout="row" layout-align="start center" layout-sm="column" layout-align-sm="start start" class="detail-info">
-			<span flex="33">Info</span>
-			<span flex>{{detail.user.info || '-'}}</span>
+	</section>
+
+	<section class="section" layout="column" ng-hide="detail.isRoot">
+
+		<span class="section-title">Datensatz Informationen</span>
+
+		<span layout="row" layout-sm="column" class="detail-info">
+			<span flex="45">Updated</span>
+			<span flex ng-show="detail.user.modified" class="subtitle">
+				<span am-time-ago="detail.user.modified"></span>
+				<md-tooltip>{{detail.user.modified | date:'dd. MMMM yyyy H:mm'}}</md-tooltip>
+				{{detail.user.modifiedBy && 'by ' + detail.user.modifiedBy}}
+			</span>
 		</span>
 
-	</span>
+		<span layout="row" layout-sm="column" class="detail-info">
+			<span flex="45">Created</span>
+			<span flex ng-show="detail.user.created" class="subtitle">{{detail.user.created | date:'dd. MMMM yyyy H:mm'}}</span>
+		</span>
+
+	</section>
 
 </md-content>
 

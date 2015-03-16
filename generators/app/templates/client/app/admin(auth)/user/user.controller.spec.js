@@ -21,13 +21,4 @@ describe('Controller: UserCtrl', function () {
 		controller.should.be.an.instanceof(Object);
 	});
 
-	it('should have an awesome title property', function () {
-		Should.exist(controller.title);
-		controller.title.should.equal('user');
-	});
-
-	it('should have a working doSomething method', function () {
-		Should.exist(controller.doSomething);
-		controller.doSomething().should.equal('user - a sublime controller');
-	});
 });

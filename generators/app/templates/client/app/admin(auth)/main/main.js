@@ -13,7 +13,7 @@
 		.config(configAdminMain);
 
 	// inject configAdminMain dependencies
-	configAdminMain.$inject = ['$stateProvider'];
+	configAdminMain.$inject = ['$stateProvider', 'mainMenuProvider'];
 
 	/**
 	 * Route configuration function configuring the passed $stateProvider.
@@ -22,7 +22,7 @@
 	 *
 	 * @param {$stateProvider} $stateProvider - The state provider to configure
 	 */
-	function configAdminMain($stateProvider) {
+	function configAdminMain($stateProvider, mainMenuProvider) {
 		// The main state configuration
 		var mainState = {
 			name: 'admin.main',
@@ -39,6 +39,11 @@
 		};
 
 		$stateProvider.state(mainState);
+
+		mainMenuProvider.addMenuItem({
+			name: 'Administration',
+			state: mainState.name
+		});
 	}
 
 })();

@@ -70,14 +70,17 @@ ParamController.prototype = {
 			delete req.body._id;
 		}
 
-		var updated = _.merge(req[this.paramName], req.body);
+		var self = this;
+		var bodyData = _.omit(req.body, this.omit);
+		var updated = _.merge(req[this.paramName], bodyData);
+
 		updated.save(function (err) {
 			if (err) {
 				return res.handleError(err);
 			}
 
 			req[this.paramName] = updated;
-			return res.ok(this.getResponseObject(updated));
+			return res.ok(self.getResponseObject(updated));
 		});
 	},
 

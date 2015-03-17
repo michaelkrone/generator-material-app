@@ -74,9 +74,15 @@ function isAuthenticated() {
 		})
 		// Attach userInfo to request
 		.use(function (req, res, next) {
+			// return if this request has already been authorized
+			if (req.userInfo) {
+				return next();
+			}
+
 			// load user model on demand
 			var User = require('../../api/user/user.model').model;
 
+			// read the user id from the token information provided in req.user
 			User.findOne({_id: req.user._id, active: true}, function (err, user) {
 				if (err) {
 					return next(err);

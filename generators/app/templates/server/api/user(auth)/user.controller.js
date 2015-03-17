@@ -30,7 +30,7 @@ exports = module.exports = UserController;
  * @see user:model~User
  */
 function UserController() {
-	ParamController.call(this, User, 'id', 'user');
+	ParamController.call(this, User, 'id', 'userDocument');
 	this.select = ['-salt', '-hashedPassword'];
 	this.omit = ['salt', 'hashedPassword'];
 	this.defaultReturn = 'profile';

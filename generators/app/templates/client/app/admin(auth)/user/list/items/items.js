@@ -1,6 +1,9 @@
 	/**
 	 * @ngdoc overview
 	 * @name <%= scriptAppName %>.admin.user.list.items
+	 * @requires ui.router
+	 * @requires components/listImage
+	 *
 	 * @description
 	 * The `<%= scriptAppName %>.admin.user.list.items` module which provides:
 	 *
@@ -11,6 +14,9 @@
 	'use strict';
 
 	angular
-		.module('<%= scriptAppName %>.admin.user.list.items', ['ui.router']);
+		.module('<%= scriptAppName %>.admin.user.list.items', [
+			'ui.router',
+			'<%= scriptAppName %>.listImage'
+		]);
 
 })();

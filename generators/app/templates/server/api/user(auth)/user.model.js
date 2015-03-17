@@ -205,11 +205,7 @@ function getProfile() {
 	// jshint validthis: true
 	return {
 		'_id': this._id,
-		'customerId': this.customerId,
 		'name': this.name,
-		'forename': this.forename,
-		'surname': this.surname,
-		'email': this.email,
 		'active': this.active,
 		'role': this.role,
 		'info': this.info

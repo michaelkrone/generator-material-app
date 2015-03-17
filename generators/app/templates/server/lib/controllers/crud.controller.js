@@ -126,14 +126,18 @@ CrudController.prototype = {
 	 * @returns {ServerResponse} A single document or NOT FOUND if no document has been found
 	 */
 	show: function (req, res) {
+		var self = this;
+
 		this.model.findOne({'_id': req.params[this.idName]}, function (err, document) {
 			if (err) {
 				return res.handleError(err);
 			}
+
 			if (!document) {
 				return res.notFound();
 			}
-			return res.ok(this.getResponseObject(document));
+
+			return res.ok(self.getResponseObject(document));
 		});
 	},
 
@@ -144,11 +148,14 @@ CrudController.prototype = {
 	 * @returns {ServerResponse} The response status 201 CREATED or an error response
 	 */
 	create: function (req, res) {
+		var self = this;
+
 		this.model.create(req.body, function (err, document) {
 			if (err) {
 				return res.handleError(err);
 			}
-			return res.created(this.getResponseObject(document));
+
+			return res.created(self.getResponseObject(document));
 		});
 	},
 
@@ -164,6 +171,9 @@ CrudController.prototype = {
 			delete req.body._id;
 		}
 
+		var self = this;
+		var bodyData = _.omit(req.body, this.omit);
+
 		this.model.findOne({'_id': req.params[this.idName]}, function (err, document) {
 			if (err) {
 				return res.handleError(err);
@@ -173,12 +183,13 @@ CrudController.prototype = {
 				return res.notFound();
 			}
 
-			var updated = _.merge(document, req.body);
+			var updated = _.merge(document, bodyData);
 			updated.save(function (err) {
 				if (err) {
 					return res.handleError(err);
 				}
-				return res.ok(this.getResponseObject(document));
+
+				return res.ok(self.getResponseObject(document));
 			});
 		});
 	},
@@ -196,13 +207,16 @@ CrudController.prototype = {
 			if (err) {
 				return res.handleError(err);
 			}
+
 			if (!document) {
 				return res.notFound();
 			}
+
 			document.remove(function (err) {
 				if (err) {
 					return res.handleError(err);
 				}
+
 				return res.noContent();
 			});
 		});

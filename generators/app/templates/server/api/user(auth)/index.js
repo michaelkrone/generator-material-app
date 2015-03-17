@@ -5,18 +5,17 @@
  * for /api/users routes. Authentication middleware is added to
  * all requests except the '/' route - where everyone can POST to.
  * Export the configured express router for the user api routes
- * @module {express.Router} user
- * @requires {@link module:middleware}
+ * @module {express.Router}
+ * @requires {request-context}
  * @requires {@link user:controller}
  * @requires {@link auth:service}
  */
 'use strict';
 
 var router = require('express').Router();
-var middleware = require('../../lib/middleware');
+var contextService = require('request-context');
 var UserController = require('./user.controller');
 var auth = require('../../lib/auth/auth.service');
-var contextService = require('request-context');
 
 // Export the configured express router for the user api routes
 module.exports = router;

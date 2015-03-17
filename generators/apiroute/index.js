@@ -2,6 +2,7 @@
 var path = require('path');
 var yeoman = require('yeoman-generator');
 var util = require('util');
+var und = require('underscore.string');
 var ngUtil = require('../util');
 var BaseGenerator = require('../base.js');
 
@@ -25,7 +26,7 @@ Generator.prototype.askFor = function askFor() {
 		{
 			name: 'route',
 			message: 'What will the url of your route be?',
-			default: '/' + name
+			default: '/' + name + (self.config.get('pluralizeRoutes') ? 's' : '')
 		},
 		{
 			name: 'apiUrl',
@@ -36,7 +37,7 @@ Generator.prototype.askFor = function askFor() {
 			name: 'secure',
 			type: 'confirm',
 			message: 'May only authenticated users be able to access this route?',
-			default: base + name,
+			default: true,
 			when: function () {
 				return self.config.get('features').auth;
 			}
@@ -66,8 +67,8 @@ Generator.prototype.askFor = function askFor() {
 		{
 			name: 'menu',
 			message: 'How should the menu item be labelled?',
-			default: '/' + name
-		},
+			default: und.capitalize(name) + (self.config.get('pluralizeRoutes') ? 's' : '')
+		}
 	];
 
 	this.prompt(prompts, function (props) {

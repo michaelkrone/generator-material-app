@@ -36,7 +36,7 @@ Generator.prototype.askFor = function askFor() {
 			name: 'secure',
 			type: 'confirm',
 			message: 'May only authenticated users be able to access this route?',
-			default: base + name,
+			default: true,
 			when: function () {
 				return self.config.get('features').auth;
 			}

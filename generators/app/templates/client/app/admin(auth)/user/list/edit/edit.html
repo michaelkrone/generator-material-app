@@ -59,20 +59,14 @@
 			</span>
 
 			<span layout="row" layout-sm="column">
-				<md-button ng-click="edit.showChangePasswordDialog($event)">Change password</md-button>
-			</span>
-
-		</section>
-
-		<section class="section" layout="column">
-
-			<span class="section-title">Additional Information</span>
-
-			<span layout="row" layout-sm="column">
 				<md-input-container flex>
 					<label>Info</label>
 					<textarea name="info" ng-model="edit.user.info"></textarea>
 				</md-input-container>
+			</span>
+
+			<span layout="row" layout-sm="column">
+				<md-button ng-click="edit.showChangePasswordDialog($event)">Change password</md-button>
 			</span>
 
 		</section>

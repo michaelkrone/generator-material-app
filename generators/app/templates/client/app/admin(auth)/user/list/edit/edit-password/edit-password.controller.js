@@ -61,7 +61,7 @@
 				vm.close();
 				Toast.show({
 					type: 'info',
-					text: 'Password für Benutzer ' + savedUser.name + ' aktualisiert'
+					text: 'Updated password for user ' + savedUser.name
 				});
 			}
 

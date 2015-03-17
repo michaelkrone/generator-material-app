@@ -25,8 +25,8 @@
 
 		// directives link definition
 		function link(scope, elem, attrs) {
-			var componentId = 'mainMenu';
-			var mainContentArea = $document.querySelector(attrs.mainContent || 'main');
+			var componentId = attrs.mdComponentId || 'mainMenu';
+			var mainContentArea = $document[0].querySelector(attrs.mainContent || 'main');
 
 			$rootScope.$on('$locationChangeSuccess', openPage);
 

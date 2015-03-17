@@ -6,8 +6,9 @@
  *
  * - {@link <%= scriptAppName %>.admin.user.list.detail.controller:UserDetailController UserDetailController}
  *
- * @requires {ui.router}
- * @requires {<%= scriptAppName %>.auth.user}
+ * @requires ui.router
+ * @requires angularMoment
+ * @requires <%= scriptAppName %>.auth.user
  */
 (function () {
 	'use strict';
@@ -15,6 +16,7 @@
 	angular
 		.module('<%= scriptAppName %>.admin.user.list.detail', [
 			'ui.router',
+			'angularMoment',
 			'<%= scriptAppName %>.auth.user'
 		])
 		.config(configureUserListDetail);
@@ -86,19 +88,5 @@
 	function resolveUserFromArray(users, $stateParams, _) {
 		return _.find(users, {'_id': $stateParams.id});
 	}
-
-	// inject resolveUser dependencies
-	// resolveUser.$inject = ['User', '$stateParams'];
-
-	/*
-	 * Resolve dependencies for the user.edit state
-	 *
-	 * @params {User} User - The service to query the user with
-	 * @params {$stateParams} $stateParams - The $stateParams to read the user id from
-	 * @returns {Object|null} The user whose value of the _id property equals $stateParams._id
-	 function resolveUser(User, $stateParams) {
-	 return User.get({id: $stateParams.id}).$promise;
-	 }
-	 */
 
 })();

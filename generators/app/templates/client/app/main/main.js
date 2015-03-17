@@ -23,7 +23,8 @@
 
 		mainMenuProvider.addMenuItem({
 			name: 'Home',
-			state: mainState.name
+			state: mainState.name,
+			order: 1
 		});
 	}
 

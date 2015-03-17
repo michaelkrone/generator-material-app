@@ -71,7 +71,8 @@
 
 		mainMenuProvider.addSubMenuItem('admin.main', {
 			name: 'Users',
-			state: listState.name
+			state: listState.name,
+			order: Infinity
 		});
 	}
 

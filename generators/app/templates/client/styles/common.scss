@@ -36,14 +36,10 @@ md-list {
 		}
 
 		&.list-head {
-			color: #999;
+			color: #888;
 
 			md-item-content {
 				padding-left: 64px;
-
-				* {
-					font-weight: bold;
-				}
 			}
 		}
 	}

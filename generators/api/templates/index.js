@@ -35,9 +35,8 @@ var register<%= modelName %>Parameters = require('./<%= name %>.params');
 var controller = new <%= modelName %>Controller();
 
 // register <%= name %> route parameters
-register<%= modelName %>Parameters(router);
+register<%= modelName %>Parameters(router);<% if (secure) { %>
 
-<% if (secure) { %>
 // add context for auth sensitive resources
 var addRequestContext = contextService.middleware('request');
 
@@ -48,8 +47,7 @@ var addUserContext = auth.addAuthContext('request:acl.user');
 var isAuthenticated = auth.hasRole('<%= role %>');
 
 // apply auth middleware to all routes
-router.route('*').all(addRequestContext, isAuthenticated, addUserContext);
-<% } %>
+router.route('*').all(addRequestContext, isAuthenticated, addUserContext);<% } %>
 
 // register <%= name %> routes
 router.route('/')

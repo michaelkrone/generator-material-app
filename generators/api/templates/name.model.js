@@ -8,7 +8,9 @@
  */
 'use strict';
 
-var mongoose = require('mongoose');
+var mongoose = require('mongoose');<% if (secure) { %>
+var requestContext = require('mongoose-request-context');
+var createdModifiedPlugin = require('mongoose-createdmodified').createdModifiedPlugin;<% } %>
 
 /**
  * The <%= modelName %> model definition
@@ -27,14 +29,23 @@ var <%= modelName %>Definition = {
  * The <%= modelName %> model schema
  * @type {MongooseSchema}
  */
-var <%= modelName %>Schema = new mongoose.Schema(<%= modelName %>Definition);
+var <%= modelName %>Schema = new mongoose.Schema(<%= modelName %>Definition);<% if (secure) { %>
+
+/**
+ * Attach security related plugins
+ */
+<%= modelName %>Schema.plugin(createdModifiedPlugin);
+
+<%= modelName %>Schema.plugin(requestContext, {
+	propertyName: 'modifiedBy',
+	contextPath: 'request:acl.user.name'
+});<% } %>
 
 /**
  *  The registered mongoose model instance of the <%= modelName %> model
  *  @type {<%= modelName %>}
  */
 var <%= modelName %> = mongoose.model('<%= modelName %>', <%= modelName %>Schema);
-
 
 module.exports = {
 

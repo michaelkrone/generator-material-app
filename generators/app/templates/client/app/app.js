@@ -74,8 +74,12 @@
 	function appRun($rootScope, $location, Auth) {
 		// Redirect to login if route requires auth and you're not logged in
 		$rootScope.$on('$stateChangeStart', function (event, next) {
+			if (!next.authenticate) {
+				return;
+			}
+
 			Auth.isLoggedInAsync(function (loggedIn) {
-				if (next.authenticate && !loggedIn) {
+				if (!loggedIn || next.role && !Auth.hasRole(next.role)) {
 					$location.path('/login');
 				}
 			});

@@ -28,6 +28,15 @@ var <%= modelName %> = require('./<%= name %>.model').model;
  */
 function <%= modelName %>Controller() {
 	ParamController.call(this, <%= modelName %>, 'id', '<%= name %>');
+
+	// modify select only properties
+	// this.select = ['-__v'];
+
+	// omit properties on update
+	// this.omit = ['hashedPassword'];
+
+	// property to return (maybe a virtual getter of the model)
+	// this.defaultReturn = 'profile';
 }
 
 <%= modelName %>Controller.prototype = Object.create(ParamController.prototype);

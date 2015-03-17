@@ -29,6 +29,7 @@
 			parent: 'admin',
 			url: '/',
 			authenticate: true,
+			role: 'admin',
 			views: {
 				'@admin': {
 					templateUrl: 'app/admin/main/main.html',

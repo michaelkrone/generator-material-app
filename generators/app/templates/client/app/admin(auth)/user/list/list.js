@@ -47,6 +47,7 @@
 			parent: 'admin.user',
 			url: '/',
 			authenticate: true,
+			role: 'admin',
 			resolve: {users:  resolveUsers},
 			views: {
 

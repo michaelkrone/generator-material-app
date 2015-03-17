@@ -12,6 +12,7 @@ var Generator = module.exports = function Generator() {
 util.inherits(Generator, BaseGenerator);
 
 Generator.prototype.askFor = function askFor() {
+	var self = this;
 	var done = this.async();
 	var name = this.name;
 
@@ -37,7 +38,7 @@ Generator.prototype.askFor = function askFor() {
 			message: 'May only authenticated users be able to access this route?',
 			default: base + name,
 			when: function () {
-				return this.config.get('features').auth;
+				return self.config.get('features').auth;
 			}
 		},
 		{

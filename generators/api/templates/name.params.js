@@ -51,12 +51,12 @@ function registerIdParam(req, res, next, id) {
 			return next(err);
 		}
 
-		if (! <%= name %>) {
+		if (!<%= name %>) {
 			res.notFound();
 			return next('route');
 		}
 
-		req['<%= name %>'] = <%= name %>;
+		req.<%= name %> = <%= name %>;
 		return next();
 	});
 }

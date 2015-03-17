@@ -75,7 +75,7 @@ function isAuthenticated() {
 		// Attach userInfo to request
 		.use(function (req, res, next) {
 			// return if this request has already been authorized
-			if (req.userInfo) {
+			if (req.hasOwnProperty('userInfo')) {
 				return next();
 			}
 
@@ -96,7 +96,7 @@ function isAuthenticated() {
 				// set the requests userInfo object as the authenticated user
 				req.userInfo = user;
 				next();
-			})
+			});
 		});
 }
 

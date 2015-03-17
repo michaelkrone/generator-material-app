@@ -26,7 +26,7 @@ function registerUserParams(router) {
 
 /**
  * Register the default id parameter for 'api/user' requests.
- * Add a 'user' property to the current request which is the
+ * Add a 'userDocument' property to the current request which is the
  * document returned by the User Model for the 'id' param
  * available in the processed route.
  * @param {http.IncomingMessage} req - The request message object

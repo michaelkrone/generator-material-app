@@ -72,8 +72,8 @@ function isAuthenticated() {
 
 			validateJwt(req, res, next);
 		})
-		// Attach userInfo to request
-		.use(function (req, res, next) {
+
+		.use(function (req, res, next) { // Attach userInfo to request
 			// return if this request has already been authorized
 			if (req.hasOwnProperty('userInfo')) {
 				return next();
@@ -122,7 +122,7 @@ function hasRole(roleRequired) {
 		});
 }
 
-/**http
+/**
  * Returns a jwt token signed by the app secret
  * @param {String} id - Id used to sign a token
  * @return {String}

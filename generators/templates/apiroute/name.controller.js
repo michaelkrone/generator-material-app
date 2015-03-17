@@ -7,7 +7,7 @@
 		.controller('<%= classedName %>Controller', <%= classedName %>Controller);
 
 	// add <%= classedName %>Controller dependencies to inject
-	<%= classedName %>Controller.$inject = [];
+	// <%= classedName %>Controller.$inject = [];
 
 	/**
 	 * <%= classedName %>Controller constructor. Main controller for the <%= scriptAppName %>.<%= _.slugify(name) %>
@@ -17,7 +17,7 @@
 	 * @param {socket.io} socket - The socket to register updates<% } %>
 	 */
 	function <%= classedName %>Controller() {
-		var vm = this;
+		// var vm = this;
 	}
 
 })();

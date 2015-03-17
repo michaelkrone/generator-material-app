@@ -64,7 +64,7 @@
 						<label>Repeat Password</label>
 						<input name="passwordRepeat" type="password"  ng-model="create.user.passwordRepeat" required repeat-input="create.user.password">
 						<div ng-messages="createForm.passwordRepeat.$error">
-							<div ng-message="required">Repeat Password is required</div>
+							<div ng-message="required">Please repeat the new password</div>
 							<div ng-message="repeat-input">The passwords do not match</div>
 						</div>
 					</md-input-container>

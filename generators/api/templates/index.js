@@ -4,9 +4,8 @@
  * and configuring the express router to handle the <%= name %> api
  * for /api/<%= name %>s routes. All Routes are registered after the
  * [request parameters]{@link <%= name %>:parameters} have been
- * added to the router instance. POST, PUT and PATCH requests are
- * routed through the removeReservedSchemaKeywords middleware.
- * Export the configured express router for the <%= name %> api routes
+ * added to the router instance.
+ * Exports the configured express router for the <%= name %> api routes
  * @module {express.Router} <%= name %>
  * @requires {@link module:middleware}
  * @requires {@link <%= name %>:controller~<%= modelName %>Controller}

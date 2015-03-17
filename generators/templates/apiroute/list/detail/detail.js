@@ -5,12 +5,14 @@
 	 * Introduce the <%= scriptAppName %>.<%= _.slugify(name) %>.list.detail submodule
 	 * and configure it.
 	 *
-	 * @requires {<%= scriptAppName %>.<%= _.slugify(name) %>.service}
+   * @requires ui.router
+	 * @requires angularMoment
 	 */
 
 	angular
 		.module('<%= scriptAppName %>.<%= _.slugify(name) %>.list.detail', [
-			'<%= scriptAppName %>.<%= _.slugify(name) %>.service'
+			'ui.router',
+			'angularMoment'
 		])
 		.config(configure<%= classedName %>ListDetail);
 
@@ -31,8 +33,10 @@
 		// The detail state configuration
 		var detailState = {
 			name: '<%= name %>.list.detail',
-			parent: '<%= name %>.list',
+			parent: '<%= name %>.list',<% if (secure) {%>
 			url: '/:id',
+			authenticate: true,
+			role: '<%= role %>',<%}%>
 			onEnter: onEnter<%= classedName %>ListDetail,
 			views: {
 				'detail@<%= name %>.list': {
@@ -72,25 +76,11 @@
 	 * Resolve dependencies for the <%= name %>.detail state
 	 *
 	 * @params {Array} <%= name %>s - The array of <%= name %>s
-	 * @params {$stateParams} $stateParams - The $stateParams to read the <%= name %> id from
+	 * @params {Object} $stateParams - The $stateParams to read the <%= name %> id from
 	 * @returns {Object|null} The <%= name %> whose value of the _id property equals $stateParams._id
 	 */
 	function resolve<%= classedName %>FromArray(<%= name %>s, $stateParams, _) {
 		return _.find(<%= name %>s, {'_id': $stateParams.id});
-	}
-
-	// inject resolve<%= classedName %> dependencies
-	resolve<%= classedName %>.$inject = ['<%= classedName %>', '$stateParams'];
-
-	/**
-	 * Resolve dependencies for the <%= name %>.edit state
-	 *
-	 * @params {<%= classedName %>} <%= classedName %> - The service to query the <%= name %> with
-	 * @params {$stateParams} $stateParams - The $stateParams to read the <%= name %> id from
-	 * @returns {Object|null} The <%= name %> whose value of the _id property equals $stateParams._id
-	 */
-	function resolve<%= classedName %>(<%= classedName %>, $stateParams) {
-		return <%= classedName%>.get({id: $stateParams.id}).$promise;
 	}
 
 })();

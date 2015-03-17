@@ -10,15 +10,16 @@
 		.controller('<%= classedName %>DetailController', <%= classedName %>DetailController);
 
 	// add <%= classedName %>DetailController dependencies to inject
-	<%= classedName %>DetailController.$inject = ['<%= classedName %>Service', '$state', '<%= name %>'];
+	<%= classedName %>DetailController.$inject = ['$state', '<%= name %>'];
 
 	/**
 	 * <%= classedName %>DetailController constructor
 	 */
-	function <%= classedName %>DetailController(<%= classedName %>Service, $state, <%= name %>) {
+	function <%= classedName %>DetailController($state, <%= name %>) {
 		var vm = this;
-		vm.<%= name %> = <%= name %>;
 
+		// the current <%= name %> to display
+		vm.<%= name %> = <%= name %>;
 		// switch to the edit state
 		vm.edit = edit;
 		// switch to the parent state

@@ -9,7 +9,10 @@
 	 */
 
 	angular
-		.module('<%= scriptAppName %>.admin.main', ['ui.router'])
+		.module('<%= scriptAppName %>.admin.main', [
+			'ui.router',
+			'<%= scriptAppName %>.mainMenu'
+		])
 		.config(configAdminMain);
 
 	// inject configAdminMain dependencies
@@ -21,6 +24,7 @@
 	 * 'main' view paired with the UserMainController as 'main'.
 	 *
 	 * @param {$stateProvider} $stateProvider - The state provider to configure
+	 * @param {mainMenuProvider} mainMenuProvider - The service to pass navigation information to
 	 */
 	function configAdminMain($stateProvider, mainMenuProvider) {
 		// The main state configuration

@@ -21,6 +21,10 @@
 
 		<span class="section-title">User data</span>
 
+		<span layout="row" layout-align="start center" class="detail-info" ng-show="!detail.user.active">
+			<span flex>User {{::detail.user.name}} is not allowed to log in</span>
+		</span>
+
 		<span layout="row" layout-sm="column" class="detail-info">
 			<span flex="45">Username</span>
 			<span flex>{{::detail.user.name}}</span>
@@ -29,14 +33,6 @@
 		<span layout="row" layout-sm="column" class="detail-info">
 			<span flex="45">Role</span>
 			<span flex>{{::detail.userRole}}</span>
-		</span>
-
-		<span layout="row" layout-align="start center" class="detail-info">
-			<span flex="45">Active</span>
-			<span flex>
-				<md-icon ng-show="detail.user.active" class="list-info" md-svg-icon="toggle:ic_check_box_24px"></md-icon>
-				<md-icon ng-show="!detail.user.active" class="list-info" md-svg-icon="toggle:ic_check_box_outline_blank_24px"></md-icon>
-			</span>
 		</span>
 
 		<span ng-if="detail.user.info" layout="row" layout-sm="column" class="detail-info">

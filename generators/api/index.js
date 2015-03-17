@@ -12,9 +12,12 @@ var Generator = module.exports = function Generator() {
 util.inherits(Generator, BaseGenerator);
 
 Generator.prototype.askFor = function askFor() {
+	process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
 	var self = this;
 	var done = this.async();
 	var name = this.name;
+	var srvConfig = require(path.join(this.options.env.cwd, 'server', 'config'));
 
 	var base = this.config.get('routesBase') || '/api/';
 	if (base.charAt(base.length - 1) !== '/') {
@@ -45,20 +48,8 @@ Generator.prototype.askFor = function askFor() {
 			name: 'role',
 			type: 'list',
 			message: 'What role may access thus route, Milord?',
-			default: 'user',
-			choices: [
-				{
-					name: 'Users',
-					value: 'user'
-				},
-				{
-					name: 'Administrators',
-					value: 'admin'
-				},
-				{
-					name: 'Root only',
-					value: 'root'
-				}],
+			default: 1,
+			choices: srvConfig.userRoles,
 			when: function (answers) {
 				return answers.secure;
 			}

@@ -21,13 +21,4 @@ describe('Controller: <%= classedName %>Ctrl', function () {
 		controller.should.be.an.instanceof(Object);
 	});
 
-	it('should have an awesome title property', function () {
-		Should.exist(controller.title);
-		controller.title.should.equal('<%= name %>');
-	});
-
-	it('should have a working doSomething method', function () {
-		Should.exist(controller.doSomething);
-		controller.doSomething().should.equal('<%= name %> - a sublime controller');
-	});
 });

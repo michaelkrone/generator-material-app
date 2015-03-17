@@ -1,5 +1,8 @@
 /**
  * Main application routes
+ * All responses are routed through the middleware.extendResponse middleware.
+ * POST, PUT, PATCH and DELETE requests are
+ * routed through the middleware.removeReservedSchemaKeywords middleware.
  */
 
 'use strict';

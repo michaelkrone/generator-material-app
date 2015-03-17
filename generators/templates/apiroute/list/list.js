@@ -4,17 +4,23 @@
 	/**
 	 * Introduce the <%= scriptAppName %>.<%= _.slugify(name) %>.list module
 	 * and configure it.
-	 *<% if(features.socketio) { %>
-	 * @requires {<%= scriptAppName %>.socket}<% }%>
-	 * @requires {ui.router}
-	 * @requires {ngMaterial}
-	 * @requires {<%= scriptAppName %>.<%= _.slugify(name) %>.list.detail}
-	 * @requires {<%= scriptAppName %>.<%= _.slugify(name) %>.list.edit}
-	 * @requires {<%= scriptAppName %>.<%= _.slugify(name) %>.list.items}
+	 * @requires ui.router
+	 * @requires ngMaterial<% if(features.socketio) { %>
+	 * @requires <%= scriptAppName %>.socket<% }%>
+	 * @requires <%= scriptAppName %>.mainMenu,
+	 * @requires <%= scriptAppName %>.toggleComponent,
+	 * @requires <%= scriptAppName %>.<%= _.slugify(name) %>.list.detail
+	 * @requires <%= scriptAppName %>.<%= _.slugify(name) %>.list.edit
+	 * @requires <%= scriptAppName %>.<%= _.slugify(name) %>.list.items
 	 */
 
 	angular
 		.module('<%= scriptAppName %>.<%= _.slugify(name) %>.list', [
+			'ngMaterial',
+			'ui.router',<% if(features.socketio) { %>
+			'<%= scriptAppName %>.socket',<% }%>
+			'<%= scriptAppName %>.mainMenu',
+			'<%= scriptAppName %>.toggleComponent',
 			'<%= scriptAppName %>.<%= _.slugify(name) %>.list.detail',
 			'<%= scriptAppName %>.<%= _.slugify(name) %>.list.edit',
 			'<%= scriptAppName %>.<%= _.slugify(name) %>.list.items'
@@ -22,7 +28,7 @@
 		.config(config<%= classedName %>ListRoutes);
 
 	// inject config<%= classedName %>ListRoutes dependencies
-	config<%= classedName %>ListRoutes.$inject = ['$urlRouterProvider', '$stateProvider'];
+	config<%= classedName %>ListRoutes.$inject = ['$stateProvider', 'mainMenuProvider'];
 
 	/**
 	 * Route configuration function configuring the passed $stateProvider.
@@ -31,12 +37,14 @@
 	 *
 	 * @param {$stateProvider} $stateProvider - The state provider to configure
 	 */
-	function config<%= classedName %>ListRoutes($urlRouterProvider, $stateProvider) {
+	function config<%= classedName %>ListRoutes($stateProvider, mainMenuProvider) {
 		// The list state configuration
 		var listState = {
 			name: '<%= name %>.list',
 			parent: '<%= name %>',
-			url: '/list',
+			url: '/list',<% if (secure) {%>
+			authenticate: true,
+			role: '<%= role %>',<%}%>
 			resolve: {
 				<%= name %>s:  resolve<%= classedName %>s
 			},
@@ -59,6 +67,11 @@
 		};
 
 		$stateProvider.state(listState);
+
+		mainMenuProvider.addSubMenuItem('<%= name %>.main', {
+			name: '<%= menuItem %> List',
+			state: listState.name
+		});
 	}
 
 	// inject resolve<%= classedName %>s dependencies

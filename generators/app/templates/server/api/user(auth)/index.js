@@ -38,6 +38,9 @@ var addRequestContext = contextService.middleware('request');
 // add the authenticated user to the created request context
 var addUserContext = auth.addAuthContext('request:acl.user');
 
+// check if the used is authenticated at all
+var isAuthenticated = auth.isAuthenticated();
+
 // check if the authenticated user has at least the 'admin' role
 var isAdmin = auth.hasRole('admin');
 
@@ -46,7 +49,7 @@ registerUserParameters(router);
 
 // wrap in domain, check authentication and attach userInfo object, set user request context
 router.route('*')
-	.all(addRequestContext, auth.isAuthenticated(), addUserContext);
+	.all(addRequestContext, isAuthenticated, addUserContext);
 
 // register user routes
 router.route('/')

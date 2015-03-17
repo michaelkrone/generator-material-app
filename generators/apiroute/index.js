@@ -2,7 +2,6 @@
 var path = require('path');
 var yeoman = require('yeoman-generator');
 var util = require('util');
-var und = require('underscore.string');
 var ngUtil = require('../util');
 var BaseGenerator = require('../base.js');
 
@@ -13,8 +12,11 @@ var Generator = module.exports = function Generator() {
 util.inherits(Generator, BaseGenerator);
 
 Generator.prototype.askFor = function askFor() {
+	process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
 	var self = this;
-	var name = this.name;
+	var name = this.name + (self.config.get('pluralizeRoutes') ? 's' : '');
+	var srvConfig = require(path.join(this.options.env.cwd, 'server', 'config'));
 
 	var done = this.async();
 	var prompts = [
@@ -26,12 +28,12 @@ Generator.prototype.askFor = function askFor() {
 		{
 			name: 'route',
 			message: 'What will the url of your route be?',
-			default: '/' + name + (self.config.get('pluralizeRoutes') ? 's' : '')
+			default: '/' + name
 		},
 		{
 			name: 'apiUrl',
-			message: 'What shall the API url of your resource be?',
-			default: '/api/' + name + (self.config.get('pluralizeRoutes') ? 's' : '')
+			message: 'What is the main API the route shall communicate with?',
+			default: '/api/' + name
 		},
 		{
 			name: 'secure',
@@ -46,28 +48,16 @@ Generator.prototype.askFor = function askFor() {
 			name: 'role',
 			type: 'list',
 			message: 'What role may access thus route, Milord?',
-			default: 'user',
-			choices: [
-				{
-					name: 'Users',
-					value: 'user'
-				},
-				{
-					name: 'Administrators',
-					value: 'admin'
-				},
-				{
-					name: 'Root only',
-					value: 'root'
-				}],
+			default: 1,
+			choices: srvConfig.userRoles,
 			when: function (answers) {
 				return answers.secure;
 			}
 		},
 		{
-			name: 'menu',
+			name: 'menuItem',
 			message: 'How should the menu item be labelled?',
-			default: und.capitalize(name) + (self.config.get('pluralizeRoutes') ? 's' : '')
+			default: this._.capitalize(name)
 		}
 	];
 
@@ -77,6 +67,7 @@ Generator.prototype.askFor = function askFor() {
 		this.apiURL = props.apiUrl;
 		this.secure = props.secure || false;
 		this.role = props.role || false;
+		this.menuItem = props.menuItem;
 		done();
 	}.bind(this));
 };

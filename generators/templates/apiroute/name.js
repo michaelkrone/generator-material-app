@@ -5,11 +5,16 @@
 	 * Introduce the <%= scriptAppName %>.<%= _.slugify(name) %> module
 	 * and configure it.
 	 *
-	 * @requires {<%= scriptAppName %>.<%= _.slugify(name) %>.main}
-	 * @requires {<%= scriptAppName %>.<%= _.slugify(name) %>.list}
+	 * @requires ui.router
+	 * @requires ngResource
+	 * @requires <%= scriptAppName %>.<%= _.slugify(name) %>.main
+	 * @requires <%= scriptAppName %>.<%= _.slugify(name) %>.list
+	 * @requires <%= scriptAppName %>.<%= _.slugify(name) %>.create
 	 */
 	angular
 		.module('<%= scriptAppName %>.<%= _.slugify(name) %>', [
+			'ngResource',
+			'ui.router',
 			'<%= scriptAppName %>.<%= _.slugify(name) %>.main',
 			'<%= scriptAppName %>.<%= _.slugify(name) %>.list',
 			'<%= scriptAppName %>.<%= _.slugify(name) %>.create'

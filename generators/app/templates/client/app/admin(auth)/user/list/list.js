@@ -6,9 +6,8 @@
 	 * and configure it.
 	 *
 	 * @requires ui.router
-	 * @requires ngMaterial
-	 * @requires ngResource
-	 * @requires <%= scriptAppName %>.socket
+	 * @requires ngMaterial<% if(features.socketio) { %>
+	 * @requires {<%= scriptAppName %>.socket}<% }%>
 	 * @requires <%= scriptAppName %>.mainMenu
 	 * @requires components/toggleComponent
 	 * @requires <%= scriptAppName %>.admin.user.list.detail
@@ -18,7 +17,6 @@
 
 	angular
 		.module('<%= scriptAppName %>.admin.user.list', [
-			'ngResource',
 			'ngMaterial',
 			'ui.router',
 			'<%= scriptAppName %>.socket',

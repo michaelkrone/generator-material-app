@@ -1,62 +1,60 @@
-<md-dialog aria-label="Create a <%= name %>">
+<md-dialog aria-label="Create a new <%= name %>" id="<%= name %>-create">
 
-	<span id="<%= name %>-create-content">
+    <md-toolbar class="md-accent">
+        <h3 class="md-toolbar-tools">
+            Create a new <%= name %>
+        </h3>
+    </md-toolbar>
 
-		<md-toolbar class="md-accent">
+    <md-content>
+        <section class="section slim" layout="column">
+            <p>
+                Create a new <%= name %> for your application.
+            </p>
+        </section>
 
-			<span layout="row" layout-align="space-between" flex>
+        <form name="createForm">
 
-				<md-button ng-click="create.hideDialog()" class="md-primary" aria-label="Hide the <%= name %> create view">
-					<md-icon icon="bower_components/material-design-icons/navigation/1x_web/ic_close_black_24dp.png"></md-icon>
-				</md-button>
+            <section class="section slim" layout="column">
+				<span layout="row" layout-align="start center">
+					<span flex="33"><%= modelName %> is active</span>
+					<md-switch name="active" class="no-label" aria-label="<%= name %> active" ng-model="create.<%= name %>.active"></md-switch>
+				</span>
+            </section>
 
-			</span>
+            <section class="section" layout="column">
 
-			<span flex></span>
-
-			<h3 class="md-toolbar-tools md-toolbar-tools-bottom" >
-				<span>Create {{create.<%= name %>.name || 'a new <%= name %>'}}</span>
-			</h3>
-
-			<md-button ng-click="create.create(<%= name %>Form)"
-					   class="md-fab md-fab-bottom-right md-primary fab-overlap"
-					   aria-label="Create a new <%= name %>">
-				<md-icon icon="bower_components/material-design-icons/action/1x_web/ic_done_black_24dp.png"></md-icon>
-			</md-button>
-
-		</md-toolbar>
-
-		<md-content flex>
-			<form name="<%= name %>Form">
-
-				<span class="section" layout="column">
-					<span layout="row" layout-align="start center" class="detail-info">
-
-						<span flex="33">Active</span>
-
-						<md-switch ng-model="create.<%= name %>.active" class="no-label" aria-label="<%= name %> active"></md-switch>
-					</span>
+				<span layout="row" layout-sm="column">
+					<md-input-container flex>
+                        <label>Name</label>
+                        <input name="name" ng-model="create.<%= name %>.name"
+                               ng-model-options="{updateOn: 'default blur', debounce: {'default': 500, 'blur': 0}}"
+                               required mongoose-error remote-unique="<%= modelName %>">
+                        <div ng-messages="createForm.name.$error">
+                            <div ng-message="required">Name is required</div>
+                            <div ng-message="mongoose">Name already in use</div>
+                            <div ng-message="remote-unique">Name already in use</div>
+                        </div>
+                    </md-input-container>
 				</span>
 
-				<span class="section" layout="column">
-
-					<md-input-container>
-						<label>Name</label>
-						<input ng-model="create.<%= name %>.name">
-					</md-input-container>
-
-					<md-input-container>
-						<label>Info</label>
-						<textarea ng-model="create.<%= name %>.info"></textarea>
-					</md-input-container>
-
+				<span layout="row" layout-sm="column">
+					<md-input-container flex class="last">
+                        <label>Info</label>
+                        <textarea name="info" ng-model="create.<%= name %>.info"></textarea>
+                    </md-input-container>
 				</span>
 
-			</form>
+            </section>
 
-		</md-content>
-	</span>
-	<!--<div class="md-actions">-->
-		<!--<md-button ng-click="create.cancelDialog()">Cancel</md-button>-->
-	<!--</div>-->
+        </form>
+
+    </md-content>
+
+    <div class="md-actions" layout="row">
+        <span flex></span>
+        <md-button ng-click="create.close()">Cancel</md-button>
+        <md-button ng-disabled="createForm.$invalid" ng-click="create.create(createForm)" class="md-primary md-raised">Create <%= name %></md-button>
+    </div>
+
 </md-dialog>

@@ -1,13 +1,19 @@
-<md-toolbar class="md-tall" scroll-shrink>
+<md-toolbar class="md-tall" scroll-shrink layout-align="start start">
+
+	<span class="md-toolbar-tools md-toolbar-tools-top">
+		<md-button ng-click="appController.openMainMenu()" aria-label="Hauptmenu öffnen">
+			<md-icon md-svg-icon="navigation:ic_menu_24px"></md-icon>
+		</md-button>
+	</span>
 
 	<span flex></span>
 
-	<h2 class="md-toolbar-tools md-toolbar-tools-bottom">
+	<h2 class="md-toolbar-tools md-toolbar-tools-bottom toolbar-tools-fab-overlap">
 		<span>My Users</span>
 	</h2>
 
-	<md-button ui-sref="admin.user.list.create" class="md-fab md-accent md-fab-bottom-left fab-overlap" aria-label="Create a new user">
-		<md-icon icon="bower_components/material-design-icons/content/1x_web/ic_add_black_24dp.png"></md-icon>
+	<md-button hide show-gt-md ui-sref="admin.user.list.create" class="md-fab md-accent md-fab-top-left fab-overlap" aria-label="Create a new user">
+		<md-icon md-svg-icon="content:ic_add_24px"></md-icon>
 	</md-button>
 
 </md-toolbar>
@@ -15,7 +21,7 @@
 <md-content ng-if="list.users.length" id="user-items-content" flex>
 	<md-list layout="column">
 
-		<md-item class="list-head">
+		<md-item class="list-head" hide-sm>
 			<md-item-content>
 				<div class="md-tile-content" flex="66">
 					<h4>Name</h4>
@@ -68,3 +74,7 @@
 		</p>
 	</md-card>
 </md-content>
+
+<md-button hide-gt-md ui-sref="admin.user.list.create" class="md-fab md-accent md-fab-bottom-right" aria-label="Create a new user">
+	<md-icon md-svg-icon="content:ic_add_24px"></md-icon>
+</md-button>

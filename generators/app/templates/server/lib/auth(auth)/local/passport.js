@@ -57,11 +57,11 @@ function getAuthentication(authModel, config) {
 			}
 
 			if (!user) {
-				return done(null, false, {message: 'Die eingegebenen Daten sind nicht korrekt.'});
+				return done(null, false, {message: 'Unknown user'});
 			}
 
 			if (!user.authenticate(password)) {
-				return done(null, false, {message: 'Die eingegebenen Daten sind nicht korrekt.'});
+				return done(null, false, {message: 'Wrong password'});
 			}
 
 			return done(null, user);

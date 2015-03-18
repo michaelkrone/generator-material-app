@@ -47,7 +47,8 @@
 
 		mainMenuProvider.addMenuItem({
 			name: 'Administration',
-			state: mainState.name
+			state: mainState.name,
+			role: 'admin'
 		});
 	}
 

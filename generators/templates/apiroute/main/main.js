@@ -48,7 +48,8 @@
 
 		mainMenuProvider.addMenuItem({
 			name: '<%= menuItem %>',
-			state: mainState.name
+			state: mainState.name<% if (secure) {%>,
+			role: '<%= role %>'<%}%>
 		});
 	}
 

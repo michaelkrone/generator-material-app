@@ -24,14 +24,15 @@
 	 *
 	 * @param {Service} Auth The Auth service to use
 	 * @param {Service} $mdDialog The mdDialog service to use
-	 * @param {Service} <%= modelName %> The <%= modelName %> service to use
+	 * @param {Service} <%= modelName %> The <%= modelName %> resource
+	 * @param {Service} <%= modelName %>Service The <%= modelName %> service to use
 	 * @param {Service} Toast The Toast service to use
 	 * @returns {Service} {@link <%= scriptAppName %>.<%= _.slugify(name) %>.create.controller:<%= modelName %>CreateController <%= modelName %>CreateController}
 	 */
 
-	<%= modelName %>CreateController.$inject = ['$mdDialog', '<%= modelName %>', 'Toast'];
+	<%= modelName %>CreateController.$inject = ['$mdDialog', '<%= modelName %>', '<%= modelName %>Service', 'Toast'];
 
-	function <%= modelName %>CreateController($mdDialog, <%= modelName %>, Toast) {
+	function <%= modelName %>CreateController($mdDialog, <%= modelName %>, <%= modelName %>Service, Toast) {
 		var vm = this;
 
 		/**
@@ -65,7 +66,7 @@
 				return;
 			}
 
-			Auth.create<%= modelName %>(vm.<%= name %>)
+			<%= modelName %>Service.create(vm.<%= name %>)
 				.then(create<%= modelName %>Success)
 				.catch(create<%= modelName %>Catch);
 

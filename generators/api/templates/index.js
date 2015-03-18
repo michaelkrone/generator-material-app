@@ -12,11 +12,11 @@
  */
 'use strict';
 
-var router = require('express').Router();
+var router = require('express').Router();<% if (features.auth) { %>
+var contextService = require('request-context');<% } %>
 var middleware = require('../../lib/middleware');
 var <%= modelName %>Controller = require('./<%= name %>.controller');<% if (features.auth) { %>
 var auth = require('../../lib/auth/auth.service');
-var contextService = require('../../lib/service/context.service');
 <% } %>
 // Export the configured express router for the <%= name %> api routes
 module.exports = router;

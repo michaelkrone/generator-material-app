@@ -14,6 +14,7 @@
 		var mainState = {
 			name: 'main',
 			url: '/',
+			authenticate: true,
 			templateUrl: 'app/main/main.html',
 			controller: 'MainController',
 			controllerAs: 'vm'

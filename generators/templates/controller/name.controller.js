@@ -7,7 +7,7 @@
 		.controller('<%= classedName %>Controller', <%= classedName %>Controller);
 
 	// add <%= classedName %>Controller dependencies to inject
-	// <%= classedName %>Controller.$inject = ['$scope'];
+	<%= classedName %>Controller.$inject = [];
 
 	/**
 	 * <%= classedName %>Controller constructor

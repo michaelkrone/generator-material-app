@@ -61,7 +61,7 @@
 		$mdDialog.show({
 			controller: '<%= classedName %>CreateController',
 			controllerAs: 'create',
-			templateUrl: '<%= createHtmlUrl %>'
+			templateUrl: '<%= createHtmlUrl %>',
 			clickOutsideToClose: false
 		}).then(transitionTo, transitionTo);
 

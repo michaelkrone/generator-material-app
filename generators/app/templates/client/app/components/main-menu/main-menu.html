@@ -4,18 +4,18 @@
 	layout="column">
 	<md-toolbar>
 		<span class="md-toolbar-tools md-toolbar-tools-top" layout="column">
-			<h1>{{::title}}</h1>
+			<h1>{{::<%= appname %>}}</h1>
 		</span>
 	</md-toolbar>
 
-	<md-content flex ng-controller="MainMenuController as menu">
+	<md-content flex ng-controller="MainMenuController as menu"><% if (features.auth) { %>
 		<ul>
 			<li>
 				<md-button ng-click="menu.logout()">Logout</md-button>
 			</li>
-		</ul>
+		</ul><% } %>
 		<ul ng-repeat="item in menu.items">
-			<li>
+			<li ng-show="menu.canAccess(item)">
 				<md-button ui-sref-active="md-primary" ui-sref="{{item.state}}" >{{item.name}}</md-button>
 				<ul ng-if="item.subItems" ng-repeat="subItem in item.subItems">
 					<li>

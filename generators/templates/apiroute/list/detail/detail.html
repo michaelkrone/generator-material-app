@@ -21,8 +21,8 @@
 
         <span class="section-title"><%= modelName %> data</span>
 
-		<span layout="row" layout-align="start center" class="detail-info" ng-show="!detail.<%= name %>.active">
-		    <span flex>User {{::detail.<%= name %>.name}} is not active</span>
+		<span layout="row" layout-align="start center" class="detail-info" ng-hide="detail.<%= name %>.active">
+		    <span flex>This <%= name %> is not active</span>
 		</span>
 
 		<span layout="row" layout-sm="column" class="detail-info">
@@ -37,7 +37,7 @@
 
     </section>
 
-    <section class="section" layout="column" ng-hide="detail.isRoot">
+    <section class="section" layout="column">
 
         <span class="section-title">Record Information</span>
 

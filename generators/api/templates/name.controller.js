@@ -27,7 +27,7 @@ var <%= modelName %> = require('./<%= name %>.model').model;
  * @see <%= name %>:model~<%= modelName %>
  */
 function <%= modelName %>Controller() {
-	ParamController.call(this, <%= modelName %>, 'id', '<%= name %>');
+	ParamController.call(this, <%= modelName %>, 'id', '<%= name %>Document');
 
 	// modify select only properties
 	// this.select = ['-__v'];

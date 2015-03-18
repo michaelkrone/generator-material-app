@@ -1,6 +1,8 @@
 /**
  * @ngdoc overview
  * @name mainMenu
+ * @requires <%= scriptAppName %>.lodash<% if (features.auth) { %>
+ * @requires <%= scriptAppName %>.auth<% } %>
  * @description
  * The `<%= scriptAppName %>.mainMenu` module which provides:
  *
@@ -11,6 +13,9 @@
 (function () {
 	'use strict';
 
-	angular.module('<%= scriptAppName %>.mainMenu', ['<%= scriptAppName %>.lodash'])
+	angular.module('<%= scriptAppName %>.mainMenu', [
+		'<%= scriptAppName %>.lodash'<% if (features.auth) { %>,
+		'<%= scriptAppName %>.auth'<% } %>
+	])
 
 })();

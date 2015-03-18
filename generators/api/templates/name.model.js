@@ -20,7 +20,7 @@ var createdModifiedPlugin = require('mongoose-createdmodified').createdModifiedP
  * @property {Boolean} active - Flag indicating this <%= name %> is active
  */
 var <%= modelName %>Definition = {
-	name: String,
+	name: {type: String, required: true},
 	info: String,
 	active: Boolean
 };
@@ -40,6 +40,13 @@ var <%= modelName %>Schema = new mongoose.Schema(<%= modelName %>Definition);<% 
 	propertyName: 'modifiedBy',
 	contextPath: 'request:acl.user.name'
 });<% } %>
+
+/**
+ * Validations
+ */
+<%= modelName %>Schema
+	.path('name')
+	.validate(validateUniqueName, 'The specified name is already in use.');
 
 /**
  *  The registered mongoose model instance of the <%= modelName %> model
@@ -71,3 +78,28 @@ module.exports = {
 
 };
 
+/**
+ * Validate the uniqueness of the given name
+ *
+ * @api private
+ * @param {String} value - The username to check for uniqueness
+ * @param {Function} respond - The callback function
+ */
+function validateUniqueName(value, respond) {
+	// jshint validthis: true
+	var self = this;
+
+	// check for uniqueness of user name
+	this.constructor.findOne({name: value}, function (err, <%= name %>) {
+		if (err) {
+			throw err;
+		}
+
+		if (<%= name %>) {
+			// the searched name is my name or a duplicate
+			return respond(self.id === <%= name %>.id);
+		}
+
+		respond(true);
+	});
+}

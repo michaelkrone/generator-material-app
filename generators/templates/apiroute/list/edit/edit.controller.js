@@ -13,7 +13,7 @@
 	 */
 
 	angular
-		.module('<%= scriptAppName %><%= _.slugify(name) %>.list.edit')
+		.module('<%= scriptAppName %>.<%= _.slugify(name) %>.list.edit')
 		.controller('<%= modelName %>EditController', <%= modelName %>EditController);
 
 	/**
@@ -23,14 +23,15 @@
 	 * Provider of the {@link <%= scriptAppName %><%= _.slugify(name) %>.list.edit.controller:<%= modelName %>EditController <%= modelName %>EditController}
 	 * @param {Service} $state The state service to use
 	 * @param {Service} $stateParams The stateParams service to use
+	 * @param {Service} $mdDialog The dialog service to use
 	 * @param {Service} Toast The Toast service to use
 	 * @param {Service} <%= modelName %>Service The <%= modelName %>Service to use
 	 * @param {Resource} <%= name %> The <%= name %> data to use
 	 */
 
-	<%= modelName %>EditController.$inject = ['$state', '$stateParams', 'Toast', '<%= modelName %>Service', '<%= name %>'];
+	<%= modelName %>EditController.$inject = ['$state', '$stateParams', '$mdDialog', 'Toast', '<%= modelName %>Service', '<%= name %>'];
 
-	function <%= modelName %>EditController($state, $stateParams, Toast, <%= modelName %>Service, <%= name %>) {
+	function <%= modelName %>EditController($state, $stateParams, $mdDialog, Toast, <%= modelName %>Service, <%= name %>) {
 		var vm = this;
 
 		// defaults

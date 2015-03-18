@@ -27,27 +27,41 @@
 	 * @returns {Service} {@link mainMenu.controller:MainMenuController MainMenuController}
 	 */
 
-	MainMenuController.$inject = ['mainMenu', '$mdSidenav', 'Auth', '_'];
+	MainMenuController.$inject = ['mainMenu', '$mdSidenav', '_'<% if (features.auth) { %>, 'Auth'<% } %>];
 
 
-	function MainMenuController(mainMenu, $mdSidenav, Auth, _) {
+	function MainMenuController(mainMenu, $mdSidenav, _ <% if (features.auth) { %>, Auth<% } %>) {
 		var vm = this;
 
 		// view model bindings
 		vm.sidenavId = 'mainMenu';
 		vm.items = _.sortBy(mainMenu.getMenu(), 'order');
-		vm.close = close;
-		vm.logout = logout;
+		vm.close = close;<% if (features.auth) { %>
+		vm.canAccess = canAccess;
+		vm.logout = logout;<% } %>
 
 		function close() {
 			return $mdSidenav(vm.sidenavId).close();
+		}<% if (features.auth) { %>
+
+		/**
+		 * Check if the current user can access the menu item
+		 * @param {Object} menuItem
+		 */
+		function canAccess(menuItem) {
+			if (menuItem.role) {
+				return Auth.hasRole(menuItem.role);
+			}
+
+			return true;
 		}
+
 		/**
 		 * Logout the current user
 		 */
 		function logout() {
 			vm.close().then(Auth.logout);
-		}
+		}<% } %>
 	}
 
 })();

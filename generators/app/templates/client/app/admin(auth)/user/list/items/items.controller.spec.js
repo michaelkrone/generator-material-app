@@ -1,18 +1,16 @@
+/* jshint -W030 */
 'use strict';
 
-describe('Controller: UserCtrl', function () {
+describe('Controller: UserItemsController', function () {
 
 	// load the controller's module
 	beforeEach(module('<%= scriptAppName %>.admin.user.list'));
 
 	var controller;
-	var scope;
 
 	// Initialize the controller and a mock scope
-	beforeEach(inject(function ($controller, $rootScope) {
-		scope = $rootScope.$new();
+	beforeEach(inject(function ($controller) {
 		controller = $controller('UserItemsController', {
-			// $scope: scope
 		});
 	}));
 
@@ -21,13 +19,13 @@ describe('Controller: UserCtrl', function () {
 		controller.should.be.an.instanceof(Object);
 	});
 
-	it('should have an awesome title property', function () {
-		Should.exist(controller.title);
-		controller.title.should.equal('user');
+	it('should expose a isSelected function', function () {
+		Should.exist(controller.isSelected);
+		controller.isSelected.should.be.a.Function;
 	});
 
-	it('should have a working doSomething method', function () {
-		Should.exist(controller.doSomething);
-		controller.doSomething().should.equal('user - a sublime controller');
+	it('should expose a showInDetails function', function () {
+		Should.exist(controller.showInDetails);
+		controller.showInDetails.should.be.a.Function;
 	});
 });

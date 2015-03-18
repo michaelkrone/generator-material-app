@@ -6,7 +6,8 @@
 		.module('<%= scriptAppName %>.admin', [
 			'ui.router',
 			'<%= scriptAppName %>.admin.main',
-			'<%= scriptAppName %>.admin.user'
+			'<%= scriptAppName %>.admin.user',
+			'<%= scriptAppName %>.mainMenu'
 		])
 		.config(configAdminRoute);
 
@@ -15,15 +16,14 @@
 
 	// route config function configuring the passed $stateProvider
 	function configAdminRoute($urlRouterProvider, $stateProvider) {
-		$stateProvider
-			var adminState = {
-				name: 'admin',
-				url: '/admin',
-				abstract: true,
-				templateUrl: 'app/admin/admin.html',
-				controller: 'AdminController',
-				controllerAs: 'vm'
-			};
+		var adminState = {
+			name: 'admin',
+			url: '/admin',
+			abstract: true,
+			templateUrl: 'app/admin/admin.html',
+			controller: 'AdminController',
+			controllerAs: 'vm'
+		};
 
 		$urlRouterProvider.when('/admin', '/admin/');
 		$stateProvider.state(adminState);

@@ -13,7 +13,7 @@
 	 * AdminController constructor
 	 */
 	function AdminController() {
-		var vm = this;
+		// var vm = this;
 	}
 
 })();

@@ -3,7 +3,7 @@
 describe('Controller: <%= classedName %>Ctrl', function () {
 
 	// load the controller's module
-	beforeEach(module('<%= scriptAppName %>.<%= _.slugify(name) %>.controller'));
+	beforeEach(module('<%= scriptAppName %>.<%= _.slugify(name) %>'));
 
 	var controller;
 	var scope;
@@ -19,15 +19,5 @@ describe('Controller: <%= classedName %>Ctrl', function () {
 	it('object should exist', function () {
 		Should.exist(controller);
 		controller.should.be.an.instanceof(Object);
-	});
-
-	it('should have an awesome title property', function () {
-		Should.exist(controller.title);
-		controller.title.should.equal('<%= name %>');
-	});
-
-	it('should have a working doSomething method', function () {
-		Should.exist(controller.doSomething);
-		controller.doSomething().should.equal('<%= name %> - a sublime controller');
 	});
 });

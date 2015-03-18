@@ -15,7 +15,7 @@
 	 *
 	 */
 	function UserController() {
-		var vm = this;
+		// var vm = this;
 	}
 
 })();

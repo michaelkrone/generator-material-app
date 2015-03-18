@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="GastroKEY Applications - <%= appname %> - Ant build file for Jenkins builds" default="build">
+<project name="<%= appname %> - Ant build file for Jenkins builds" default="build">
 
 	<!-- set properties for later referenced directories -->
 	<property name="build.dir">build</property>

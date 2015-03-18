@@ -1,27 +1,41 @@
-select {
-	width: 170px;
-	color: rgba(0,0,0,.87);
-	border: none;
-	border-bottom: 1px solid rgba(0,0,0,.12);
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-	background: url(/bower_components/material-design-icons/navigation/1x_web/ic_arrow_drop_down_grey600_24dp.png) right no-repeat;
-	padding: 7px 24px 5px 0;
-	margin-top: -1px
+
+md-input-container {
+
+	md-select {
+		-webkit-flex: 1;
+		-ms-flex: 1;
+		flex: 1;
+		-webkit-order: 2;
+		-ms-flex-order: 2;
+		order: 2;
+		display: block;
+		background: none;
+		padding: 12px 0 0 0;
+		//		border-bottom: 1px solid lightgray;
+		line-height: 26px;
+		-ms-flex-preferred-size: 26px;
+		border-radius: 0;
+		margin: 0;
+
+		.md-select-label {
+			font-size: 14px;
+		}
+
+		.md-select-icon {
+			display: none;
+		}
+	}
+
+	&.md-input-has-value md-select {
+		padding: 1px 0px 0px 0px;
+		border-bottom: none;
+
+		.md-select-icon {
+			display: block;
+		}
+	}
 }
 
-select * {
-	padding: .9em 1em;
-	color: #000
-}
-
-select[disabled] {
-	color: rgba(0, 0, 0, .26);
-	border-bottom-width: 0
-}
-
-md-input-container > label.select-label {
-	transform: translate3d(0, -42px, 0) scale(0.75);
-	margin-bottom: -31px;
+.md-select-label {
+	font-size: 14px;
 }

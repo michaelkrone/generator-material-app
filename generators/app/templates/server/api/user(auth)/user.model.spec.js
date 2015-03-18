@@ -2,14 +2,8 @@
 
 var should = require('should');
 var User = require('./user.model').model;
-//var app = require('../../app');
 
-var user = new User({
-	provider: 'local',
-	name: 'Fake User',
-	email: 'test@test.com',
-	password: 'password'
-});
+var user;
 
 describe('User Model', function () {
 	before(function (done) {
@@ -17,6 +11,17 @@ describe('User Model', function () {
 		User.remove().exec().then(function () {
 			done();
 		});
+	});
+
+	beforeEach(function (done) {
+		user = new User({
+			provider: 'local',
+			name: 'username',
+			active: true,
+			role: 'user',
+			password: 'sosecret!'
+		});
+		done();
 	});
 
 	afterEach(function (done) {
@@ -42,31 +47,56 @@ describe('User Model', function () {
 		});
 	});
 
-	it('should fail when saving without an email', function (done) {
-		user.email = '';
+	it('should fail when saving without a name', function (done) {
+		user.name = '';
 		user.save(function (err) {
 			should.exist(err);
 			done();
 		});
 	});
 
+	it('should fail when saving with a blank role', function (done) {
+		user.role = '';
+		user.save(function (err) {
+			should.exist(err);
+			done();
+		});
+	});
+
+	it('should succeed when saving with a role', function (done) {
+		user.role = 'admin';
+		user.save(function (err, data) {
+			should.exist(data);
+			done();
+		});
+	});
+
+	it('should succeed when saving without a role', function (done) {
+		delete user.role;
+		user.save(function (err, data) {
+			should.exist(data);
+			done();
+		});
+	});
+
 	it('should authenticate user if password is valid', function () {
-		return user.authenticate('password').should.be.true;
+		user.authenticate('sosecret!').should.be.true;
 	});
 
 	it('should not authenticate user if password is invalid', function () {
-		return user.authenticate('blah').should.not.be.true;
+		user.authenticate('blah').should.not.be.true;
 	});
 
 	it('should have a virtual password property', function () {
-		return user.password.should.exist;
+		user.password.should.exist;
 	});
 
 	it('should have a virtual token property', function () {
-		return user.token.should.exist;
+		user.token.should.exist;
 	});
 
 	it('should have a virtual profile property', function () {
-		return user.profile.should.exist;
+		user.profile.should.exist;
 	});
+
 });

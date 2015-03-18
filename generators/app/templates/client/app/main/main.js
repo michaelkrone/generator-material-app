@@ -7,17 +7,26 @@
 		.config(configMainRoute);
 
 	// inject configMainRoute dependencies
-	configMainRoute.$inject = ['$stateProvider'];
+	configMainRoute.$inject = ['$stateProvider', 'mainMenuProvider'];
 
 	// route config function configuring the passed $stateProvider
-	function configMainRoute($stateProvider) {
-		$stateProvider
-			.state('main', {
-				url: '/',
-				templateUrl: 'app/main/main.html',
-				controller: 'MainController',
-				controllerAs: 'vm'
-			});
+	function configMainRoute($stateProvider, mainMenuProvider) {
+		var mainState = {
+			name: 'main',
+			url: '/',
+			authenticate: true,
+			templateUrl: 'app/main/main.html',
+			controller: 'MainController',
+			controllerAs: 'vm'
+		};
+
+		$stateProvider.state(mainState);
+
+		mainMenuProvider.addMenuItem({
+			name: 'Home',
+			state: mainState.name,
+			order: 1
+		});
 	}
 
 })();

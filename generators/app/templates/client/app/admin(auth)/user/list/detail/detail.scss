@@ -1,12 +1,3 @@
-#user-detail-content {
-  .detail-info {
-    md-checkbox[ng-disabled] {
-      margin: 0;
-    }
-  }
+#user-detail-toolbar {}
 
-  md-switch.no-label .md-label,
-  md-checkbox[ng-disabled].no-label .md-label {
-    display: none;
-  }
-}
+#user-detail-content {}

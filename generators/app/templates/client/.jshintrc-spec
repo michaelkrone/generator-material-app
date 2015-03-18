@@ -12,6 +12,8 @@
 		"expect":	true,
 		"browser": true,
 		"element": true,
-		"by":	true
+		"by":	true,
+		"Should": true,
+		"sinon": true
 	}
 }

@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	// register the service as <%= classedName %>
+	// register the directive as <%= classedName %>
 	angular
 		.module('<%= scriptAppName %>')
 		.directive('<%= classedName %>', <%= classedName %>);

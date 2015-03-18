@@ -9,11 +9,14 @@
 	 */
 
 	angular
-		.module('<%= scriptAppName %>.admin.main', ['ui.router'])
+		.module('<%= scriptAppName %>.admin.main', [
+			'ui.router',
+			'<%= scriptAppName %>.mainMenu'
+		])
 		.config(configAdminMain);
 
 	// inject configAdminMain dependencies
-	configAdminMain.$inject = ['$stateProvider'];
+	configAdminMain.$inject = ['$stateProvider', 'mainMenuProvider'];
 
 	/**
 	 * Route configuration function configuring the passed $stateProvider.
@@ -21,14 +24,16 @@
 	 * 'main' view paired with the UserMainController as 'main'.
 	 *
 	 * @param {$stateProvider} $stateProvider - The state provider to configure
+	 * @param {mainMenuProvider} mainMenuProvider - The service to pass navigation information to
 	 */
-	function configAdminMain($stateProvider) {
+	function configAdminMain($stateProvider, mainMenuProvider) {
 		// The main state configuration
 		var mainState = {
 			name: 'admin.main',
 			parent: 'admin',
 			url: '/',
 			authenticate: true,
+			role: 'admin',
 			views: {
 				'@admin': {
 					templateUrl: 'app/admin/main/main.html',
@@ -39,6 +44,12 @@
 		};
 
 		$stateProvider.state(mainState);
+
+		mainMenuProvider.addMenuItem({
+			name: 'Administration',
+			state: mainState.name,
+			role: 'admin'
+		});
 	}
 
 })();

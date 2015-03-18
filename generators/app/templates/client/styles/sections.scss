@@ -1,21 +1,46 @@
 .section {
-	padding: 16px;
-	font-size: 14px;
+	padding: 16px 0 16px 0;
+
+	span {
+		font-size: 14px;
+	}
+
+	&.slim {
+		padding: 4px 0;
+	}
 
 	.section-title {
-		color: #999;
-		margin-bottom: 16px;
+		color: #888;
+		margin-bottom: 8px;
+		font-size: .8em;
+		text-transform: uppercase;
+
+		&.slim {
+			margin-bottom: 0;
+		}
 	}
 
 	.detail-info {
 		margin: 8px 0;
 
-		span:first-child {
-			color: #555;
+		&.slim {
+			margin: 0;
 		}
 
-		span {
-			color: #999;
+		span[flex]:first-child {
+			color: #555;
+			text-overflow: ellipsis;
+			overflow: hidden;
+		}
+
+		span[flex]:nth-child(2) {
+			color: #888;
+		}
+
+		@media (max-width: 600px) {
+			span:not(first-child) {
+				margin-top: 8px;
+			}
 		}
 	}
 }

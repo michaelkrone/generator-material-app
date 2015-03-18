@@ -1,35 +1,35 @@
-<md-content id="login-content" layout-fill flex layout="row" layout-align="center center">
+<section id="login-content" layout="column" flex layout-align="center center">
 
-	<md-card>
-		<md-card-content>
+	<h1>Login</h1>
 
-			<h2>Login</h2>
+	<!-- remove in production -->
+	<p ng-show="!login.error">Use a development seed user to login, e.g. user <code>Admin</code> with the password <code>password</code></p>
+	<!-- /remove in production -->
 
-			<p>Accounts are reset on server restart from <code>server/config/seed.js</code>. Default account is <code>test@test.com</code>
-				/ <code>test</code></p>
+	<p ng-show="login.error" class="md-warn">{{login.error.message}}</p>
 
-			<p>Admin account is <code>admin@admin.com</code> / <code>admin</code></p>
+	<form name="loginForm" layout="column" layout-fill layout-align="space-between" ng-submit="login.login(loginForm)">
 
-			<form class="form" name="form" ng-submit="vm.login(form)" novalidate>
+		<md-input-container md-is-error="loginForm.name.$error.required && loginForm.name.$dirty">
+			<label>Username</label>
+			<input name="name" ng-model="login.user.name" required/>
+			<div ng-messages="loginForm.name.$error" ng-if="loginForm.name.$dirty">
+				<div ng-message="required">Username is required</div>
+			</div>
+		</md-input-container>
 
-				<md-text-float label="Email" ng-model="vm.user.email" name="email"></md-text-float>
+		<md-input-container md-is-error="loginForm.password.$error.required && loginForm.password.$dirty">
+			<label>Password</label>
+			<input name="password" type="password" ng-model="login.user.password" required/>
+			<div ng-messages="loginForm.password.$error" ng-if="loginForm.password.$dirty">
+				<div ng-message="required">Password is required</div>
+			</div>
+		</md-input-container>
 
-				<md-text-float label="Password" ng-model="vm.user.password" name="password" type="password"></md-text-float>
-				<p ng-show="form.email.$error.required && form.password.$error.required && vm.submitted">Please enter your email
-					and password.</p>
+		<span layout="row" layout-align="end">
+			<md-button class="md-primary md-raised" ng-disabled="!loginForm.$valid" type="submit">Login</md-button>
+		</span>
 
-				<p ng-show="form.email.$error.email && vm.submitted">Please enter a valid email.</p>
+	</form>
 
-				<p>{{ vm.errors.other }}</p>
-
-				<section layout="row" layout-sm="column" layout-align="center center">
-					<md-button type="submit" md-no-ink href="/signup">Register</md-button>
-					<md-button class="md-raised md-primary">Login</md-button>
-				</section>
-
-			</form>
-
-		</md-card-content>
-	</md-card>
-
-</md-content>
+</section>

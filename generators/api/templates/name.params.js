@@ -26,13 +26,13 @@ function register<%= modelName %>Params(router) {
 
 /**
  * Register the default id parameter for <%= route %> requests.
- * Add a '<%= name %>' property to the current request which is the
+ * Add a '<%= name %>Document' property to the current request which is the
  * document returned by the <%= modelName %> Model for the 'id' param
  * available in the processed route.
  * @param {http.IncomingMessage} req - The request message object
  * @param {http.ServerResponse} res - The outgoing response object
  * @param next {function} - The next handler function to call when done
- * @param id {String} - The id parsed from the current request
+ * @param id {String} - The id parameter parsed from the current request
  * @see <%= name %>:model~<%= modelName %>
  * @returns {function} This function sets a status of 400 for malformed MongoDB
  * id's and a status of 404 if no document has been found for the passed
@@ -51,12 +51,12 @@ function registerIdParam(req, res, next, id) {
 			return next(err);
 		}
 
-		if (! <%= name %>) {
+		if (!<%= name %>) {
 			res.notFound();
 			return next('route');
 		}
 
-		req['<%= name %>'] = <%= name %>;
+		req.<%= name %>Document = <%= name %>;
 		return next();
 	});
 }

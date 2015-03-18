@@ -58,6 +58,7 @@ module.exports = {
  * @return A Response with status 200 set
  */
 function sendOk(data, options) {
+	// jshint validthis: true
 	return this.res.status(200).sendData(data, options);
 }
 
@@ -68,6 +69,7 @@ function sendOk(data, options) {
  * @return A Response with status 201 set
  */
 function created(data, options) {
+	// jshint validthis: true
 	return this.res.status(201).sendData(data, options);
 }
 
@@ -78,5 +80,6 @@ function created(data, options) {
  * @return A Response with status 204 set
  */
 function noContent(data, options) {
+	// jshint validthis: true
 	return this.res.status(204).sendData(data, options);
 }

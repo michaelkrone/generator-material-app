@@ -5,19 +5,20 @@
  * for /api/users routes. Authentication middleware is added to
  * all requests except the '/' route - where everyone can POST to.
  * Export the configured express router for the user api routes
- * @module {express.Router} user
- * @requires {@link config}
- * @requires {@link middleware}
+ * @module {express.Router}
+ * @requires {request-context}
  * @requires {@link user:controller}
  * @requires {@link auth:service}
  */
 'use strict';
 
 var router = require('express').Router();
-var middleware = require('../../lib/middleware');
+var contextService = require('request-context');
 var UserController = require('./user.controller');
-var config = require('../../config');
 var auth = require('../../lib/auth/auth.service');
+
+// Export the configured express router for the user api routes
+module.exports = router;
 
 /**
  * The user api parameters to attach
@@ -25,26 +26,52 @@ var auth = require('../../lib/auth/auth.service');
  */
 var registerUserParameters = require('./user.params');
 
-// Export the configured express router for the user api routes
-module.exports = router;
-
 /**
  * The api controller
  * @type {user:controller~UserController}
  */
 var controller = new UserController();
 
+// add context for auth sensitive resources
+var addRequestContext = contextService.middleware('request');
+
+// add the authenticated user to the created request context
+var addUserContext = auth.addAuthContext('request:acl.user');
+
+// check if the used is authenticated at all
+var isAuthenticated = auth.isAuthenticated();
+
+// check if the authenticated user has at least the 'admin' role
+var isAdmin = auth.hasRole('admin');
+
 // register user route parameters
 registerUserParameters(router);
 
-// register user routes
-router.get('/', auth.hasRole('admin'), controller.index);
-router.delete('/:id', auth.hasRole('admin'), controller.destroy);
-router.get('/me', auth.isAuthenticated(), controller.me);
-router.put('/:id', auth.isAuthenticated(), middleware.removeReservedSchemaKeywords, controller.update);
-router.patch('/:id', auth.isAuthenticated(), middleware.removeReservedSchemaKeywords, controller.update);
-router.put('/:id/password', auth.isAuthenticated(), middleware.removeReservedSchemaKeywords, controller.changePassword);
-router.patch('/:id/password', auth.isAuthenticated(), middleware.removeReservedSchemaKeywords, controller.changePassword);
-router.get('/:id', auth.isAuthenticated(), controller.show);
-router.post('/', middleware.removeReservedSchemaKeywords, controller.create);
+// wrap in domain, check authentication and attach userInfo object, set user request context
+router.route('*')
+	.all(addRequestContext, isAuthenticated, addUserContext);
 
+// register user routes
+router.route('/')
+	.get(isAdmin, controller.index)
+	.post(isAdmin, controller.create);
+
+// fetch authenticated user info
+router.route('/me')
+	.get(controller.me);
+
+router.route('/:id')
+	.get(isAdmin, controller.show)
+	.delete(isAdmin, controller.destroy)
+	.put(isAdmin, controller.update)
+	.patch(isAdmin, controller.update);
+
+// set the password for a user
+router.route('/:id/password')
+	.put(controller.changePassword)
+	.patch(controller.changePassword);
+
+// admin only - administrative tasks for a user resource (force set password)
+router.route('/:id/admin')
+	.put(isAdmin, controller.setPassword)
+	.patch(isAdmin, controller.setPassword);

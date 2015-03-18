@@ -16,6 +16,9 @@ var conf = {
 		dist: 'dist',
 		build: 'build',
 		coverage: 'coverage',
+		client: 'client',
+		server: 'server',
+		app: 'app',
 		doc: 'docs', // will expand to $dirs.build/$dirs.doc/{client,server}
 		plato: 'plato' // will expand to $dirs.build/$dirs.plato/{client,server}
 	},
@@ -27,6 +30,9 @@ var conf = {
 		css: {
 			dir: 'client/styles/',
 			file: 'app.css'
+		},
+		testReports: {
+			path: path.join(rootPath, 'build', 'test-reports')
 		}
 	},
 	src: {
@@ -40,6 +46,17 @@ var conf = {
 				'!client/**/*.mock.js',
 				'client/app/**/*.js'
 			],
+			docs: {
+				components: [
+					'!client/app/components/**/*.spec.js',
+					'!client/app/components/**/*.mock.js',
+					'client/app/components/**/*.js'
+				],
+				app: [
+					'!client/app/components/**/*.js',
+					'client/app/**/*.js'
+				]
+			},
 			unitTests: ['client/app/**/*.spec.js'],
 			mocks: [
 				'client/app/**/*.mock.js',
@@ -47,7 +64,7 @@ var conf = {
 			],
 			bower: bowerFiles
 		},
-		styles: ['client/**/*.scss'],
+		styles: ['client/styles/**/*.scss', 'client/app/**/*.scss'],
 		html: ['client/**/*.html'],
 		css: ['client/styles/app.css'],
 		e2eTests: ['e2e/**/*.spec.js']
@@ -71,17 +88,25 @@ var conf = {
 		protractor: {
 			args: [
 				'--seleniumServerJar',
+				'--verbose',
 				'./node_modules/protractor/selenium/selenium-server-standalone-2.39.0.jar'
 			],
 			configFile: path.join(rootPath, 'protractor.conf.js')
 		},
 		karma: {
 			configFile: path.join(rootPath, 'karma.conf.js'),
+			singleRun: true,
 			basePath: 'client/',
+			frameworks: ['mocha', 'angular-filesort'],
+			angularFilesort: {
+				whitelist: [
+					'app/**/*.js'
+				]
+			},
 			appFiles: [
-				'app/app.js',
 				'app/**/*.js',
-				'client/bower_components/should/should.js'
+				'bower_components/should/should.js',
+				'bower_components/sinonjs/sinon.js'
 			]
 		},
 		mocha: {
@@ -90,12 +115,12 @@ var conf = {
 		},
 		jshint: {
 			server: {
-				src: './server/.jshintrc',
-				test: './client/.jshintrc-spec'
+				src: path.join(rootPath, './server/.jshintrc'),
+				test: path.join(rootPath, './server/.jshintrc-spec')
 			},
 			client: {
-				src: './client/.jshintrc',
-				test: './client/.jshintrc-spec'
+				src: path.join(rootPath, './client/.jshintrc'),
+				test: path.join(rootPath, './client/.jshintrc-spec')
 			}
 		},
 		inject: {
@@ -104,7 +129,7 @@ var conf = {
 			addRootSlash: false
 		},
 		browserSync: {
-			proxy: 'localhost:9000',
+			proxy: 'localhost:9001',
 			ghostMode: {
 				clicks: true,
 				forms: true,
@@ -123,7 +148,7 @@ var conf = {
 	}
 };
 
-//merge javascript source file configurations
+// merge javascript source file configurations
 conf.src.js = conf.src.server.js.concat(conf.src.client.js);
 conf.src.unitTests = conf.src.server.unitTests.concat(conf.src.client.unitTests);
 

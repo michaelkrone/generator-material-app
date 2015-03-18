@@ -1,0 +1,14 @@
+<md-toast>
+	<span flex>{{::vm.text}}</span>
+
+	<md-button class="md-primary"
+						 ng-class="{'md-accent': vm.type === 'warn'}"
+						 ng-if="::vm.link"
+						 ng-click="vm.showItem()">
+		Show
+	</md-button>
+
+	<span ng-if="::vm.link">|</span>
+
+	<md-button ng-click="vm.close()">OK</md-button>
+</md-toast>

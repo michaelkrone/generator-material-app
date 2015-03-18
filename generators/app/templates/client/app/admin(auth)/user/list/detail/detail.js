@@ -1,21 +1,26 @@
+/**
+ * @ngdoc overview
+ * @name <%= scriptAppName %>.admin.user.list.detail
+ * @description
+ * The `<%= scriptAppName %>.admin.user.list.detail` module which provides:
+ *
+ * - {@link <%= scriptAppName %>.admin.user.list.detail.controller:UserDetailController UserDetailController}
+ *
+ * @requires ui.router
+ * @requires angularMoment
+ * @requires <%= scriptAppName %>.auth.user
+ */
 (function () {
 	'use strict';
 
-	/**
-	 * Introduce the <%= scriptAppName %>.admin.user.list.detail submodule
-	 * and configure it.
-	 *
-	 * @requires {<%= scriptAppName %>.auth.user}
-	 */
-
 	angular
 		.module('<%= scriptAppName %>.admin.user.list.detail', [
+			'ui.router',
+			'angularMoment',
 			'<%= scriptAppName %>.auth.user'
 		])
 		.config(configureUserListDetail);
 
-	// inject configUserRoutes dependencies
-	configureUserListDetail.$inject = ['$stateProvider'];
 
 	/**
 	 * Route configuration function configuring the passed $stateProvider.
@@ -27,6 +32,9 @@
 	 *
 	 * @param {$stateProvider} $stateProvider - The state provider to configure
 	 */
+
+	configureUserListDetail.$inject = ['$stateProvider'];
+
 	function configureUserListDetail($stateProvider) {
 		// The detail state configuration
 		var detailState = {
@@ -34,14 +42,14 @@
 			parent: 'admin.user.list',
 			url: 'detail/:id',
 			onEnter: onEnterUserListDetail,
+			authenticate: true,
+			role: 'admin',
 			views: {
 				'detail@admin.user.list': {
 					templateUrl: 'app/admin/user/list/detail/detail.html',
 					controller: 'UserDetailController',
 					controllerAs: 'detail',
-					resolve: {
-						user: resolveUserFromArray
-					}
+					resolve: {user: resolveUserFromArray}
 				}
 			}
 		};
@@ -56,7 +64,7 @@
 	 * Executed when entering the admin.user.list.detail state. Open the component
 	 * registered with the component id 'user.detailView'.
 	 *
- 	 * @params {$timeout} $timeout - The $timeout service to wait for view initialization
+	 * @params {$timeout} $timeout - The $timeout service to wait for view initialization
 	 * @params {ToggleComponent} ToggleComponent - The service to toggle the detail view
 	 */
 	function onEnterUserListDetail($timeout, ToggleComponent) {
@@ -79,20 +87,6 @@
 	 */
 	function resolveUserFromArray(users, $stateParams, _) {
 		return _.find(users, {'_id': $stateParams.id});
-	}
-
-	// inject resolveUser dependencies
-	resolveUser.$inject = ['User', '$stateParams'];
-
-	/**
-	 * Resolve dependencies for the user.edit state
-	 *
-	 * @params {User} User - The service to query the user with
-	 * @params {$stateParams} $stateParams - The $stateParams to read the user id from
-	 * @returns {Object|null} The user whose value of the _id property equals $stateParams._id
-	 */
-	function resolveUser(User, $stateParams) {
-		return User.get({id: $stateParams.id}).$promise;
 	}
 
 })();

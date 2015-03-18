@@ -16,8 +16,10 @@
 		"compression": "~1.0.1",
 		"lodash": "~2.4.1",
 		"ejs": "~0.8.4",
-		"minimist": "^1.1.0",
-		"mongoose": "~3.8.8", <% if(features.auth) { %>
+		"request-context": "^0.1.1",
+		"mongoose": "~3.8.8",
+		"mongoose-createdmodified": "0.0.2",
+		"mongoose-request-context": "0.0.1", <% if(features.auth) { %>
 		"jsonwebtoken": "^0.3.0",
 		"express-jwt": "^0.1.3",
 		"passport": "~0.2.0",
@@ -37,16 +39,16 @@
 			"url": "git@localhost:apps/<%= _.slugify(appname) %>.git"
 		},
 		"keywords": [
-			"GastroKey",
-			"submodule",
+			"material design",
 			"<%= appname %>"
 		],
 		"engines": {
 			"node": ">=0.10.33"
 		},
-		"author": "Gastro Instruments GmbH <info@gastro-instruments.de>",
+		"author": "",
 		"devDependencies": {
 			"browser-sync": "^1.7.3",
+			"minimist": "^1.1.0",
 			"del": "^0.1.3",
 			"event-stream": "^3.1.7",
 			"gulp": "^3.8.9",

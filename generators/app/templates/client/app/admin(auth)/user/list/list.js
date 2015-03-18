@@ -5,17 +5,23 @@
 	 * Introduce the <%= scriptAppName %>.admin.user.list module
 	 * and configure it.
 	 *
-	 * @requires {<%= scriptAppName %>.socket}
-	 * @requires {ui.router}
-	 * @requires {ngMaterial}
-	 * @requires {<%= scriptAppName %>.admin.user.list.detail}
-	 * @requires {<%= scriptAppName %>.admin.user.list.edit}
-	 * @requires {<%= scriptAppName %>.admin.user.list.items}
-	 * @requires {<%= scriptAppName %>.admin.user.list.create}
+	 * @requires ui.router
+	 * @requires ngMaterial<% if(features.socketio) { %>
+	 * @requires {<%= scriptAppName %>.socket}<% }%>
+	 * @requires <%= scriptAppName %>.mainMenu
+	 * @requires components/toggleComponent
+	 * @requires <%= scriptAppName %>.admin.user.list.detail
+	 * @requires <%= scriptAppName %>.admin.user.list.edit
+	 * @requires <%= scriptAppName %>.admin.user.list.items
 	 */
 
 	angular
 		.module('<%= scriptAppName %>.admin.user.list', [
+			'ngMaterial',
+			'ui.router',
+			'<%= scriptAppName %>.socket',
+			'<%= scriptAppName %>.mainMenu',
+			'<%= scriptAppName %>.toggleComponent',
 			'<%= scriptAppName %>.admin.user.list.detail',
 			'<%= scriptAppName %>.admin.user.list.edit',
 			'<%= scriptAppName %>.admin.user.list.items'
@@ -23,7 +29,7 @@
 		.config(configUserListRoutes);
 
 	// inject configUserListRoutes dependencies
-	configUserListRoutes.$inject = ['$stateProvider'];
+	configUserListRoutes.$inject = ['$stateProvider', 'mainMenuProvider'];
 
 	/**
 	 * Route configuration function configuring the passed $stateProvider.
@@ -32,13 +38,14 @@
 	 *
 	 * @param {$stateProvider} $stateProvider - The state provider to configure
 	 */
-	function configUserListRoutes($stateProvider) {
+	function configUserListRoutes($stateProvider, mainMenuProvider) {
 		// The list state configuration
 		var listState = {
 			name: 'admin.user.list',
 			parent: 'admin.user',
 			url: '/',
 			authenticate: true,
+			role: 'admin',
 			resolve: {users:  resolveUsers},
 			views: {
 
@@ -59,6 +66,12 @@
 		};
 
 		$stateProvider.state(listState);
+
+		mainMenuProvider.addSubMenuItem('admin.main', {
+			name: 'Users',
+			state: listState.name,
+			order: Infinity
+		});
 	}
 
 	// inject resolveUsers dependencies

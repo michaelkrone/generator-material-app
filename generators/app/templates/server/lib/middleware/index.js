@@ -1,35 +1,38 @@
 /**
- * Module defining connect middleware to use in the <%= appname %> application.
+ * Module defining connect middleware to use in the <%= scriptAppName %> application.
  * @module {Object} middleware
  * @requires {@link responses}
  */
 'use strict';
 
 var _ = require('lodash');
-var Schema = require('mongoose').Schema;
 var customResponses = require('../responses');
-var reserved = ['__v'].concat(Object.keys(Schema.reserved));
+var reserved = ['__v'].concat(Object.keys(require('mongoose').Schema.reserved));
 
 /**
  * The default error handler
  * Binds the handleError method of reponse to the request and response objects.
  * Passes the error to following handlers. The handleErrpr function will send the best
  * response available.
+ *
+ * @type {Function}
  * @param {Error|String} err - The error that occured during the request-response-cycle
  * @param {http.IncomingMessage} req - The request message object
  * @param {http.ServerResponse} res - The outgoing response object
- * @param {function} next - The next handler callback
+ * @param {function} [next] - The next handler callback
  */
 exports.defaultErrorHandler = function defaultErrorHandler(err, req, res, next) {
-	console.log('defaultErrorHandler', req.originalUrl, res.statusCode, err);
+	console.error('defaultErrorHandler', req.originalUrl, res.statusCode, err);
 	_.bind(customResponses.handleError, {res: res, req: req}, err);
-	// pass the error to following handlers
-	return next(err);
+	// pass the error to following handlers (if next if passed)
+	if (next) {
+		return next(err);
+	}
 };
-
 
 /**
  * Removes reserved properties from the request body.
+ *
  * @param {http.IncomingMessage} req - The request message object
  * @param {http.ServerResponse} res - The outgoing response object
  * @param {function} next - The next handler callback
@@ -51,7 +54,7 @@ exports.removeReservedSchemaKeywords = function removeReservedSchemaKeywords(req
  * @param {http.ServerResponse} res - The outgoing response object
  * @param {function} next - The next handler callback
  */
-exports.extendResponse = function extendResponse(req, res, next)  {
+exports.extendResponse = function extendResponse(req, res, next) {
 	_.forEach(customResponses, function eachResponse(fn, name) {
 		res[name] = _.bind(fn, {
 			req: req,

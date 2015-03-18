@@ -5,11 +5,15 @@
 	 * Introduce the <%= scriptAppName %>.user module
 	 * and configure it.
 	 *
+	 * @requires ngResource
+	 * @requires ui.router
 	 * @requires {<%= scriptAppName %>.admin.user.list}
 	 * @requires {<%= scriptAppName %>.admin.user.create}
 	 */
 	angular
 		.module('<%= scriptAppName %>.admin.user', [
+			'ngResource',
+			'ui.router',
 			'<%= scriptAppName %>.admin.user.list',
 			'<%= scriptAppName %>.admin.user.create'
 		])

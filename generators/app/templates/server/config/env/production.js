@@ -1,5 +1,7 @@
 'use strict';
 
+process.env.DATABASE_NAME = process.env.DATABASE_NAME || '<%= appname %>';
+
 module.exports = {
 
 	ip: process.env.ip || undefined,
@@ -9,6 +11,6 @@ module.exports = {
 	publicDir: 'public',
 
 	mongo: {
-		uri: 'mongodb://localhost/<%= appname %>'
+		uri: 'mongodb://localhost/' + process.env.DATABASE_NAME
 	}
 };

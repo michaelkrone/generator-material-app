@@ -11,12 +11,12 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 /**
- * Use email and password authentication by default by using the
- * 'email' and 'password' fields of the authentication model.
+ * Use name and password authentication by default by using the
+ * 'name' and 'password' fields of the authentication model.
  * @type {Object}
  */
 var strategyConfig = {
-	usernameField: 'email',
+	usernameField: 'name',
 	passwordField: 'password' // virtual model field
 };
 
@@ -25,7 +25,7 @@ var strategyConfig = {
  * [strategy configuration]{@link auth:local:passport~strategyConfig} and the
  * corresponding [authentication method]{@link auth:local:passport~getAuthentication} on
  * a new LocalStrategy.
- * @param {MongooseModel} Model - The model used for authentication
+ * @param {Model} AuthModel - The model used for authentication
  * @param {Object} [config] - The application configuration, may be passed to the service some day
  */
 exports.setup = function (AuthModel, config) {
@@ -35,7 +35,7 @@ exports.setup = function (AuthModel, config) {
 /**
  * Return a function that authenticates the user. The user is identified by email.
  * The hashed password is passed to the User model for authentication.
- * @param {MongooseModel} authModel - The mongoose model used to authenticate the user
+ * @param {Model} authModel - The mongoose model used to authenticate the user
  * @param {Object} [config] - The application configuration, may be passed to the service some day
  * @returns {function} - The authentication function to use with the given authModel
  */
@@ -46,22 +46,22 @@ function getAuthentication(authModel, config) {
 	 * @function
 	 * @memberOf getAuthentication
 	 * Authenticate the user.
-	 * @param {String} email - The email used to authenticate the user
+	 * @param {String} name - The name used to authenticate the user
 	 * @param {String} password - The hashed password
 	 * @param {function} done - The callback function called with an error or the valid user object
 	 */
-	function authenticate(email, password, done) {
-		authModel.findOne({email: email.toLowerCase()}, function (err, user) {
+	function authenticate(name, password, done) {
+		authModel.findOne({name: name, active: true}, function (err, user) {
 			if (err) {
 				return done(err);
 			}
 
 			if (!user) {
-				return done(null, false, {message: 'This email is not registered.'});
+				return done(null, false, {message: 'Unknown user'});
 			}
 
 			if (!user.authenticate(password)) {
-				return done(null, false, {message: 'This password is not correct.'});
+				return done(null, false, {message: 'Wrong password'});
 			}
 
 			return done(null, user);

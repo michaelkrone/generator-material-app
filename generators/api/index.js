@@ -12,8 +12,12 @@ var Generator = module.exports = function Generator() {
 util.inherits(Generator, BaseGenerator);
 
 Generator.prototype.askFor = function askFor() {
+	process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
+	var self = this;
 	var done = this.async();
 	var name = this.name;
+	var srvConfig = require(path.join(this.options.env.cwd, 'server', 'config'));
 
 	var base = this.config.get('routesBase') || '/api/';
 	if (base.charAt(base.length - 1) !== '/') {
@@ -30,6 +34,25 @@ Generator.prototype.askFor = function askFor() {
 			name: 'route',
 			message: 'What shall the URI of your resource be?',
 			default: base + name
+		},
+		{
+			name: 'secure',
+			type: 'confirm',
+			message: 'May only authenticated users be able to access this route?',
+			default: true,
+			when: function () {
+				return self.config.get('features').auth;
+			}
+		},
+		{
+			name: 'role',
+			type: 'list',
+			message: 'What role may access thus route, Milord?',
+			default: 1,
+			choices: srvConfig.userRoles,
+			when: function (answers) {
+				return answers.secure;
+			}
 		}
 	];
 
@@ -39,6 +62,9 @@ Generator.prototype.askFor = function askFor() {
 		}
 
 		this.route = props.route;
+		this.secure = props.secure || false;
+		this.role = props.role || false;
+
 		done();
 	}.bind(this));
 };

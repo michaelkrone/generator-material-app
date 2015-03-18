@@ -9,16 +9,18 @@
 		.controller('<%= classedName %>ListController', <%= classedName %>ListController);
 
 	// add <%= classedName %>ListController dependencies to inject
-	<%= classedName %>ListController.$inject = ['<%= name %>s', '$state', 'ToggleComponent'<% if(features.socketio) { %>, '$scope', 'socket'<% } %>];
+	<%= classedName %>ListController.$inject = [<% if(features.socketio) { %>'$scope', 'socket', <% } %>'$state', '<%= name %>s', 'ToggleComponent'];
 
 	/**
 	 * <%= classedName %>ListController constructor
-	 *
-	 * @param {Array} <%= name %>s - The list of <%= name %>s resolved for this route
+	 *<% if(features.socketio) { %>
+	 * @param {Object} $scope - The current scope
+	 * @param {Object} socket - The socket service to register to<% }%>
 	 * @param {$state} $state - The $state to activate routing states on
-	 * @param {$mdSidenav} $mdSidenav - The sidenav controller for switching the detail view
+	 * @param {Array} <%= name %>s - The list of <%= name %>s resolved for this route
+	 * @param {Service} ToggleComponent - The service for switching the detail view
 	 */
-	function <%= classedName %>ListController(<%= name %>s, $state, ToggleComponent<% if(features.socketio) { %>, $scope, socket<% }%>) {
+	function <%= classedName %>ListController(<% if(features.socketio) { %>$scope, socket, <% }%>$state, <%= name %>s, ToggleComponent) {
 		var vm = this;
 
 		// the array of <%= name %>s
@@ -40,7 +42,6 @@
 				socket.unsyncUpdates('<%= name %>');
 			}
 		}<% } %>
-
 
 		/**
 		 * Toggle the detail view

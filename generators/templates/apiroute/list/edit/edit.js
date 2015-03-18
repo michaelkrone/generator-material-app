@@ -5,11 +5,17 @@
 	 * Introduce the <%= scriptAppName %>.<%= _.slugify(name) %>.list.edit module
 	 * and configure it.
 	 *
-	 * @requires {<%= scriptAppName %>.<%= _.slugify(name) %>.service}
+	 * @requires 'ui.router',
+	 * @requires 'ngMaterial',
+	 * @requires <%= scriptAppName %>.mongooseError
+	 * @requires <%= scriptAppName %>.<%= _.slugify(name) %>.service
 	 */
 
 	angular
 		.module('<%= scriptAppName %>.<%= _.slugify(name) %>.list.edit', [
+			'ui.router',
+			'ngMaterial',
+			'<%= scriptAppName %>.mongooseError',
 			'<%= scriptAppName %>.<%= _.slugify(name) %>.service'
 		])
 		.config(configure<%= classedName %>ListEdit);
@@ -32,7 +38,9 @@
 		var editState = {
 			name: '<%= name %>.list.edit',
 			parent: '<%= name %>.list',
-			url: '/edit/:id',
+			url: '/edit/:id',<% if (secure) {%>
+			authenticate: true,
+			role: '<%= role %>',<%}%>
 			onEnter: onEnter<%= classedName %>ListEdit,
 			views: {
 				'detail@<%= name %>.list': {
@@ -73,26 +81,13 @@
 	 * from the injected Array of <%= name %>s by using the '_id' property.
 	 *
 	 * @params {Array} <%= name %>s - The array of <%= name %>s
-	 * @params {$stateParams} $stateParams - The $stateParams to read the <%= name %> id from
+	 * @params {Object} $stateParams - The $stateParams to read the <%= name %> id from
+	 * @params {Object} _ - The lodash service to find the requested <%= name %>
 	 * @returns {Object|null} The <%= name %> whose value of the _id property equals $stateParams._id
 	 */
 	function resolve<%= classedName %>FromArray(<%= name %>s, $stateParams, _) {
+		//	return <%= classedName%>.get({id: $stateParams.id}).$promise;
 		return _.find(<%= name %>s, {'_id': $stateParams.id});
 	}
-
-	// inject resolve<%= classedName %> dependencies
-	// resolve<%= classedName %>.$inject = ['<%= classedName %>', '$stateParams'];
-
-	/*
-	 * Resolve dependencies for the <%= name %>.edit state by sending a query to
-	 * the api route using the <%= classedName %> resource.
-	 *
-	 * @params {<%= classedName %>} <%= classedName %> - The service to query the <%= name %> with
-	 * @params {$stateParams} $stateParams - The $stateParams to read the <%= name %> id from
-	 * @returns {Object|null} The <%= name %> whose value of the _id property equals $stateParams._id
-	 */
-	// function resolve<%= classedName %>(<%= classedName %>, $stateParams) {
-	//	return <%= classedName%>.get({id: $stateParams.id}).$promise;
-	// }
 
 })();

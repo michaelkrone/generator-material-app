@@ -1,114 +1,143 @@
+/**
+ * @ngdoc controller
+ * @name <%= scriptAppName %><%= _.slugify(name) %>.list.edit.controller:<%= modelName %>EditController
+ * @description
+ * Controller of the <%= name %> edit page of the admin section
+ */
+
 (function () {
 	'use strict';
 
 	/**
-	 * Register the edit controller as <%= classedName %>EditController
- 	 */
+	 * Register the edit controller as <%= modelName %>EditController
+	 */
 
 	angular
 		.module('<%= scriptAppName %>.<%= _.slugify(name) %>.list.edit')
-		.controller('<%= classedName %>EditController', <%= classedName %>EditController);
-
-	// add <%= classedName %>EditController dependencies to inject
-	<%= classedName %>EditController.$inject = ['<%= classedName %>Service', '$state', '$mdToast', '<%= name %>'];
+		.controller('<%= modelName %>EditController', <%= modelName %>EditController);
 
 	/**
-	 * <%= classedName %>EditController constructor
+	 * @ngdoc function
+	 * @name <%= scriptAppName %><%= _.slugify(name) %>.list.edit.provider:<%= modelName %>EditController
+	 * @description
+	 * Provider of the {@link <%= scriptAppName %><%= _.slugify(name) %>.list.edit.controller:<%= modelName %>EditController <%= modelName %>EditController}
+	 * @param {Service} $state The state service to use
+	 * @param {Service} $stateParams The stateParams service to use
+	 * @param {Service} $mdDialog The dialog service to use
+	 * @param {Service} Toast The Toast service to use
+	 * @param {Service} <%= modelName %>Service The <%= modelName %>Service to use
+	 * @param {Resource} <%= name %> The <%= name %> data to use
 	 */
-	function <%= classedName %>EditController(<%= classedName %>Service, $state, $mdToast, <%= name %>) {
+
+	<%= modelName %>EditController.$inject = ['$state', '$stateParams', '$mdDialog', 'Toast', '<%= modelName %>Service', '<%= name %>'];
+
+	function <%= modelName %>EditController($state, $stateParams, $mdDialog, Toast, <%= modelName %>Service, <%= name %>) {
 		var vm = this;
 
 		// defaults
-		vm.message = {};
-		vm.errors = {};
-		vm.<%= name %> = {};
-		angular.copy(<%= name %>, vm.<%= name %>);
+		vm.<%= name %> = angular.copy(<%= name %>, vm.<%= name %>);
+		vm.displayName = <%= name %>.name;
 
 		// view model bindings
 		vm.update = update;
 		vm.remove = remove;
-		vm.showToast = showToast;
-		vm.goBack = goBack ;
+		vm.goBack = goBack;
+		vm.showList = showList;
 
 		/**
 		 * Open the detail state with the current <%= name %>
 		 *
 		 */
-		function goBack () {
+		function goBack() {
 			$state.go('^.detail', {id: vm.<%= name %>._id});
 		}
 
-		// view model implementations
-
 		/**
-		 * Updates a <%= name %> by using the <%= classedName %>Service save method
-		 * @param {AngularHTMLForm} [form]
+		 * Open the <%= name %> list state
+		 *
+		 */
+		function showList() {
+			$state.go('^');
+		}
+		/**
+		 * Updates a <%= name %> by using the <%= modelName %>Service save method
+		 * @param {Form} [form]
 		 */
 		function update(form) {
 			// refuse to work with invalid data
-			if (form && !form.$valid) {
+			if (!vm.<%= name %>._id || form && !form.$valid) {
 				return;
 			}
 
-			<%= classedName %>Service.update(vm.<%= name %>)
-				.then(update<%= classedName %>)
-				.catch(catch<%= classedName %>UpdateErrors);
+			<%= modelName %>Service.update(vm.<%= name %>)
+				.then(update<%= modelName %>Success)
+				.catch(update<%= modelName %>Catch);
 
-			function update<%= classedName %>() {
-				vm.message = {type: 'success', message: vm.<%= name %>.name + ' updated'};
-				(form && form.$setPristine());
-				vm.showToast();
+			function update<%= modelName %>Success(updated<%= modelName %>) {
+				// update the display name after successful save
+				vm.displayName = updated<%= modelName %>.name;
+				Toast.show({text: '<%= modelName %> ' + vm.displayName + ' updated'});
+				if (form) {
+					form.$setPristine();
+				}
 			}
 
-			function catch<%= classedName %>UpdateErrors(err) {
-				err = err.data;
-				vm.message = {type: 'danger', message: 'Error while updating <%= name %>: ' + err };
-				resetErrors(err, form);
-				vm.showToast();
-			}
-		}
+			function update<%= modelName %>Catch(err) {
+				Toast.show({
+					type: 'warn',
+					text: 'Error while updating <%= modelName %> ' + vm.displayName,
+					link: {state: $state.$current, params: $stateParams}
+				});
 
-		/**
-		 * Removes a <%= name %> by using the <%= classedName %>Service remove method
-		 * @param {AngularHTMLForm} [form]
-		 */
-		function remove(form) {
-			<%= classedName %>Service.remove(vm.<%= name %>)
-				.then(delete<%= classedName %>)
-				.catch(catch<%= classedName %>RemoveErrors);
-
-			function delete<%= classedName %>() {
-				vm.message = {type: 'success', message: '<%= name %> removed'};
-				vm.showToast();
-			}
-
-			function catch<%= classedName %>RemoveErrors(err) {
-				err = err.data;
-				vm.errors = {};
-				resetErrors(err, form);
+				if (form && err) {
+					form.setResponseErrors(err.data);
+				}
 			}
 		}
 
 		/**
-		 * Update validity of form fields that match the mongoose errors
+		 * Show a dialog to ask the <%= name %> if she wants to delete the current selected <%= name %>.
+		 * @param {AngularForm} form - The form to pass to the remove handler
+		 * @param {$event} ev - The event to pass to the dialog service
 		 */
-		function resetErrors(err, form) {
-			angular.forEach(err.errors, function (error, field) {
-				(form && form[field]).$setValidity('mongoose', false);
-				vm.errors[field] = error.type;
-			});
-		}
+		function remove(form, ev) {
+			var confirm = $mdDialog.confirm()
+				.title('Delete <%= name %> ' + vm.displayName + '?')
+				.content('Do you really want to delete <%= name %> ' + vm.displayName + '?')
+				.ariaLabel('Delete <%= name %>')
+				.ok('Delete <%= name %>')
+				.cancel('Cancel')
+				.targetEvent(ev);
 
-		/**
-		 * Display a toast with the given content. If the content is falsy
-		 * use vm.message.message instead.
-		 *
-		 * @param {String} [content] - The toasts content
-		 * @param {$event} [$event] - unused, may be passed to the service
-		 */
-		function showToast(content, $event) {
-			content = content || vm.message.message;
-			$mdToast.show($mdToast.simple().content(content));
+			$mdDialog.show(confirm)
+				.then(performRemove);
+
+			/**
+			 * Removes a <%= name %> by using the <%= modelName %>Service remove method
+			 * @api private
+			 */
+			function performRemove() {
+				<%= modelName %>Service.remove(vm.<%= name %>)
+					.then(delete<%= modelName %>Success)
+					.catch(delete<%= modelName %>Catch);
+
+				function delete<%= modelName %>Success() {
+					Toast.show({type: 'success', text: '<%= modelName %> ' + vm.displayName + ' deleted'});
+					vm.showList();
+				}
+
+				function delete<%= modelName %>Catch(err) {
+					Toast.show({
+						type: 'warn',
+						text: 'Error while deleting <%= name %> ' + vm.displayName,
+						link: {state: $state.$current, params: $stateParams}
+					});
+
+					if (form && err) {
+						form.setResponseErrors(err, vm.errors);
+					}
+				}
+			}
 		}
 	}
 })();

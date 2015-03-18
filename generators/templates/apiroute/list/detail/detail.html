@@ -1,47 +1,62 @@
-<md-toolbar class="md-hue-1">
+<md-toolbar class="md-hue-1 md-tall" id="<%= name %>-detail-toolbar">
 
-	<span layout="row" layout-align="space-between" flex>
-
-		<md-button ng-click="detail.goBack()" aria-label="Hide <%= name %> detail view">
-			<md-icon icon="bower_components/material-design-icons/navigation/1x_web/ic_arrow_back_black_24dp.png"></md-icon>
-		</md-button>
-
-		<md-button ng-click="detail.edit()" aria-label="Edit <%= name %>" class="md-primary">
-			<md-icon icon="bower_components/material-design-icons/content/1x_web/ic_create_black_24dp.png"></md-icon>
-		</md-button>
-
+	<span layout="row" layout-align="space-between" class="md-toolbar-tools md-toolbar-tools-top">
+		<md-button ng-click="detail.goBack()" aria-label="Close detail view">
+            <md-icon md-svg-icon="navigation:ic_close_24px"></md-icon>
+        </md-button>
+		<md-button ng-click="detail.edit()" aria-label="Edit <%= name %>">
+            <md-icon md-svg-icon="content:ic_create_24px"></md-icon>
+        </md-button>
 	</span>
 
-	<span flex></span>
-
-	<h3 class="md-toolbar-tools md-toolbar-tools-bottom">
-		<span>{{detail.<%= name %>.name}}</span>
-	</h3>
+	<span class="md-toolbar-tools md-toolbar-tools-bottom" layout="column">
+		<h3>{{::detail.<%= name %>.name}}</h3>
+	</span>
 
 </md-toolbar>
 
-<md-content flex id="#<%= name %>-detail-content">
-	<span class="section" layout="column">
+<md-content class="md-padding" flex id="<%= name %>-detail-content">
 
-		<span class="section-title">Info</span>
+    <section class="section" layout="column">
 
-		<span layout="row" layout-align="start center" layout="row" layout-align="start center" layout-sm="column" layout-align-sm="start start" class="detail-info">
-			<span flex="33">Active</span>
-		   	<md-checkbox
-				   class="no-label"
-				   ng-disabled="true"
-				   aria-label="<%= name %> active"
-				   ng-model="detail.<%= name %>.active">
-		   </md-checkbox>
+        <span class="section-title"><%= modelName %> data</span>
+
+		<span layout="row" layout-align="start center" class="detail-info" ng-hide="detail.<%= name %>.active">
+		    <span flex>This <%= name %> is not active</span>
 		</span>
 
-		<span layout="row" layout-align="start center" layout="row" layout-align="start center" layout-sm="column" layout-align-sm="start start" class="detail-info">
-			<span flex="33">Info</span>
-			<span flex>{{detail.<%= name %>.info}}</span>
+		<span layout="row" layout-sm="column" class="detail-info">
+			<span flex="45">Name</span>
+			<span flex>{{::detail.<%= name %>.name}}</span>
 		</span>
-	</span>
 
-	<md-divider></md-divider>
+		<span ng-if="detail.<%= name %>.info" layout="row" layout-sm="column" class="detail-info">
+			<span flex="45">Info</span>
+			<span flex>{{::detail.<%= name %>.info}}</span>
+		</span>
+
+    </section>
+
+    <section class="section" layout="column">
+
+        <span class="section-title">Record Information</span>
+
+		<span layout="row" layout-sm="column" class="detail-info">
+			<span flex="45">Modified</span>
+			<span flex ng-show="detail.<%= name %>.modified" class="subtitle">
+				<span am-time-ago="detail.<%= name %>.modified"></span>
+				<md-tooltip>{{detail.<%= name %>.modified | date:'dd. MMMM yyyy H:mm'}}</md-tooltip>
+				{{detail.<%= name %>.modifiedBy && 'by ' + detail.<%= name %>.modifiedBy}}
+			</span>
+		</span>
+
+		<span layout="row" layout-sm="column" class="detail-info">
+			<span flex="45">Created</span>
+			<span flex ng-show="detail.<%= name %>.created" class="subtitle">{{detail.<%= name %>.created | date:'dd. MMMM yyyy H:mm'}}</span>
+		</span>
+
+    </section>
+
 </md-content>
 
 

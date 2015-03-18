@@ -1,3 +1,0 @@
-[submodule "license"]
-	path = ./
-	url = git@git.hi-repo1.instruments.local:gastro-instruments/software-license.git

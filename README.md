@@ -27,7 +27,7 @@ Will generate something like this:
 ![User creation](https://michaelkrone.github.io/generator-material-app/screenshots/users-create.png)
 Create user dialog
 
-Navigate to [http://localhost:9001](http://localhost:9001) to see the generated application where you can administer the users of you application
+Navigate to [http://localhost:9001](http://localhost:9001) to see the generated application where you can administer the users of your application
 
 ### Add API
 This will add a server API and a corresponding client route to manage your cats including test stubs and documentation:

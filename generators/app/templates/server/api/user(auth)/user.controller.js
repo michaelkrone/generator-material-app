@@ -29,8 +29,8 @@ exports = module.exports = UserController;
  * @inherits ParamController
  * @see user:model~User
  */
-function UserController() {
-	ParamController.call(this, User, 'id', 'userDocument');
+function UserController(router) {
+	ParamController.call(this, User, 'id', 'userDocument', router);
 	this.select = ['-salt', '-hashedPassword'];
 	this.omit = ['salt', 'hashedPassword'];
 	this.defaultReturn = 'profile';
@@ -98,7 +98,7 @@ UserController.prototype = {
 	},
 
 	/**
-	 * Get the user for the current request.
+	 * Get the authenticated user for the current request.
 	 * The requested user id is read from the userInfo parameter of the request object.
 	 * @param {IncomingMessage} req - The request message object the user object is read from
 	 * @param {ServerResponse} res - The outgoing response object

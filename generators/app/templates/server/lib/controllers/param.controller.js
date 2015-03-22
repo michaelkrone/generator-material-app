@@ -123,6 +123,8 @@ ParamController.prototype = {
 	 * parameter value. Calls the passed next function when done.
 	 */
 	registerRequestParameter: function (req, res, next, id) {
+		var self = this;
+
 		// only process a valid object id
 		if (!ObjectID.isValid(id)) {
 			res.badRequest();
@@ -140,7 +142,7 @@ ParamController.prototype = {
 				return next('route');
 			}
 
-			req[this.paramName] = doc;
+			req[self.paramName] = doc;
 			return next();
 		});
 	}

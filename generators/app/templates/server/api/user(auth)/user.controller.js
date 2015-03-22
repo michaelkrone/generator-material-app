@@ -44,7 +44,7 @@ UserController.prototype = {
 	 */
 	constructor: UserController,
 
-	/**
+	/**README
 	 * Replaces an existing user password in the DB using the request body
 	 * property named 'password'. Should be an admin only route.
 	 * @param {IncomingMessage} req - The request message object

@@ -12,9 +12,11 @@
         <span><%= menuItem %> List</span>
     </h2>
 
-    <md-button hide show-gt-md ng-if="list.<%= name %>s.length" ui-sref="<%= name %>.list.create" class="md-fab md-accent md-fab-top-left fab-overlap" aria-label="Create a new <%= name %>">
+	<a ui-sref="<%= name %>.list.create">
+    <md-button hide show-gt-md ng-if="list.<%= name %>s.length" class="md-fab md-accent md-fab-top-left fab-overlap" aria-label="Create a new <%= name %>">
         <md-icon md-svg-icon="content:ic_add_24px"></md-icon>
     </md-button>
+	</a>
 
 </md-toolbar>
 
@@ -71,14 +73,18 @@
 
 <md-content ng-if="!list.<%= name %>s.length">
 	<md-card>
-		<h2>No <%= _.capitalize(name) %>s found</h2>
-		<p>
-			There are no <%= _.capitalize(name) %>s!
-			<a ui-sref="<%= name %>.list.create">Create one!</a>
-		</p>
+		<md-card-content>
+			<h2>No <%= _.capitalize(name) %>s found</h2>
+			<p>
+				There are no <%= _.capitalize(name) %>s!
+				<a ui-sref="<%= name %>.list.create">Create one!</a>
+			</p>
+		</md-card-content>
 	</md-card>
 </md-content>
 
-<md-button hide-gt-md ui-sref="<%= name %>.list.create" class="md-fab md-accent md-fab-bottom-right" aria-label="Create a new <%= name %>">
-    <md-icon md-svg-icon="content:ic_add_24px"></md-icon>
-</md-button>
+<a ui-sref="<%= name %>.list.create">
+	<md-button hide-gt-md ui-sref="<%= name %>.list.create" class="md-fab md-accent md-fab-bottom-right" aria-label="Create a new <%= name %>">
+	    <md-icon md-svg-icon="content:ic_add_24px"></md-icon>
+	</md-button>
+</a>

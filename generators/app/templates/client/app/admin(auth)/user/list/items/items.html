@@ -12,9 +12,11 @@
 		<span>My Users</span>
 	</h2>
 
-	<md-button hide show-gt-md ui-sref="admin.user.list.create" class="md-fab md-accent md-fab-top-left fab-overlap" aria-label="Create a new user">
-		<md-icon md-svg-icon="content:ic_add_24px"></md-icon>
-	</md-button>
+	<a ui-sref="admin.user.list.create">
+		<md-button hide show-gt-md class="md-fab md-accent md-fab-top-left fab-overlap" aria-label="Create a new user">
+			<md-icon md-svg-icon="content:ic_add_24px"></md-icon>
+		</md-button>
+	</a>
 
 </md-toolbar>
 
@@ -79,6 +81,8 @@
 	</md-card>
 </md-content>
 
-<md-button hide-gt-md ui-sref="admin.user.list.create" class="md-fab md-accent md-fab-bottom-right" aria-label="Create a new user">
-	<md-icon md-svg-icon="content:ic_add_24px"></md-icon>
-</md-button>
+<a ui-sref="admin.user.list.create">
+	<md-button hide-gt-md ui-sref="admin.user.list.create" class="md-fab md-accent md-fab-bottom-right" aria-label="Create a new user">
+		<md-icon md-svg-icon="content:ic_add_24px"></md-icon>
+	</md-button>
+</a>

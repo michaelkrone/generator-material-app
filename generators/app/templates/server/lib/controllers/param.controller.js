@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
-var ObjectID = require('mongoose').mongo.BSONPure.ObjectID;
+var ObjectID = require('mongoose').Types.ObjectId;
 
 var CrudController = require('./crud.controller');
 

@@ -1,6 +1,8 @@
 'use strict';
 
 var _ = require('lodash');
+var ObjectID = require('mongoose').Types.ObjectId;
+
 var CrudController = require('./crud.controller');
 
 /**
@@ -19,8 +21,9 @@ exports = module.exports = ParamController;
  * @param {Model} model - The mongoose model to operate on
  * @param {String} idName - The name of the id request parameter to use
  * @param {String} paramName - The name of the request property to use
+ * @param {Object} router - The express router to attach the param function to
  */
-function ParamController(model, idName, paramName) {
+function ParamController(model, idName, paramName, router) {
 	// call super constructor
 	CrudController.call(this, model, idName);
 
@@ -28,6 +31,10 @@ function ParamController(model, idName, paramName) {
 	if (paramName) {
 		this.paramName = String(paramName);
 	}
+
+	// register id name route parameter
+	this.paramString = ':' + this.paramName;
+	router.param(this.paramName, this.registerRequestParameter);
 }
 
 ParamController.prototype = {
@@ -53,7 +60,7 @@ ParamController.prototype = {
 	 */
 	show: function (req, res) {
 		if (req[this.paramName]) {
-			return res.ok(req[this.paramName]);
+			return res.ok(this.getResponseObject(req[this.paramName]));
 		}
 		return res.notFound();
 	},
@@ -99,6 +106,44 @@ ParamController.prototype = {
 
 			delete req[this.paramName];
 			return res.noContent();
+		});
+	},
+
+	/**
+	 * Register the default id parameter for route requests.
+	 * Add a property to the current request which is the
+	 * document returned by the controller Model for the param configures
+	 * paramter name available in the processed request.
+	 * @param {http.IncomingMessage} req - The request message object
+	 * @param {http.ServerResponse} res - The outgoing response object
+	 * @param next {function} - The next handler function to call when done
+	 * @param id {String} - The id parameter parsed from the current request
+	 * @returns {function} This function sets a status of 400 for malformed MongoDB
+	 * id's and a status of 404 if no document has been found for the passed
+	 * parameter value. Calls the passed next function when done.
+	 */
+	registerRequestParameter: function (req, res, next, id) {
+		var self = this;
+
+		// only process a valid object id
+		if (!ObjectID.isValid(id)) {
+			res.badRequest();
+			return next();
+		}
+
+		// attach the document as this.paramName to the request
+		this.model.findOne({'_id': id}, function (err, doc) {
+			if (err) {
+				return next(err);
+			}
+
+			if (!doc) {
+				res.notFound();
+				return next('route');
+			}
+
+			req[self.paramName] = doc;
+			return next();
 		});
 	}
 };

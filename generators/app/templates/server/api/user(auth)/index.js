@@ -21,16 +21,10 @@ var auth = require('../../lib/auth/auth.service');
 module.exports = router;
 
 /**
- * The user api parameters to attach
- * @type {user:parameters}
- */
-var registerUserParameters = require('./user.params');
-
-/**
  * The api controller
  * @type {user:controller~UserController}
  */
-var controller = new UserController();
+var controller = new UserController(router);
 
 // add context for auth sensitive resources
 var addRequestContext = contextService.middleware('request');
@@ -43,9 +37,6 @@ var isAuthenticated = auth.isAuthenticated();
 
 // check if the authenticated user has at least the 'admin' role
 var isAdmin = auth.hasRole('admin');
-
-// register user route parameters
-registerUserParameters(router);
 
 // wrap in domain, check authentication and attach userInfo object, set user request context
 router.route('*')
@@ -60,18 +51,19 @@ router.route('/')
 router.route('/me')
 	.get(controller.me);
 
-router.route('/:id')
+// user crud routes
+router.route('/' + controller.paramString)
 	.get(isAdmin, controller.show)
 	.delete(isAdmin, controller.destroy)
 	.put(isAdmin, controller.update)
 	.patch(isAdmin, controller.update);
 
 // set the password for a user
-router.route('/:id/password')
+router.route('/' + controller.paramString +  '/password')
 	.put(controller.changePassword)
 	.patch(controller.changePassword);
 
 // admin only - administrative tasks for a user resource (force set password)
-router.route('/:id/admin')
+router.route('/' + controller.paramString + '/admin')
 	.put(isAdmin, controller.setPassword)
 	.patch(isAdmin, controller.setPassword);

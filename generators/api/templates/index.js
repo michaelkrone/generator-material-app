@@ -22,19 +22,14 @@ var auth = require('../../lib/auth/auth.service');
 module.exports = router;
 
 /**
- * The <%= name %> api parameters to attach
- * @type {<%= name %>:parameters}
- */
-var register<%= modelName %>Parameters = require('./<%= name %>.params');
-
-/**
  * The api controller
  * @type {<%= name %>:controller~<%= modelName %>Controller}
  */
-var controller = new <%= modelName %>Controller();
+var controller = new <%= modelName %>Controller(router);
 
-// register <%= name %> route parameters
-register<%= modelName %>Parameters(router);<% if (secure) { %>
+// register <%= name %> route parameters, uncomment if needed
+// var register<%= modelName %>Parameters = require('./<%= name %>.params');
+// register<%= modelName %>Parameters(router);<% if (secure) { %>
 
 // add context for auth sensitive resources
 var addRequestContext = contextService.middleware('request');
@@ -53,7 +48,7 @@ router.route('/')
 	.get(controller.index)
 	.post(controller.create);
 
-router.route('/:id')
+router.route('/' + controller.paramString)
 	.get(controller.show)
 	.delete(controller.destroy)
 	.put(controller.update)

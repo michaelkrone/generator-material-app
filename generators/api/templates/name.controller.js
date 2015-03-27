@@ -20,14 +20,14 @@ var <%= modelName %> = require('./<%= name %>.model').model;
  * <%= modelName %>Controller constructor
  * @classdesc Controller that handles <%= route %> route requests
  * for the <%= name %> api.
- * Uses the 'id' parameter and the '<%= name %>' request property
+ * Uses the '<%= name %>Id' parameter and the '<%= name %>Param' request property
  * to operate with the [main <%= name %> API Model]{@link <%= name %>:model~<%= modelName %>} model.
  * @constructor
- * @extends ParamController
+ * @inherits ParamController
  * @see <%= name %>:model~<%= modelName %>
  */
 function <%= modelName %>Controller(router) {
-	ParamController.call(this, <%= modelName %>, '<%= name %>Id', '<%= name %>Document', router);
+	ParamController.call(this, <%= modelName %>,  router);
 
 	// modify select only properties
 	// this.select = ['-__v'];
@@ -39,6 +39,17 @@ function <%= modelName %>Controller(router) {
 	// this.defaultReturn = 'profile';
 }
 
+// define properties for the <%= modelName %>Controller here
+<%= modelName %>Controller.prototype = {
+
+	/**
+	 * Set our own constructor property for instanceof checks
+	 * @private
+	 */
+	constructor: <%= modelName %>Controller
+
+};
+
+// inherit from ParamController
 <%= modelName %>Controller.prototype = Object.create(ParamController.prototype);
-<%= modelName %>Controller.prototype.constructor = <%= modelName %>Controller;
 

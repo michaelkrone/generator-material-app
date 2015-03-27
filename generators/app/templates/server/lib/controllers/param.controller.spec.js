@@ -23,8 +23,7 @@ var dummyDefinition = { 'textField': String };
 var dummySchema = new mongoose.Schema(dummyDefinition);
 delete mongoose.connection.models.dummyModel;
 var dummyModel = mongoose.model('dummyModel', dummySchema);
-
-var dummyEntry = { 'textField': 'some text' };
+var router = require('express').Router();
 
 /*
  define dummy controller
@@ -32,7 +31,7 @@ var dummyEntry = { 'textField': 'some text' };
 var ParamController = require('./param.controller.js');
 
 function DummyController(model, idName, paramName) {
-	ParamController.call(this, model, idName, paramName);
+	ParamController.call(this, model, idName, paramName, router);
 }
 
 DummyController.prototype = {
@@ -47,7 +46,6 @@ DummyController.prototype = _.create(ParamController.prototype, DummyController.
  */
 var apiRoute = '/api/test/param';
 
-var router = require('express').Router();
 var controller = new DummyController(dummyModel, 'id', 'dummyObject');
 
 // C
@@ -59,22 +57,6 @@ router.get('/:id', controller.show);
 router.put('/:id', controller.update);
 // D
 router.delete('/:id', controller.destroy);
-
-router.param('id', function (req, res, next, id) {
-	dummyModel.findById(id, function (err, dummy) {
-		if (err) {
-			return next(err);
-		}
-
-		if (!dummy) {
-			res.notFound();
-			return next('route');
-		}
-
-		req.dummyObject = dummy;
-		return next();
-	})
-});
 
 app.use(apiRoute, router);
 

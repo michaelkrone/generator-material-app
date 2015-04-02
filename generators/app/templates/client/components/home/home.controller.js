@@ -20,13 +20,36 @@
 	 * Provider of the {@link <%= scriptAppName %>.home.controller:HomeController HomeController}
 	 *
 	 * @param {Service} $router The router service to use
-	 */
+	 */<% if(features.auth) { %>
 
-	// HomeController.$inject = [''];
+	HomeController.$inject = ['Auth'];<% }%>
 
-	function HomeController() {
+	function HomeController(<% if(features.auth) { %>Auth<% }%>) {
 		var vm = this;
-		vm.greeting = 'Milord, I dare to be the HomeController';
-	}
+
+		/**
+		 * @ngdoc property
+		 * @name greeting
+		 * @propertyOf <%= scriptAppName %>.home.controller:HomeController
+		 * @description
+		 * The polite greeting of this sublime controller
+		 *
+		 */
+		vm.greeting = 'Milord, here be HomeControllers.';<% if(features.auth) { %>
+
+		/**
+		 * @ngdoc property
+		 * @name auth
+		 * @propertyOf <%= scriptAppName %>.home.controller:HomeController
+		 * @description
+		 * The auth service of this controller
+		 *
+		 */
+		vm.auth = Auth;<% }%>
+	}<% if(features.auth) { %>
+
+	HomeController.prototype.canActivate = function () {
+		return this.auth.isLoggedIn();
+	};<% }%>
 
 })();

@@ -125,8 +125,8 @@ module.exports = yeoman.generators.Base.extend({
 
 		if (this.features.auth) {
 			ngModules.push(appModule('auth'));
-			ngModules.push(appModule('admin'));
-			ngModules.push(appModule('account'));
+			//ngModules.push(appModule('admin'));
+			ngModules.push(appModule('login'));
 		}
 
 		// add home component module as last element

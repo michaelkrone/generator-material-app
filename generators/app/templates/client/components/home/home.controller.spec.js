@@ -18,4 +18,10 @@ describe('Controller: HomeController', function () {
 	it('should exist', function () {
 		HomeController.should.be.instanceof(Object);
 	});
+
+	it('should greet', function () {
+		HomeController.greeting
+			.should.be.instanceof(String)
+			.and.should.match(/HomeController/);
+	});
 });

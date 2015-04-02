@@ -57,7 +57,7 @@
 			 * @name responseError
 			 * @methodOf auth.interceptor.service:AuthInterceptor
 			 * @description
-			 * Intercept 401s and redirect you to login
+			 * Intercept 401s and redirect you to login(auth)
 			 * @param {Object} response The response
 			 * @returns {Promise} Rejected promise
 			 */
@@ -73,7 +73,7 @@
 			return config;
 		}
 
-		// Intercept 401s and redirect you to login
+		// Intercept 401s and redirect you to login(auth)
 		function responseError(response) {
 			if (response.status === 401) {
 				// remove any stale tokens
@@ -82,7 +82,7 @@
 				// use timeout to perform location change
 				// in the next digest cycle
 				$timeout(function () {
-					$location.path('/login');
+					$location.path('/login(auth)');
 				}, 0);
 
 				return $q.reject(response);

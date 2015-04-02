@@ -5,21 +5,21 @@
 	"main": "server/index.js",
 	"private": true,
 	"dependencies": {
-		"express": "~4.9.0",
-		"morgan": "~1.0.0",
-		"body-parser": "~1.5.0",
-		"method-override": "~1.0.0",
-		"serve-favicon": "~2.0.1",
-		"cookie-parser": "~1.0.1",
-		"express-session": "~1.0.2",
-		"errorhandler": "~1.0.0",
-		"compression": "~1.0.1",
-		"lodash": "~2.4.1",
-		"ejs": "~0.8.4",
+		"express": "^4.9.0",
+		"morgan": "^1.0.0",
+		"body-parser": "^1.5.0",
+		"method-override": "^1.0.0",
+		"serve-favicon": "^2.0.1",
+		"cookie-parser": "^1.0.1",
+		"express-session": "^1.0.2",
+		"errorhandler": "^1.0.0",
+		"compression": "^1.0.1",
+		"lodash": "^3.0.0",
+		"ejs": "^0.8.4",
 		"request-context": "^0.1.1",
 		"mongoose": ">=3.8.8",
-		"mongoose-createdmodified": "0.0.2",
-		"mongoose-request-context": "0.0.1", <% if(features.auth) { %>
+		"mongoose-createdmodified": "^0.0.2",
+		"mongoose-request-context": "^0.0.5", <% if(features.auth) { %>
 		"jsonwebtoken": "^0.3.0",
 		"express-jwt": "^0.1.3",
 		"passport": "~0.2.1",
@@ -43,7 +43,7 @@
 			"<%= appname %>"
 		],
 		"engines": {
-			"node": ">=0.10.33"
+			"node": ">=0.12"
 		},
 		"author": "",
 		"devDependencies": {

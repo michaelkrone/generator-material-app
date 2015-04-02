@@ -6,12 +6,14 @@
 		.module('<%= scriptAppName %>.admin')
 		.controller('AdminController', AdminController);
 
-	// add AdminController dependencies to inject
-	// AdminController.$inject = [''];
-
 	/**
+	 * @ngdoc
+	 * @description
 	 * AdminController constructor
 	 */
+
+	// AdminController.$inject = [''];
+
 	function AdminController() {
 		// var vm = this;
 	}

@@ -85,7 +85,7 @@
 		 * @description
 		 * Authenticate user and save token
 		 *
-		 * @param {Object} user login info
+		 * @param {Object} user login(auth) info
 		 * @param {Function} [callback] A callback
 		 * @return {Promise} A promise
 		 */
@@ -121,7 +121,7 @@
 		 * @methodOf auth.service:Auth
 		 * @description
 		 * Delete access token and user info.
-		 * Redirect to login page by forcing a page reload.
+		 * Redirect to login(auth) page by forcing a page reload.
 		 *
 		 */
 		function logout() {

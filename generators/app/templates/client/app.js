@@ -16,18 +16,15 @@
 		.config(appConfig)
 		.run(appRun);
 
-	/* App configuration */
-
-	// add appConfig dependencies to inject
-	appConfig.$inject = ['$locationProvider', '$mdThemingProvider', '$mdIconProvider'<% if (features.auth) { %>, '$httpProvider'<% } %>];
 
 	/**
 	 * Application config function
 	 *
-	 * @param $stateProvider
-	 * @param $urlRouterProvider
 	 * @param $locationProvider
 	 */
+
+	appConfig.$inject = ['$locationProvider', '$mdThemingProvider', '$mdIconProvider'<% if (features.auth) { %>, '$httpProvider'<% } %>];
+
 	function appConfig($locationProvider, $mdThemingProvider, $mdIconProvider<% if (features.auth) { %>, $httpProvider<% } %>) {
 		$locationProvider.html5Mode(true);<% if(features.auth) { %>
 
@@ -56,34 +53,16 @@
 		$mdIconProvider.iconSet('alert', spritePath + 'svg-sprite-alert.svg');
 	}
 
-	/* App run bootstrap */
-
-	// add appConfig dependencies to inject
-	appRun.$inject = ['$router'<% if(features.auth) { %>, '$rootScope', '$location', 'Auth'<% } %>];
-
 	/**
-	 * Application run function
+	 * Application run function, defines the default route: '/home'.
 	 *
-	 * @param $rootScope
-	 * @param $location
-	 * @param Auth
+	 * @param $router
 	 */
-	function appRun($router<% if(features.auth) { %>, $rootScope, $location, Auth<% } %>) {
-		// define the default route
-		$router.config([{ path: '/', redirectTo: '/home' }]);<% if(features.auth) { %>
-		// Redirect to login if route requires auth and you're not logged in
-		$rootScope.$on('$locationChangeStart', function (event, next) {
-			if (!next.authenticate) {
-				event.preventDefault();
-				return;
-			}
 
-			Auth.isLoggedInAsync(function (loggedIn) {
-				if (!loggedIn || next.role && !Auth.hasRole(next.role)) {
-					$location.path('/login');
-				}
-			});
-		});<% } %>
+	appRun.$inject = ['$router'];
+
+	function appRun($router) {
+		$router.config([{path: '/', redirectTo: '/home'}]);
 	}
 
 })();

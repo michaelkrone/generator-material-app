@@ -1,27 +1,29 @@
 <section id="login-content" layout="column" flex layout-align="center center">
 
-	<h1>Login</h1>
+	<h1 class="md-title">Login</h1>
 
 	<!-- remove in production -->
-	<p ng-show="!login.error">Use a development seed user to login, e.g. user <code>Admin</code> with the password <code>password</code></p>
+	<p class="md-body-1" ng-show="!login.error">
+		Use a development seed user to login, e.g. user <code>Admin</code> with the password <code>password</code>
+	</p>
 	<!-- /remove in production -->
 
-	<p ng-show="login.error" class="md-warn">{{login.error.message}}</p>
+	<p class="md-warn md-body-2" ng-show="login.error">{{login.error.message}}</p>
 
 	<form name="loginForm" layout="column" layout-fill layout-align="space-between" ng-submit="login.login(loginForm)">
 
-		<md-input-container md-is-error="loginForm.name.$error.required && loginForm.name.$dirty">
+		<md-input-container>
 			<label>Username</label>
 			<input name="name" ng-model="login.user.name" required/>
-			<div ng-messages="loginForm.name.$error" ng-if="loginForm.name.$dirty">
+			<div ng-messages="loginForm.name.$error">
 				<div ng-message="required">Username is required</div>
 			</div>
 		</md-input-container>
 
-		<md-input-container md-is-error="loginForm.password.$error.required && loginForm.password.$dirty">
+		<md-input-container>
 			<label>Password</label>
 			<input name="password" type="password" ng-model="login.user.password" required/>
-			<div ng-messages="loginForm.password.$error" ng-if="loginForm.password.$dirty">
+			<div ng-messages="loginForm.password.$error">
 				<div ng-message="required">Password is required</div>
 			</div>
 		</md-input-container>

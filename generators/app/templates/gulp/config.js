@@ -18,7 +18,7 @@ var conf = {
 		coverage: 'coverage',
 		client: 'client',
 		server: 'server',
-		app: 'app',
+		app: 'client',
 		doc: 'docs', // will expand to $dirs.build/$dirs.doc/{client,server}
 		plato: 'plato' // will expand to $dirs.build/$dirs.plato/{client,server}
 	},
@@ -44,27 +44,28 @@ var conf = {
 			js: [
 				'!client/**/*.spec.js',
 				'!client/**/*.mock.js',
-				'client/app/**/*.js'
+				'!client/bower_components/**',
+				'client/**/*.js'
 			],
 			docs: {
 				components: [
-					'!client/app/components/**/*.spec.js',
-					'!client/app/components/**/*.mock.js',
-					'client/app/components/**/*.js'
+					'!client/common/**/*.spec.js',
+					'!client/common/**/*.mock.js',
+					'client/common/**/*.js'
 				],
 				app: [
-					'!client/app/components/**/*.js',
-					'client/app/**/*.js'
+					'!client/app/common/**/*.js',
+					'client/**/*.js'
 				]
 			},
 			unitTests: ['client/app/**/*.spec.js'],
 			mocks: [
-				'client/app/**/*.mock.js',
+				'client/**/*.mock.js',
 				'client/bower_components/angular-mocks/angular-mocks.js'
 			],
 			bower: bowerFiles
 		},
-		styles: ['client/styles/**/*.scss', 'client/app/**/*.scss'],
+		styles: ['client/styles/app.scss', 'client/common/**/*.scss', 'client/components/**/*.scss'],
 		html: ['client/**/*.html'],
 		css: ['client/styles/app.css'],
 		e2eTests: ['e2e/**/*.spec.js']
@@ -106,7 +107,8 @@ var conf = {
 			appFiles: [
 				'app/**/*.js',
 				'bower_components/should/should.js',
-				'bower_components/sinonjs/sinon.js'
+				'bower_components/sinonjs/sinon.js',
+				'!bower_components/**'
 			]
 		},
 		mocha: {

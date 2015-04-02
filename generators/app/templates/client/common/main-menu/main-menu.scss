@@ -1,0 +1,36 @@
+md-sidenav[md-component-id="mainMenu"] {
+
+	md-list {
+		width: 100%;
+
+		.md-button {
+			display: block;
+			border-radius: 0;
+			color: inherit;
+			cursor: pointer;
+			font-weight: 400;
+			line-height: 42px;
+			margin: 0;
+			max-height: 42px;
+			overflow: hidden;
+			padding: 0px 16px;
+			text-align: left;
+			text-decoration: none;
+			white-space: normal;
+			width: 100%;
+		}
+
+		md-item {
+			padding: 0;
+
+			md-list {
+				.md-button {
+					padding-left: 32px;
+					text-transform: none;
+					text-decoration: none;
+				}
+			}
+		}
+	}
+
+}

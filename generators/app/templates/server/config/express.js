@@ -14,8 +14,8 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var methodOverride = require('method-override');
 var favicon = require('serve-favicon');
-var errorHandler = require('errorhandler');
-var passport = require('passport');
+var errorHandler = require('errorhandler');<% if(features.auth) { %>
+var passport = require('passport');<% } %>
 var config =  require('./index');
 
 // export the express configuration function
@@ -41,8 +41,8 @@ function initExpress(app) {
 	app.use(bodyParser.urlencoded({ extended: false }));
 	app.use(bodyParser.json());
 	app.use(methodOverride());
-	app.use(cookieParser());
-	app.use(passport.initialize());
+	app.use(cookieParser());<% if(features.auth) { %>
+	app.use(passport.initialize());<% } %>
 	app.use(favicon(path.join(publicDir, 'favicon.ico')));
 
 	if ('production' === env) {
@@ -56,7 +56,9 @@ function initExpress(app) {
 		app.use(express.static(publicDir));
 		app.set('appPath', publicDir);
 		app.use(morgan('dev'));
-		// Error handler - has to be last
-		app.use(errorHandler());
 	}
+
+	// Error handler - has to be last
+	app.use(errorHandler());
+
 }

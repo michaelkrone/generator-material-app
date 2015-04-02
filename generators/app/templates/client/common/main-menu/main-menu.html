@@ -1,0 +1,35 @@
+<md-sidenav
+	md-is-locked-open="$mdMedia('gt-lg')"
+	md-component-id="mainMenu"
+	class="md-sidenav-left md-whiteframe-z2"
+	layout="column">
+	<md-toolbar>
+		<span class="md-toolbar-tools md-toolbar-tools-top" layout="column">
+			<h2 class="md-headline"><%= appname %> Menu</h2>
+		</span>
+	</md-toolbar>
+
+	<md-content flex ng-controller="MainMenuController as menu"><% if (features.auth) { %>
+
+		<md-list>
+			<md-item>
+				<md-button ng-click="menu.logout()">Logout</md-button>
+			</md-item>
+		</md-list><% } %>
+
+		<md-list>
+			<md-item ng-repeat="item in menu.items"<% if (features.auth) { %> ng-show="menu.canAccess(item)"<% } %> layout="column">
+				<md-button ng-href="{{item.link}}">{{item.name}}</md-button>
+				<md-list ng-if="item.subItems" ng-repeat="subItem in item.subItems"<% if (features.auth) { %> ng-show="menu.canAccess(subItems)"<% } %>>
+					<md-item>
+						<md-button ng-href="{{subItem.link}}" >{{subItem.name}}</md-button>
+						<md-divider ng-if="!$last"></md-divider>
+					</md-item>
+				</md-list>
+				<md-divider ng-if="!$last"></md-divider>
+			</md-item>
+		</md-list>
+
+	</md-content>
+
+</md-sidenav>

@@ -95,12 +95,12 @@ module.exports = yeoman.generators.Base.extend({
 		// global modules
 
 		var ngModules = [
-			"'ngCookies'",
-			"'ngResource'",
-			"'ngSanitize'",
-			"'ngMessages'",
+			//"'ngCookies'",
+			//"'ngResource'",
+			//"'ngSanitize'",
+			//"'ngMessages'",
 			"'ngMaterial'",
-			"'ui.router'"
+			"'ngNewRouter'"
 		];
 
 		if (this.features.socketio) {
@@ -129,8 +129,8 @@ module.exports = yeoman.generators.Base.extend({
 			ngModules.push(appModule('account'));
 		}
 
-		// add main module as last element
-		ngModules.push(appModule('main'));
+		// add home component module as last element
+		ngModules.push(appModule('home'));
 
 		this.angularModules = ngModules.join(",\n\t\t\t");
 
@@ -155,12 +155,12 @@ module.exports = yeoman.generators.Base.extend({
 
 		// default client config
 		this.config.set('angularModules', ngModules);
-		this.config.set('componentsDirectory', this.options.routeDirectory || 'client/app/components/');
-		this.config.set('routeDirectory', this.options.routeDirectory || 'client/app/');
-		this.config.set('directiveDirectory', this.options.directiveDirectory || 'client/app/components');
-		this.config.set('filterDirectory', this.options.filterDirectory || 'client/app/components');
-		this.config.set('serviceDirectory', this.options.serviceDirectory || 'client/app/components');
-		this.config.set('basePath', this.options.basePath || 'app');
+		this.config.set('componentsDirectory', this.options.routeDirectory || 'client/components/');
+		this.config.set('routeDirectory', this.options.routeDirectory || 'client/components/');
+		this.config.set('directiveDirectory', this.options.directiveDirectory || 'client/components/');
+		this.config.set('filterDirectory', this.options.filterDirectory || 'client//components/');
+		this.config.set('serviceDirectory', this.options.serviceDirectory || 'client/components/');
+		this.config.set('basePath', this.options.basePath || 'client');
 		this.config.set('moduleName', this.options.moduleName || '');
 		this.config.set('extensions', this.options.extensions || ['js', 'html', 'scss']);
 		this.config.forceSave();

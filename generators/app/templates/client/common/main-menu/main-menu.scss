@@ -8,7 +8,7 @@ md-sidenav[md-component-id="mainMenu"] {
 			border-radius: 0;
 			color: inherit;
 			cursor: pointer;
-			font-weight: 400;
+			font-weight: 500;
 			line-height: 42px;
 			margin: 0;
 			max-height: 42px;
@@ -16,6 +16,7 @@ md-sidenav[md-component-id="mainMenu"] {
 			padding: 0px 16px;
 			text-align: left;
 			text-decoration: none;
+			text-transform: none;
 			white-space: normal;
 			width: 100%;
 		}
@@ -26,6 +27,7 @@ md-sidenav[md-component-id="mainMenu"] {
 			md-list {
 				.md-button {
 					padding-left: 32px;
+					font-weight: 400;
 					text-transform: none;
 					text-decoration: none;
 				}

@@ -14,7 +14,7 @@
 		"express-session": "^1.0.2",
 		"errorhandler": "^1.0.0",
 		"compression": "^1.0.1",
-		"lodash": "^3.0.0",
+		"lodash": "^2.4.1",
 		"ejs": "^0.8.4",
 		"request-context": "^0.1.1",
 		"mongoose": ">=3.8.8",

@@ -1,4 +1,4 @@
-<md-sidenav
+<md-sidenav<%if (features.auth) {%> ng-show="app.isLoggedIn()"<% } %>
 	md-is-locked-open="$mdMedia('gt-lg')"
 	md-component-id="mainMenu"
 	class="md-sidenav-left md-whiteframe-z2"

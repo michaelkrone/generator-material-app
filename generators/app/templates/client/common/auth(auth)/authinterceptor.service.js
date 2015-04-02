@@ -19,7 +19,7 @@
 
 	// register the AuthInterceptor on the application module
 	angular
-		.module('<%= scriptAppName %>.auth.interceptor', [])
+		.module('<%= scriptAppName %>.auth.interceptor', ['ngCookies'])
 		.factory('AuthInterceptor', AuthInterceptor);
 
 
@@ -30,14 +30,14 @@
 	 * Provider of the {@link auth.interceptor.service:AuthInterceptor AuthInterceptor-service}
 	 *
 	 * @param {Service} $q The promise service to use
-	 * @param {Service} $cookieStore The cookie service to use
+	 * @param {Service} $cookies The cookie service to use
 	 * @param {Service} $location The location service to use
 	 * @returns {Service} {@link auth.interceptor.service:AuthInterceptor AuthInterceptor-service}
 	 */
 
-	AuthInterceptor.$inject = ['$q', '$cookieStore', '$location', '$timeout'];
+	AuthInterceptor.$inject = ['$q', '$cookies', '$location', '$timeout'];
 
-	function AuthInterceptor($q, $cookieStore, $location, $timeout) {
+	function AuthInterceptor($q, $cookies, $location, $timeout) {
 		// public API
 		return {
 
@@ -67,8 +67,8 @@
 		// Add authorization token to headers
 		function request(config) {
 			config.headers = config.headers || {};
-			if ($cookieStore.get('token')) {
-				config.headers.Authorization = 'Bearer ' + $cookieStore.get('token');
+			if ($cookies.get('token')) {
+				config.headers.Authorization = 'Bearer ' + $cookies.get('token');
 			}
 			return config;
 		}
@@ -77,12 +77,12 @@
 		function responseError(response) {
 			if (response.status === 401) {
 				// remove any stale tokens
-				$cookieStore.remove('token');
+				$cookies.remove('token');
 
 				// use timeout to perform location change
 				// in the next digest cycle
 				$timeout(function () {
-					$location.path('/login(auth)');
+					$location.path('/login');
 				}, 0);
 
 				return $q.reject(response);

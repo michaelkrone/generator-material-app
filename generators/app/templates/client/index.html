@@ -23,11 +23,11 @@
 	your browser</a> to improve your experience.</p>
 <![endif]-->
 
-<main-menu<%if (features.auth) {%> ng-show="app.isLoggedIn()"<% } %>></main-menu>
+<main-menu></main-menu>
 
 <main layout="column" flex>
 
-	<md-toolbar <%if (features.auth) {%> ng-show="app.isLoggedIn()"<% } %>>
+	<md-toolbar ng-cloak <%if (features.auth) {%> ng-show="app.isLoggedIn()"<% } %>>
 		<div class="md-toolbar-tools">
 			<md-button hide-gt-lg ng-click="app.openMainMenu()" aria-label="Open main menu">
 				<md-icon md-svg-icon="navigation:ic_menu_24px"></md-icon>
@@ -41,6 +41,7 @@
 	</md-toolbar>
 
 	<section layout="row" flex ng-viewport="content"></section>
+
 </main>
 
 <script src="socket.io-client/socket.io.js"></script>

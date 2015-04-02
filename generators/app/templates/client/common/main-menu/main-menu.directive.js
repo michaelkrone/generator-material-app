@@ -28,7 +28,7 @@
 			var componentId = attrs.mdComponentId || 'mainMenu';
 			var mainContentArea = $document[0].querySelector(attrs.mainContent || 'main');
 
-			$rootScope.$on('$locationChangeSuccess', openPage);
+			$rootScope.$on('$locationChangeStart', openPage);
 
 			/**
 			 * @ngdoc function
@@ -40,7 +40,11 @@
 			function openPage() {
 				$mdSidenav(componentId)
 					.close()
-					.then(mainContentArea.focus());
+					.then(focusMainContent);
+			}
+
+			function focusMainContent() {
+				mainContentArea.focus();
 			}
 		}
 	}

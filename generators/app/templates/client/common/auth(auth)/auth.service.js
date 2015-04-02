@@ -22,12 +22,7 @@
 
 	// register the service as Auth
 	angular
-		.module('<%= scriptAppName %>.auth', [
-			'ngResource',
-			'ngCookies',
-			'<%= scriptAppName %>.auth.interceptor',
-			'<%= scriptAppName %>.auth.user'
-		])
+		.module('<%= scriptAppName %>.auth.service', ['ngCookies'])
 		.factory('Auth', Auth)
 		.constant('userRoles', getUserRoles());
 
@@ -43,19 +38,18 @@
 	 * @param {Service} $location The location service to use
 	 * @param {Service} _ The lodash service to use
 	 * @param {Service} User The User service to use
-	 * @param {Service} $cookieStore The cookieStore service to use
 	 * @param {Service} $q The promise service to use
 	 * @param {Service} $templateCache The templateCache service to use
 	 * @param {Service} userRoles The userRoles
 	 * @returns {Service} {@link auth.service:Auth Auth-service}
 	 */
 
-	Auth.$inject = ['$http', '$cookieStore', '$cookies', '$location', '$q', '$templateCache', '_', 'User', 'userRoles'];
+	Auth.$inject = ['$http', '$cookies', '$location', '$q', '$templateCache', '_', 'User', 'userRoles'];
 
-	function Auth($http, $cookieStore, $cookies, $location, $q, $templateCache, _, User, userRoles) {
+	function Auth($http, $cookies, $location, $q, $templateCache, _, User, userRoles) {
 		var currentUser = {};
 
-		if ($cookieStore.get('token')) {
+		if ($cookies.get('token')) {
 			currentUser = User.get();
 		}
 
@@ -96,12 +90,10 @@
 			$cookies.customerId = user.customerId;
 
 			$http.post('/auth/local', {
-				customerId: user.customerId,
 				name: user.name,
 				password: user.password
 			}).success(function (data) {
-				$cookieStore.put('token', data.token);
-				$cookieStore.remove('customerID');
+				$cookies.put('token', data.token);
 				currentUser = User.get();
 				deferred.resolve(data);
 				return cb();
@@ -125,7 +117,7 @@
 		 *
 		 */
 		function logout() {
-			$cookieStore.remove('token');
+			$cookies.remove('token');
 			currentUser = {};
 			$templateCache.removeAll();
 			$location.path('/login');
@@ -182,7 +174,6 @@
 			}).$promise;
 		}
 
-
 		/**
 		 * @ngdoc function
 		 * @name getCurrentUser
@@ -196,7 +187,6 @@
 			return currentUser;
 		}
 
-
 		/**
 		 * @ngdoc function
 		 * @name isLoggedIn
@@ -209,7 +199,6 @@
 		function isLoggedIn() {
 			return currentUser.hasOwnProperty('role');
 		}
-
 
 		/**
 		 * @ngdoc function
@@ -227,13 +216,10 @@
 				}).catch(function () {
 					cb(false);
 				});
-			} else if (currentUser.hasOwnProperty('role')) {
-				cb(true);
 			} else {
-				cb(false);
+				cb(isLoggedIn());
 			}
 		}
-
 
 		/**
 		 * @ngdoc function
@@ -250,7 +236,6 @@
 			user = user || getCurrentUser();
 			return user.role === 'admin';
 		}
-
 
 		/**
 		 * @ngdoc function
@@ -279,7 +264,7 @@
 		 * @returns {String} The token
 		 */
 		function getToken() {
-			return $cookieStore.get('token');
+			return $cookies.get('token');
 		}
 
 		/**

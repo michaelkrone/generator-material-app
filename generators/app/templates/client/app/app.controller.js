@@ -18,17 +18,17 @@
 	 * @name <%= scriptAppName %>.provider:AppController
 	 * @description
 	 * Provider of the {@link <%= scriptAppName %>.controller:AppController AppController}
-	 *
-	 * @param {Auth} Auth - The authentication service used for logging out
+	 *<% if(features.auth) { %>
+	 * @param {Auth} Auth - The authentication service used for logging out<% } %>
 	 * @param {$location} $mdSidenav - The sidenav service used to communicate with the sidenav components
 	 */
 
-	AppController.$inject = ['Auth', '$mdSidenav'];
+	AppController.$inject = [<% if(features.auth) { %> 'Auth', <% } %>'$mdSidenav'];
 
-	function AppController(Auth, $mdSidenav) {
+	function AppController(<% if(features.auth) { %> Auth,  <% } %>$mdSidenav) {
 		var vm = this;
 
-		vm.sidenavId = 'mainMenu';
+		vm.sidenavId = 'mainMenu';<% if(features.auth) { %>
 
 		/**
 		 * @ngdoc function
@@ -50,6 +50,15 @@
 
 		/**
 		 * @ngdoc function
+		 * @name currentUser
+		 * @methodOf <%= scriptAppName %>.controller:AppController
+		 * @description
+		 * See {@link components/auth.service:Auth#getCurrentUser getCurrentUser} of the Auth service
+		 */
+		vm.currentUser = Auth.getCurrentUser();<% } %>
+
+		/**
+		 * @ngdoc function
 		 * @name closeMainMenu
 		 * @methodOf <%= scriptAppName %>.controller:AppController
 		 * @description
@@ -67,15 +76,6 @@
 		 * @returns {Promise} The promise from mdSidenav
 		 */
 		vm.openMainMenu = openMainMenu;
-
-		/**
-		 * @ngdoc function
-		 * @name currentUser
-		 * @methodOf <%= scriptAppName %>.controller:AppController
-		 * @description
-		 * See {@link components/auth.service:Auth#getCurrentUser getCurrentUser} of the Auth service
-		 */
-		vm.currentUser = Auth.getCurrentUser();
 
 		/**
 		 * Close the main menu sidenav component

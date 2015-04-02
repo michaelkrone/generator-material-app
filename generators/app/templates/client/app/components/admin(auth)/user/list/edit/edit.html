@@ -1,0 +1,77 @@
+<md-toolbar class="md-hue-1 md-tall">
+
+	<span layout="row" layout-align="space-between" class="md-toolbar-tools md-toolbar-tools-top">
+		<md-button ng-click="edit.goBack()" aria-label="Back to detail view">
+			<md-icon md-svg-icon="navigation:ic_arrow_back_24px"></md-icon>
+		</md-button>
+		<md-button ng-hide="edit.isRoot" ng-click="edit.remove(editForm, $event)" aria-label="Delete user">
+			<md-icon md-svg-icon="action:ic_delete_24px"></md-icon>
+		</md-button>
+	</span>
+
+	<span class="md-toolbar-tools md-toolbar-tools-bottom" layout="column">
+		<h3>{{edit.displayName}}</h3>
+	</span>
+
+</md-toolbar>
+
+<md-button class="md-accent md-fab md-fab-bottom-right fab-overlap"
+					 aria-label="Save user"
+					 ng-click="edit.update(editForm)"
+					 ng-disabled="!editForm.$dirty || editForm.$invalid">
+	<md-icon md-svg-icon="action:ic_done_24px"></md-icon>
+</md-button>
+
+<md-content class="md-padding" flex id="user-edit-content">
+
+	<form name="editForm">
+
+		<section class="section" layout="column">
+
+			<span class="section-title">User data</span>
+
+			<span layout="row" layout-align="start center">
+				<span flex="33">User can log in</span>
+				<md-switch name="active" class="no-label" aria-label="user active" ng-model="edit.user.active"></md-switch>
+			</span>
+
+			<span layout="row" layout-sm="column">
+				<md-input-container flex>
+					<label>Username</label>
+					<input name="name" ng-model="edit.user.name"
+								 required mongoose-error remote-unique="User" remote-unique-ignore="{{edit.displayName}}">
+					<div ng-messages="editForm.name.$error">
+						<div ng-message="required">Username is required</div>
+						<div ng-message="mongoose">Username in use already</div>
+						<div ng-message="remote-unique">Username in use already</div>
+					</div>
+				</md-input-container>
+
+				<md-input-container ng-class="{'md-input-has-value': edit.user.role}" ng-cloak flex>
+					<label>Role</label>
+					<md-select ng-hide="edit.isRoot" ng-model="edit.user.role" placeholder="Role" name="role" required flex>
+						<md-select-label>{{edit.getNameForRole(edit.user.role) || 'Role'}}</md-select-label>
+						<md-option ng-value="role.role" ng-repeat="role in edit.userRoles">{{role.name}}</md-option>
+					</md-select>
+					<div ng-messages="editForm.role.$error">
+						<div ng-message="required">Role is required</div>
+					</div>
+				</md-input-container>
+			</span>
+
+			<span layout="row" layout-sm="column">
+				<md-input-container flex>
+					<label>Info</label>
+					<textarea name="info" ng-model="edit.user.info"></textarea>
+				</md-input-container>
+			</span>
+
+			<span layout="row" layout-sm="column">
+				<md-button ng-click="edit.showChangePasswordDialog($event)">Change password</md-button>
+			</span>
+
+		</section>
+
+	</form>
+
+</md-content>

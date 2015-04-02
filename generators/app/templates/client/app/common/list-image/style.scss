@@ -1,0 +1,35 @@
+img.list-image {
+	border-radius: 30px;
+	width: 42px;
+	margin: 8px 16px;
+	border: 1px solid #eee;
+}
+
+list-image {
+
+	div, img {
+		border-radius: 30px;
+		width: 42px;
+		margin: 8px 16px;
+		border: none;
+		color: #fff;
+
+		&.md-light-blue-dark-theme {
+			color: #000;
+			border: 1px solid #888;
+		}
+
+	}
+
+	div {
+		height: 42px;
+		text-align: center;
+		line-height: 42px;
+
+		span {
+			font-size: 20px;
+		}
+
+	}
+
+}

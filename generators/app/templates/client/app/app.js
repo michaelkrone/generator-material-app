@@ -13,13 +13,13 @@
 			// Add modules below
 			<%= angularModules %>
 		])
-		.config(appConfig)<% if(features.auth) { %>
-		.run(appRun)<% } %>;
+		.config(appConfig)
+		.run(appRun);
 
 	/* App configuration */
 
 	// add appConfig dependencies to inject
-	appConfig.$inject = ['$urlRouterProvider', '$urlMatcherFactoryProvider', '$locationProvider', '$mdThemingProvider', '$mdIconProvider'<% if (features.auth) { %>, '$httpProvider'<% } %>];
+	appConfig.$inject = ['$locationProvider', '$componentLoaderProvider', '$mdThemingProvider', '$mdIconProvider'<% if (features.auth) { %>, '$httpProvider'<% } %>];
 
 	/**
 	 * Application config function
@@ -28,13 +28,15 @@
 	 * @param $urlRouterProvider
 	 * @param $locationProvider
 	 */
-	function appConfig($urlRouterProvider, $urlMatcherFactoryProvider, $locationProvider, $mdThemingProvider, $mdIconProvider<% if (features.auth) { %>, $httpProvider<% } %>) {
-		$urlRouterProvider.otherwise('/');
-		$urlMatcherFactoryProvider.strictMode(false);
+	function appConfig($locationProvider, $componentLoaderProvider, $mdThemingProvider, $mdIconProvider<% if (features.auth) { %>, $httpProvider<% } %>) {
 		$locationProvider.html5Mode(true);
+
+		$componentLoaderProvider
+			// configure the angular router to templates from app/components
+			.setTemplateMapping(templateMapping);
+
 	<% if(features.auth) { %>
 		$httpProvider.interceptors.push('AuthInterceptor');<% } %>
-
 
 		// set the default palette name
 		var defaultPalette = 'blue';
@@ -57,12 +59,12 @@
 		$mdIconProvider.iconSet('content', spritePath + 'svg-sprite-content.svg');
 		$mdIconProvider.iconSet('toggle', spritePath + 'svg-sprite-toggle.svg');
 		$mdIconProvider.iconSet('alert', spritePath + 'svg-sprite-alert.svg');
-	}<% if(features.auth) { %>
+	}
 
 	/* App run bootstrap */
 
 	// add appConfig dependencies to inject
-	appRun.$inject = ['$rootScope', '$location', 'Auth'];
+	appRun.$inject = ['$router'<% if(features.auth) { %>, '$rootScope', '$location', 'Auth'<% } %>];
 
 	/**
 	 * Application run function
@@ -71,10 +73,13 @@
 	 * @param $location
 	 * @param Auth
 	 */
-	function appRun($rootScope, $location, Auth) {
+	function appRun($router<% if(features.auth) { %>, $rootScope, $location, Auth<% } %>) {
+		// define the default route
+		$router.config([{ path: '/', redirectTo: '/home' }]);<% if(features.auth) { %>
 		// Redirect to login if route requires auth and you're not logged in
-		$rootScope.$on('$stateChangeStart', function (event, next) {
+		$rootScope.$on('$routeChangeStart', function (event, next) {
 			if (!next.authenticate) {
+				event.preventDefault();
 				return;
 			}
 
@@ -83,7 +88,18 @@
 					$location.path('/login');
 				}
 			});
+		});<% } %>
+	}
+
+	function templateMapping(componentName) {
+		var dash = replaceCamelCase(componentName, '.');
+		return ['app/components/', dash,  '/', dash, '.html'].join('');
+	}
+
+	function replaceCamelCase(str, replace) {
+		return str.replace(/([A-Z])/g, function ($1) {
+			return replace + $1.toLowerCase();
 		});
-	}<% } %>;
+	}
 
 })();

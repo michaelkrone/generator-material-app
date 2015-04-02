@@ -7,6 +7,7 @@
 	<title><%= name %></title>
 	<meta name="description" content="">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+	<link href='http://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,700' rel='stylesheet' type='text/css'>
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
 	<!--vendor:css-->
@@ -15,17 +16,32 @@
 	<!-- app:css -->
 	<!-- endinject -->
 </head>
-<body ng-app="<%= scriptAppName %>" ng-controller="AppController as appController" layout="column">
+<body ng-strict-di ng-app="<%= scriptAppName %>" ng-controller="AppController as app" layout="row">
 
 <!--[if lt IE 9]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
 	your browser</a> to improve your experience.</p>
 <![endif]-->
 
-<main-menu <%if (features.auth) {%>ng-show="appController.isLoggedIn()"<% } %>></main-menu>
+<main-menu<%if (features.auth) {%> ng-show="app.isLoggedIn()"<% } %>></main-menu>
 
-<!-- Add your site or application content here -->
-<main ng-cloak layout="column" layout-fill ui-view></main>
+<main layout="column" flex>
+
+	<md-toolbar <%if (features.auth) {%> ng-show="app.isLoggedIn()"<% } %>>
+		<div class="md-toolbar-tools">
+			<md-button hide-gt-lg ng-click="app.openMainMenu()" aria-label="Open main menu">
+				<md-icon md-svg-icon="navigation:ic_menu_24px"></md-icon>
+			</md-button>
+			<h2><%= appname %></h2>
+			<span flex></span><%if (features.auth) {%>
+			<md-button ng-show="app.isLoggedIn()" ng-click="app.logout()" aria-label="Logout">
+				<md-icon md-svg-icon="navigation:ic_more_vert_24px"></md-icon>
+			</md-button><% } %>
+		</div>
+	</md-toolbar>
+
+	<section layout="row" flex ng-viewport="content"></section>
+</main>
 
 <script src="socket.io-client/socket.io.js"></script>
 

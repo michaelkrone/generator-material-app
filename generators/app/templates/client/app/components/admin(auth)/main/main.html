@@ -1,0 +1,33 @@
+<section id="admin-main-content" layout="column" layout-fill flex>
+
+	<md-toolbar class="md-tall" scroll-shrink>
+		<span class="md-toolbar-tools md-toolbar-tools-top">
+			<md-button ng-click="appController.openMainMenu()" aria-label="Open main menu">
+				<md-icon md-svg-icon="navigation:ic_menu_24px"></md-icon>
+			</md-button>
+		</span>
+
+		<span flex></span>
+
+		<h2 class="md-toolbar-tools md-toolbar-tools-bottom">
+			<span>Administration</span>
+		</h2>
+	</md-toolbar>
+
+	<md-content>
+		<md-card>
+			<md-card-content>
+
+				<h2>Administration Section</h2>
+
+				<p>
+					View your <a ui-sref="admin.user.list">list of Users</a>
+					or <a ui-sref="admin.user.list.create">create a User</a>.
+				</p>
+
+				</md-card-content>
+		</md-card>
+	</md-content>
+
+</section>
+

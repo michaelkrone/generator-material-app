@@ -1,0 +1,88 @@
+<md-toolbar class="md-tall" scroll-shrink layout-align="start start">
+
+	<span class="md-toolbar-tools md-toolbar-tools-top">
+		<md-button ng-click="appController.openMainMenu()" aria-label="Open main menu">
+			<md-icon md-svg-icon="navigation:ic_menu_24px"></md-icon>
+		</md-button>
+	</span>
+
+	<span flex></span>
+
+	<h2 class="md-toolbar-tools md-toolbar-tools-bottom toolbar-tools-fab-overlap">
+		<span>My Users</span>
+	</h2>
+
+	<a ui-sref="admin.user.list.create">
+		<md-button hide show-gt-md class="md-fab md-accent md-fab-top-left fab-overlap" aria-label="Create a new user">
+			<md-icon md-svg-icon="content:ic_add_24px"></md-icon>
+		</md-button>
+	</a>
+
+</md-toolbar>
+
+<md-content ng-if="list.users.length" id="user-items-content" flex>
+	<md-list layout="column">
+
+		<md-item class="list-head" hide-sm>
+
+			<md-item-content>
+				<div class="md-tile-content" flex="66">
+					<h4>Name</h4>
+				</div>
+				<div class="md-tile-content" flex="33" hide show-gt-md>
+					<h4>Role</h4>
+				</div>
+				<div class="md-tile-content" flex="33" hide show-gt-md>
+					<h4>Active</h4>
+				</div>
+			</md-item-content>
+
+			<md-divider md-inset></md-divider>
+
+		</md-item>
+
+		<md-item
+				ng-repeat="user in list.users"
+				ng-click="items.showInDetails(user)"
+				ng-class="{'selected': items.isSelected(user)}">
+
+			<md-item-content>
+				<div class="md-tile-left">
+					<list-image ng-if="!user.image" string="{{user.name}}"></list-image>
+				</div>
+				<div class="md-tile-content" flex="66">
+					<h3>{{user.name}}</h3>
+				</div>
+				<div class="md-tile-content" flex="33" hide show-gt-md>
+					<h3>{{items.getRole(user).name}}</h3>
+				</div>
+				<div class="md-tile-content" flex="33" hide show-gt-md>
+					<h3>
+						<md-icon ng-show="user.active" class="list-info" md-svg-icon="toggle:ic_check_box_24px"></md-icon>
+						<md-icon ng-show="!user.active" class="list-info" md-svg-icon="toggle:ic_check_box_outline_blank_24px"></md-icon>
+					</h3>
+				</div>
+			</md-item-content>
+
+			<md-divider md-inset></md-divider>
+
+		</md-item>
+
+	</md-list>
+</md-content>
+
+<md-content ng-if="!list.users.length">
+	<md-card>
+		<h2>No Users found</h2>
+		<p>
+			There are no Users!
+			<a ui-sref="user.create">Create one!</a>
+		</p>
+	</md-card>
+</md-content>
+
+<a ui-sref="admin.user.list.create">
+	<md-button hide-gt-md ui-sref="admin.user.list.create" class="md-fab md-accent md-fab-bottom-right" aria-label="Create a new user">
+		<md-icon md-svg-icon="content:ic_add_24px"></md-icon>
+	</md-button>
+</a>

@@ -1,0 +1,67 @@
+<md-toolbar class="md-hue-1 md-tall" id="user-detail-toolbar">
+
+	<span layout="row" layout-align="space-between" class="md-toolbar-tools md-toolbar-tools-top">
+		<md-button ng-click="detail.goBack()" aria-label="Close detail view">
+			<md-icon md-svg-icon="navigation:ic_close_24px"></md-icon>
+		</md-button>
+		<md-button ng-show="!detail.isRoot || detail.currentIsRoot" ng-click="detail.edit()" aria-label="Edit user">
+			<md-icon md-svg-icon="content:ic_create_24px"></md-icon>
+		</md-button>
+	</span>
+
+	<span class="md-toolbar-tools md-toolbar-tools-bottom" layout="column">
+		<h3>{{::detail.user.name}}</h3>
+	</span>
+
+</md-toolbar>
+
+<md-content class="md-padding" flex id="user-detail-content">
+
+	<section class="section" layout="column">
+
+		<span class="section-title">User data</span>
+
+		<span layout="row" layout-align="start center" class="detail-info" ng-show="!detail.user.active">
+			<span flex>User {{::detail.user.name}} is not allowed to log in</span>
+		</span>
+
+		<span layout="row" layout-sm="column" class="detail-info">
+			<span flex="45">Username</span>
+			<span flex>{{::detail.user.name}}</span>
+		</span>
+
+		<span layout="row" layout-sm="column" class="detail-info">
+			<span flex="45">Role</span>
+			<span flex>{{::detail.userRole}}</span>
+		</span>
+
+		<span ng-if="detail.user.info" layout="row" layout-sm="column" class="detail-info">
+			<span flex="45">Info</span>
+			<span flex>{{::detail.user.info}}</span>
+		</span>
+
+	</section>
+
+	<section class="section" layout="column" ng-hide="detail.isRoot">
+
+		<span class="section-title">Record Information</span>
+
+		<span layout="row" layout-sm="column" class="detail-info">
+			<span flex="45">Modified</span>
+			<span flex ng-show="detail.user.modified" class="subtitle">
+				<span am-time-ago="detail.user.modified"></span>
+				<md-tooltip>{{detail.user.modified | date:'dd. MMMM yyyy H:mm'}}</md-tooltip>
+				{{detail.user.modifiedBy && 'by ' + detail.user.modifiedBy}}
+			</span>
+		</span>
+
+		<span layout="row" layout-sm="column" class="detail-info">
+			<span flex="45">Created</span>
+			<span flex ng-show="detail.user.created" class="subtitle">{{detail.user.created | date:'dd. MMMM yyyy H:mm'}}</span>
+		</span>
+
+	</section>
+
+</md-content>
+
+

@@ -22,10 +22,12 @@
 
 	// register the service as Auth
 	angular
-		.module('<%= scriptAppName %>.auth.service', ['ngCookies'])
+		.module('<%= scriptAppName %>.auth.service', [
+			'ngCookies',
+			'ngNewRouter'
+		])
 		.factory('Auth', Auth)
 		.constant('userRoles', getUserRoles());
-
 
 	/**
 	 * @ngdoc function
@@ -35,7 +37,7 @@
 	 *
 	 * @param {Service} $http The http service to use
 	 * @param {Service} $cookies The cookies service to use
-	 * @param {Service} $location The location service to use
+	 * @param {Service} $router The location service to use
 	 * @param {Service} _ The lodash service to use
 	 * @param {Service} User The User service to use
 	 * @param {Service} $q The promise service to use
@@ -44,9 +46,9 @@
 	 * @returns {Service} {@link auth.service:Auth Auth-service}
 	 */
 
-	Auth.$inject = ['$http', '$cookies', '$location', '$q', '$templateCache', '_', 'User', 'userRoles'];
+	Auth.$inject = ['$http', '$cookies', '$router', '$q', '$templateCache', '_', 'User', 'userRoles'];
 
-	function Auth($http, $cookies, $location, $q, $templateCache, _, User, userRoles) {
+	function Auth($http, $cookies, $router, $q, $templateCache, _, User, userRoles) {
 		var currentUser = {};
 
 		if ($cookies.get('token')) {
@@ -120,7 +122,7 @@
 			$cookies.remove('token');
 			currentUser = {};
 			$templateCache.removeAll();
-			$location.path('/login');
+			$router.navigate('/login');
 		}
 
 

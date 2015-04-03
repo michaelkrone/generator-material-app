@@ -26,15 +26,16 @@
 	 * @returns {Service} {@link mainMenu.controller:MainMenuController MainMenuController}
 	 */
 
-	MainMenuController.$inject = ['mainMenu', '$mdSidenav', '_'<% if (features.auth) { %>, 'Auth'<% } %>];
+	MainMenuController.$inject = ['mainMenu', '$router', '$mdSidenav', '_'<% if (features.auth) { %>, 'Auth'<% } %>];
 
 
-	function MainMenuController(mainMenu, $mdSidenav, _ <% if (features.auth) { %>, Auth<% } %>) {
+	function MainMenuController(mainMenu, $router, $mdSidenav, _ <% if (features.auth) { %>, Auth<% } %>) {
 		var vm = this;
 
 		// view model bindings
 		vm.sidenavId = 'mainMenu';
 		vm.items = _.sortBy(mainMenu.getMenu(), 'order');
+		vm.navigateTo = navigateTo;
 		vm.close = close;<% if (features.auth) { %>
 		vm.canAccess = canAccess;
 		vm.logout = logout;<% } %>
@@ -44,6 +45,16 @@
 		 */
 		function close() {
 			return $mdSidenav(vm.sidenavId).close();
+		}
+
+		/**
+		 * Close the sidenav and navigate to the component
+		 * linked by the given item.
+		 */
+		function navigateTo(item) {
+			vm.close().then(function () {
+				$router.navigate(item.link);
+			});
 		}<% if (features.auth) { %>
 
 		/**
@@ -53,6 +64,10 @@
 		function canAccess(menuItem) {
 			if (menuItem.role) {
 				return Auth.hasRole(menuItem.role);
+			}
+
+			if (menuItem.authenticated) {
+				return Auth.isLoggedIn();
 			}
 
 			return true;

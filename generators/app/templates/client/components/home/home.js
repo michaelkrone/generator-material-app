@@ -12,11 +12,14 @@
 
 	var routeConfig = {
 		path: '/home',
-		components: {content: 'home'}
+		components: {
+			content: 'home'
+		}
 	};
 
 	var menuItem = {
 		name: 'Home',
+		icon: 'action:ic_home_24px',
 		link: routeConfig.path,
 		order: 1
 	};

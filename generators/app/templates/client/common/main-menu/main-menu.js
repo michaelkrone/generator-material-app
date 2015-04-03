@@ -14,6 +14,7 @@
 	'use strict';
 
 	angular.module('<%= scriptAppName %>.mainMenu', [
+		'ngNewRouter',
 		'<%= scriptAppName %>.lodash'<% if (features.auth) { %>,
 		'<%= scriptAppName %>.auth'<% } %>
 	])

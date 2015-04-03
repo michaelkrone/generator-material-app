@@ -9,9 +9,9 @@ md-sidenav[md-component-id="mainMenu"] {
 			color: inherit;
 			cursor: pointer;
 			font-weight: 500;
-			line-height: 42px;
+			line-height: 48px;
 			margin: 0;
-			max-height: 42px;
+			max-height: 48px;
 			overflow: hidden;
 			padding: 0px 16px;
 			text-align: left;
@@ -19,6 +19,14 @@ md-sidenav[md-component-id="mainMenu"] {
 			text-transform: none;
 			white-space: normal;
 			width: 100%;
+
+			md-icon {
+				margin-right: 32px;
+			}
+
+			span {
+				margin-right: 32px;
+			}
 		}
 
 		md-item {

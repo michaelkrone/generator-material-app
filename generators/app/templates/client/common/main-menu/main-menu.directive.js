@@ -15,38 +15,12 @@
 	function MainMenu($rootScope, $mdSidenav, $document) {
 		// directive definition members
 		var directive = {
-			link: link,
 			restrict: 'E',
 			replace: true,
 			templateUrl: 'common/main-menu/main-menu.html'
 		};
 
 		return directive;
-
-		// directives link definition
-		function link(scope, elem, attrs) {
-			var componentId = attrs.mdComponentId || 'mainMenu';
-			var mainContentArea = $document[0].querySelector(attrs.mainContent || 'main');
-
-			$rootScope.$on('$locationChangeStart', openPage);
-
-			/**
-			 * @ngdoc function
-			 * @name openPage
-			 * @methodOf mainMenu.directive:
-			 * @description
-			 * Open a page
-			 */
-			function openPage() {
-				$mdSidenav(componentId)
-					.close()
-					.then(focusMainContent);
-			}
-
-			function focusMainContent() {
-				mainContentArea.focus();
-			}
-		}
 	}
 
 

@@ -25,9 +25,9 @@
 	 * @returns {Service} {@link <%= scriptAppName %>.login.controller:LoginController LoginController}
 	 */
 
-	LoginController.$inject = ['Auth', '$location'];
+	LoginController.$inject = ['Auth', '$router'];
 
-	function LoginController(Auth, $location) {
+	function LoginController(Auth, $router) {
 		var vm = this;
 
 		/**
@@ -42,13 +42,13 @@
 
 		/**
 		 * @ngdoc property
-		 * @name location
+		 * @name router
 		 * @propertyOf <%= scriptAppName %>.login.controller:LoginController
 		 * @description
-		 * The location service of this controller
+		 * The router service of this controller
 		 *
 		 */
-		vm.location = $location;
+		vm.router = $router;
 
 		/**
 		 * @ngdoc property
@@ -90,7 +90,7 @@
 
 		// Logged in, redirect to home
 		function loginSuccess() {
-			vm.location.path('/');
+			vm.router.navigate('/');
 		}
 
 		// Error, set controllers error object

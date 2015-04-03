@@ -16,7 +16,7 @@
 			<md-item>
 				<md-button ng-click="menu.logout()">
 					<md-icon md-svg-icon="navigation:ic_cancel_24px"></md-icon>
-					<span class="md-subhead">Logout</span>
+					<span class="md-body-2">Logout</span>
 				</md-button>
 			</md-item>
 			<md-divider></md-divider>
@@ -25,20 +25,20 @@
 		<md-list ng-repeat="item in menu.items"<% if (features.auth) { %> ng-show="menu.canAccess(item)"<% } %> >
 
 			<md-item layout="row" layout-align="start center">
-				<md-button ng-click="menu.navigateTo(item)">
-					<md-icon md-svg-icon="{{item.icon}}"></md-icon>
-					<span class="md-subhead">{{item.name}}</span>
+				<md-button ng-class="{'md-primary': menu.isActive(item)}" ng-click="menu.navigateTo(item)">
+					<md-icon ng-class="{'md-primary': menu.isActive(item)}" md-svg-icon="{{item.icon}}"></md-icon>
+					<span class="md-body-2">{{item.name}}</span>
 				</md-button>
-				<md-divider ng-if="!$last"></md-divider>
 			</md-item>
 
-			<md-item layout="row" layout-align="start center" ng-repeat="item in item.subItems"<% if (features.auth) { %> ng-show="menu.canAccess(item)"<% } %>>
-				<md-button ng-click="menu.navigateTo(item)">
-					<md-icon md-svg-icon="{{item.icon}}"></md-icon>
-					<span class="md-body-1">{{item.name}}</span>
+			<md-item layout="row" layout-align="start center" ng-repeat="subItem in item.subItems"<% if (features.auth) { %> ng-show="menu.canAccess(subItem)"<% } %>>
+				<md-button ng-class="{'md-primary': menu.isActive(subItem)}" ng-click="menu.navigateTo(subItem)">
+					<md-icon ng-class="{'md-primary': menu.isActive(subItem)}" md-svg-icon="{{subItem.icon}}"></md-icon>
+					<span class="md-body-2">{{subItem.name}}</span>
 				</md-button>
-				<md-divider ng-if="!$last"></md-divider>
 			</md-item>
+
+			<md-divider ng-if="!$last"></md-divider>
 
 		</md-list>
 

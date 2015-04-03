@@ -1,0 +1,10 @@
+<div class="md-toolbar-tools">
+	<md-button hide-gt-lg ng-click="app.openMainMenu()" class="md-icon-button" aria-label="Open main menu">
+		<md-icon md-svg-icon="navigation:ic_menu_24px"></md-icon>
+	</md-button>
+	<h2><%= appname %></h2>
+	<span flex></span><%if (features.auth) {%>
+	<md-button ng-show="app.isLoggedIn()" ng-click="app.logout()" class="md-icon-button" aria-label="Logout">
+		<md-icon md-svg-icon="navigation:ic_more_vert_24px"></md-icon>
+	</md-button><% } %>
+</div>

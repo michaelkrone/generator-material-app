@@ -36,7 +36,8 @@
 		vm.sidenavId = 'mainMenu';
 		vm.items = _.sortBy(mainMenu.getMenu(), 'order');
 		vm.navigateTo = navigateTo;
-		vm.close = close;<% if (features.auth) { %>
+		vm.close = close;
+		vm.isActive = isActive;<% if (features.auth) { %>
 		vm.canAccess = canAccess;
 		vm.logout = logout;<% } %>
 
@@ -55,6 +56,13 @@
 			vm.close().then(function () {
 				$router.navigate(item.link);
 			});
+		}
+
+		/**
+		 * Determine if the menu item is active for the current route
+		 */
+		function isActive(item) {
+			return item.link === $router.lastNavigationAttempt;
 		}<% if (features.auth) { %>
 
 		/**

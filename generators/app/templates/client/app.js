@@ -31,7 +31,7 @@
 		$httpProvider.interceptors.push('AuthInterceptor');<% } %>
 
 		// set the default palette name
-		var defaultPalette = 'green';
+		var defaultPalette = 'light-blue';
 		$mdThemingProvider.setDefaultTheme(defaultPalette);
 
 		// define a palette to darken the background of components
@@ -42,7 +42,7 @@
 		$mdThemingProvider
 			.theme(defaultPalette)
 			.primaryPalette(defaultPalette)
-			.accentPalette('light-blue')
+			.accentPalette('light-green')
 			.backgroundPalette('grey-background');
 
 		var spritePath = 'bower_components/material-design-icons/sprites/svg-sprite/';

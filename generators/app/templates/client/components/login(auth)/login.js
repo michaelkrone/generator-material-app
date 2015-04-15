@@ -31,7 +31,7 @@
 	 * Defines the '/login route for the 'login' component.
 	 */
 
-	// inject runAdmin dependencies
+	// inject runAdmin dependencies here
 	runAccount.$inject = ['$router'];
 
 	function runAccount($router) {

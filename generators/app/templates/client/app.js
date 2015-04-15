@@ -16,9 +16,9 @@
 		.config(appConfig)
 		.run(appRun);
 
-
 	/**
-	 * Application config function
+	 * Application config function, configuring the material theme and the navigation,
+	 * add the auth interceptor to the http service.
 	 *
 	 * @param $locationProvider
 	 */
@@ -27,13 +27,10 @@
 
 	function appConfig($locationProvider, $mdThemingProvider, $mdIconProvider<% if (features.auth) { %>, $httpProvider<% } %>) {
 		$locationProvider.html5Mode(true);<% if(features.auth) { %>
-
 		$httpProvider.interceptors.push('AuthInterceptor');<% } %>
 
 		// set the default palette name
 		var defaultPalette = 'light-blue';
-		$mdThemingProvider.setDefaultTheme(defaultPalette);
-
 		// define a palette to darken the background of components
 		var greyBackgroundMap = $mdThemingProvider.extendPalette(defaultPalette, {'A100': 'fafafa'});
 		$mdThemingProvider.definePalette('grey-background', greyBackgroundMap);
@@ -42,7 +39,7 @@
 		$mdThemingProvider
 			.theme(defaultPalette)
 			.primaryPalette(defaultPalette)
-			.accentPalette('light-green')
+			.accentPalette('green')
 			.backgroundPalette('grey-background');
 
 		var spritePath = 'bower_components/material-design-icons/sprites/svg-sprite/';

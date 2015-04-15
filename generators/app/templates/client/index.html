@@ -27,7 +27,7 @@
 
 <main layout="column" flex>
 
-	<md-toolbar ng-cloak class="md-tall md-whiteframe-z1"<%if (features.auth) {%> ng-show="app.isLoggedIn()"<% } %>>
+	<md-toolbar ng-cloak class="md-whiteframe-z1"<%if (features.auth) {%> ng-show="app.isLoggedIn()"<% } %>>
 		<div class="md-toolbar-tools">
 			<md-button hide-gt-lg ng-click="app.openMainMenu()" class="md-icon-button" aria-label="Open main menu">
 				<md-icon md-svg-icon="navigation:ic_menu_24px"></md-icon>

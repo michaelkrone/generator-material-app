@@ -31,7 +31,7 @@
 	 * Adds the 'Home' menu item to the main menu, linking to '/home' with order '1'.
 	 */
 
-	// inject configHome dependencies
+	// inject configHome dependencies here
 	configHome.$inject = ['mainMenuProvider'];
 
 	function configHome(mainMenuProvider) {
@@ -45,7 +45,7 @@
 	 * Defines the '/home' route for the 'home' component.
 	 */
 
-	// inject runHome dependencies
+	// inject runHome dependencies here
 	runHome.$inject = ['$router'];
 
 	function runHome($router) {

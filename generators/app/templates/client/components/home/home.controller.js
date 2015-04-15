@@ -35,7 +35,7 @@
 		 * The polite greeting of this sublime controller
 		 *
 		 */
-		vm.greeting = 'Milord, here be HomeControllers.';<% if(features.auth) { %>
+		vm.greeting = 'Milord, this is the HomeController.';<% if(features.auth) { %>
 
 		/**
 		 * @ngdoc property

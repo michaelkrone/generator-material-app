@@ -64,12 +64,13 @@ module.exports = yeoman.generators.Base.extend({
 				message: 'Shall I scaffold out a JWT authentication (with users and stuff)?',
 				default: true
 			},
-			{
-				type: 'confirm',
-				name: 'socketio',
-				message: 'Would you like to use socket.io?',
-				default: true
-			}], function (answers) {
+			//{
+			//	type: 'confirm',
+			//	name: 'socketio',
+			//	message: 'Would you like to use socket.io?',
+			//	default: true
+			//}
+		], function (answers) {
 
 			if (answers.socketio) {
 				this.features.socketio = true;
@@ -79,6 +80,7 @@ module.exports = yeoman.generators.Base.extend({
 				this.features.auth = true;
 			}
 
+			this.features.socketio = true;
 			//this.gitrepo = answers.git;
 
 			cb();

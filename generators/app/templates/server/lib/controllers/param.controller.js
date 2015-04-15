@@ -18,22 +18,39 @@ exports = module.exports = ParamController;
  * The parameter name is passed as the third argument.
  * @constructor
  * @inherits CrudController
- * @param {Model} model - The mongoose model to operate on
- * @param {String} idName - The name of the id request parameter to use
- * @param {String} paramName - The name of the request property to use
+ * @param {Object} model - The mongoose model to operate on
+ * @param {String} [idName] - The name of the id request parameter to use,
+ * defaults to the lowercase model name with 'Id' appended.
+ * @param {String} [paramName] - The name of the request property to use,
+ * defaults to the lowercase model name with 'Param' appended.
  * @param {Object} router - The express router to attach the param function to
  */
 function ParamController(model, idName, paramName, router) {
+	var modelName = model.modelName.toLowerCase();
+
+	// make idName and paramName arguments optional (v0.1.1)
+	if (typeof idName === 'function') {
+		router = idName;
+		idName = modelName + 'Id';
+	}
+
+	if (typeof paramName === 'function') {
+		router = paramName;
+		paramName = modelName + 'Param';
+	}
+
 	// call super constructor
 	CrudController.call(this, model, idName);
 
-	// only set param if is set, will default to 'id'
-	if (paramName) {
-		this.paramName = String(paramName);
+	// only set param if it is set, will default to 'id'
+	if (!paramName) {
+		paramName = modelName + 'Param';
 	}
 
-	// register id name route parameter
+	this.paramName = String(paramName);
 	this.paramString = ':' + this.paramName;
+
+	// register param name route parameter
 	router.param(this.paramName, this.registerRequestParameter);
 }
 
@@ -49,7 +66,14 @@ ParamController.prototype = {
 	 * The route parameter name
 	 * @default
 	 */
-	paramName: 'id',
+	paramName: undefined,
+
+	/**
+	 * Flag indicating that a mongo db id is used as a parameter. The parameter
+	 * function will check for a valid mongo id then.
+	 * @default
+	 */
+	mongoId: true,
 
 	/**
 	 * Get a single document, returning the request
@@ -125,8 +149,8 @@ ParamController.prototype = {
 	registerRequestParameter: function (req, res, next, id) {
 		var self = this;
 
-		// only process a valid object id
-		if (!ObjectID.isValid(id)) {
+		// check if a custom id is used, when not only process a valid object id
+		if (this.mongoId && !ObjectID.isValid(id)) {
 			res.badRequest();
 			return next();
 		}

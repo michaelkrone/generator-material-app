@@ -4,13 +4,14 @@
 	"dependencies": {
 		"angular": ">=1.4.*",
 		"angular-resource": ">=1.4.*",
+		"angular-animate": ">=1.4.*",
 		"angular-cookies": ">=1.4.*",
 		"angular-sanitize": ">=1.4.*",
 		"angular-messages": ">=1.4.*",
 		"angular-ui-router": "latest",
 		"material-design-icons": ">=1.0.1",
 		"lodash": "~2.4.1",
-		"angular-material": "master",
+		"angular-material": "0.8.3",
 		"angular-socket-io": "~0.6.0",
 		"angular-i18n": "~1.3.14",
 		"angular-moment": "~0.9.0"<% if (features.socketio) { %>,
@@ -22,6 +23,7 @@
 		"should": "shouldjs/should.js#~4.4.1"
 	},
 	"resolutions": {
-		"angular": ">=1.4.*"
+		"angular": ">=1.4.*",
+		"angular-animate": ">=1.4.*"
 	}
 }

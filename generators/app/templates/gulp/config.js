@@ -96,16 +96,8 @@ var conf = {
 		},
 		karma: {
 			configFile: path.join(rootPath, 'karma.conf.js'),
-			singleRun: true,
-			basePath: 'client/',
-			frameworks: ['mocha', 'angular-filesort'],
-			angularFilesort: {
-				whitelist: [
-					'app/**/*.js'
-				]
-			},
 			appFiles: [
-				'app/**/*.js',
+				'client/**/*.js',
 				'bower_components/should/should.js',
 				'bower_components/sinonjs/sinon.js',
 				'!bower_components/**'

@@ -9,7 +9,7 @@ module.exports = function(config) {
 
 		// frameworks to use
 		// available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-		frameworks: ['mocha'],
+		frameworks: ['mocha', 'angular-filesort'],
 
 		// spec and mock files, test runner and index.html
 		files: conf.options.karma.files,
@@ -30,6 +30,17 @@ module.exports = function(config) {
 		// available reporters: https://npmjs.org/browse/keyword/karma-reporter
 		reporters: ['progress', 'coverage'],
 
+		singleRun: true,
+
+		basePath: 'client/',
+
+		angularFilesort: {
+			whitelist: [
+				'client/**/*.js'
+			]
+		},
+
+		appFiles: conf.options.karma.files,
 
 		// configure the reporter
 		coverageReporter: {

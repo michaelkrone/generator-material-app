@@ -1,20 +1,20 @@
 /**
- * @ngdoc overview
- * @name <%= scriptAppName %>
+ * @ngdoc
+ * @module <%= scriptAppName %>
  * @description
  * Module definition for the <%= scriptAppName %> module.
+ * This is the app module of the <%= name %> application.
  */
 
 (function () {
 	'use strict';
 
-	angular
-		.module('<%= scriptAppName %>', [
+	angular.
+		module('<%= scriptAppName %>', [
 			// Add modules below
 			<%= angularModules %>
-		])
-		.config(appConfig)
-		.run(appRun);
+		]).
+		config(appConfig);
 
 	/**
 	 * Application config function, configuring the material theme and the navigation,
@@ -29,37 +29,36 @@
 		$locationProvider.html5Mode(true);<% if(features.auth) { %>
 		$httpProvider.interceptors.push('AuthInterceptor');<% } %>
 
-		// set the default palette name
-		var defaultPalette = 'light-blue';
-		// define a palette to darken the background of components
-		var greyBackgroundMap = $mdThemingProvider.extendPalette(defaultPalette, {'A100': 'fafafa'});
-		$mdThemingProvider.definePalette('grey-background', greyBackgroundMap);
+		setTheming('light-blue', 'green', 'pink');
+		registerIcons('navigation', 'action', 'content', 'toggle', 'alert');
 
-		// customize the theme
-		$mdThemingProvider
-			.theme(defaultPalette)
-			.primaryPalette(defaultPalette)
-			.accentPalette('green')
-			.backgroundPalette('grey-background');
+		/**
+		 * Configure the themingProvider with the given theme colors
+		 * @param theme
+		 * @param primary
+		 * @param accent
+		 */
+		function setTheming(theme, primary, accent) {
+			// define a palette to darken the background of components
+			var greyBackgroundMap = $mdThemingProvider.extendPalette(theme, {'A100': 'fafafa'});
+			$mdThemingProvider.definePalette('grey-background', greyBackgroundMap);
+			// customize the theme
+			$mdThemingProvider.
+				theme(theme).
+				primaryPalette(primary).
+				accentPalette(accent).
+				backgroundPalette('grey-background');
+		}
 
-		var spritePath = 'bower_components/material-design-icons/sprites/svg-sprite/';
-		$mdIconProvider.iconSet('navigation', spritePath + 'svg-sprite-navigation.svg');
-		$mdIconProvider.iconSet('action', spritePath + 'svg-sprite-action.svg');
-		$mdIconProvider.iconSet('content', spritePath + 'svg-sprite-content.svg');
-		$mdIconProvider.iconSet('toggle', spritePath + 'svg-sprite-toggle.svg');
-		$mdIconProvider.iconSet('alert', spritePath + 'svg-sprite-alert.svg');
-	}
-
-	/**
-	 * Application run function, defines the default route: '/home'.
-	 *
-	 * @param $router
-	 */
-
-	appRun.$inject = ['$router'];
-
-	function appRun($router) {
-		$router.config([{path: '/', redirectTo: '/home'}]);
+		/**
+		 * Load icons from the default material svg spreadsheets
+		 * @param {...} Names of the iconsets to register
+		 */
+		function registerIcons() {
+			Array.prototype.slice.call(arguments).forEach(function (name) {
+				$mdIconProvider.iconSet(name, 'bower_components/material-design-icons/sprites/svg-sprite/svg-sprite-' + name + '.svg');
+			});
+		}
 	}
 
 })();

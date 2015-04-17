@@ -1,14 +1,20 @@
+/**
+ * @ngdoc
+ * @module <%= scriptAppName %>.home
+ * @description
+ * The home module of the <%= name %> application.
+ */
+
 (function () {
 	'use strict';
 
-	// register the route config on the application
 	angular
 		.module('<%= scriptAppName %>.home', [
 			'ngNewRouter',
 			'<%= scriptAppName %>.mainMenu'
-		])
-		.config(configHome)
-		.run(runHome);
+		]);
+		//.config(configHome)
+		//.run(runHome);
 
 	var routeConfig = {
 		path: '/home',

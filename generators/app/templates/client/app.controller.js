@@ -23,10 +23,18 @@
 	 * @param {$location} $mdSidenav - The sidenav service used to communicate with the sidenav components
 	 */
 
-	AppController.$inject = [<% if(features.auth) { %> 'Auth', <% } %>'$mdSidenav'];
+	AppController.$inject = [<% if(features.auth) { %> 'Auth', <% } %>'$router', '$mdSidenav', 'mainMenu'];
 
-	function AppController(<% if(features.auth) { %> Auth,  <% } %>$mdSidenav) {
+	AppController.$routeConfig =[
+		{ path: '/', redirectTo: '/home' },
+		{ path: '/home', components: { content: 'home' }, menu: { name: 'Home', order: 1, icon: 'action:ic_home_24px' } }
+		// add more routes here
+	];
+
+	function AppController(<% if(features.auth) { %> Auth,  <% } %>$router, $mdSidenav, mainMenu) {
 		var vm = this;
+
+		mainMenu.addController(this);
 
 		vm.sidenavId = 'mainMenu';<% if(features.auth) { %>
 
@@ -91,4 +99,5 @@
 			return $mdSidenav(vm.sidenavId).open();
 		}
 	}
+
 })();

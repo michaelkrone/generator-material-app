@@ -24,4 +24,10 @@ describe('Controller: HomeController', function () {
 			.should.be.instanceof(String)
 			.and.should.match(/HomeController/);
 	});
+
+	it('should have features', function () {
+		HomeController.features
+			.should.be.instanceof(Array)
+			.and.should.have.length(<% if(features.socketio) {%>8<% } else {%>7<% }%>);
+	});
 });

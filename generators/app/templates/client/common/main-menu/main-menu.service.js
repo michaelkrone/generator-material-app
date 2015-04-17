@@ -67,20 +67,32 @@
 		 * @methodOf mainMenu.service:mainMenu
 		 * @description
 		 * Adds a new submenu item to a parent menu
-		 * @param {String} parent The link of the parent element
+		 * @param {String} parent The path of the parent element
 		 * @param {Object} menuData The sub item data to add
 		 */
 		function addSubMenuItem(parent, menuData) {
-			var menuItem = _.find(menu, {link: parent});
+			var menuItem = _.find(menu, {path: parent});
 			if (menuItem) {
 				menuItem.subItems = menuItem.subItems || [];
 				menuItem.subItems.push(menuData);
 			}
 		}
 
+		function addController(controller) {
+			var config = controller.constructor.$routeConfig;
+			config.forEach(function (item) {
+				if (item.menu) {
+					item.menu.path = item.path;
+					addMenuItem(item.menu);
+				}
+			});
+		}
+
 		// a private constructor
 		function MainMenu() {
 			this.getMenu = getMenu;
+
+			this.addController = addController;
 
 			function getMenu() {
 				return menu;

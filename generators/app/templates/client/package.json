@@ -1,0 +1,17 @@
+{
+	"name": "<%= _.slugify(_.humanize(appname)) %> Client",
+  "version": "0.0.1",
+	"private": true,
+	"dependencies": {},
+	"scripts": {},
+	"repository": {},
+	"keywords": [
+		"material design",
+		"<%= appname %>"
+	],
+	"engines": {
+		"node": ">=0.12"
+	},
+	"author": "",
+	"devDependencies": {}
+}

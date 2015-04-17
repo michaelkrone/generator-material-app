@@ -1,4 +1,7 @@
 <md-content flex class="md-padding" id="home-content">
+	<md-card>
+		<md-card-content>
+
 			<h2 class="md-headline">Welcome Home!</h2>
 
 			<span class="md-subhead">{{home.greeting}}</span>
@@ -8,17 +11,28 @@
 				The route is accessible as <span class="md-body-2">'/home'</span>. <br/>
 				This is version <code>v<%= pkg.version %></code> of the awesome <%= appname %> App.
 			</p>
-</md-content>
+		</md-card-content>
+	</md-card>
 
-<div ng-app="gridListDemo" ng-controller="gridListDemoCtrl as vm" flex>
-	<md-grid-list
-		md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6"
-		md-row-height-gt-md="1:1" md-row-height="4:3"
-		md-gutter="8px" md-gutter-gt-sm="4px" >
-		<md-grid-tile md-rowspan="2" md-colspan="2" class="pink">
-			<md-icon md-svg-icon="action:ic_home_24px"></md-icon>
-			<span class="md-subhead">{{home.greeting}}</span>
-			<md-grid-tile-footer><h3>Welcome Home!</h3></md-grid-tile-footer>
-		</md-grid-tile>
-	</md-grid-list>
-</div>
+	<md-card>
+		<md-card-content>
+			<div flex>
+				<md-grid-list md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="4:3"
+											md-gutter="8px" md-gutter-gt-sm="4px">
+					<md-grid-tile ng-repeat="feature in home.features"
+												md-rowspan="{{feature.size.row}}"
+												md-colspan="{{feature.size.col}}"
+												md-colspan-sm="1"
+												ng-class="feature.color">
+						<a ng-href="{{feature.link}}">
+							<img style="max-width: 100%" ng-src="{{feature.icon}}"></img>
+						</a>
+						<md-grid-tile-footer>
+							<h3>{{feature.name}}</h3>
+						</md-grid-tile-footer>
+					</md-grid-tile>
+				</md-grid-list>
+			</div>
+		</md-card-content>
+	</md-card>
+</md-content>

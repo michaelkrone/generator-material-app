@@ -109,7 +109,7 @@ module.exports = yeoman.generators.Base.extend({
 
 		// app modules
 
-		ngModules.push(appModule('lodash'));
+		// ngModules.push(appModule('lodash'));
 		ngModules.push(appModule('mainMenu'));
 		// ngModules.push(appModule('mongooseError'));
 		// ngModules.push(appModule('listImage'));

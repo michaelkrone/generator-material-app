@@ -7,9 +7,9 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var express = require('express');
+var config = require('./config/index');<% if(features.socketio) { %>
 var socketio = require('socket.io');
-var config = require('./config/index');
-var socketConfig = require('./config/socketio');
+var socketConfig = require('./config/socketio');<% }%>
 var db = require('./config/mongoose');
 var app = express();
 
@@ -38,13 +38,14 @@ process
  * @return
  */
 function startServer() {
-	var server = require('http').createServer(app);
+	var server = require('http').createServer(app);<% if(features.socketio) { %>
 	var socket = socketio(server, {
 		serveClient: (config.env !== 'production'),
 		path: '/socket.io-client'
 	});
+
 	// Setup SocketIO
-	socketConfig(socket);
+	socketConfig(socket);<% }%>
 	return server;
 }
 

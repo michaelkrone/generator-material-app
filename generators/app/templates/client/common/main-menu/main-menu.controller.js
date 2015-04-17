@@ -54,7 +54,7 @@
 		 */
 		function navigateTo(item) {
 			vm.close().then(function () {
-				$router.navigate(item.link);
+				$router.navigate(item.path);
 			});
 		}
 

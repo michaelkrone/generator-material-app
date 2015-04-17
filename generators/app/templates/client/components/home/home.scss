@@ -1,1 +1,28 @@
-#home-content {}
+#home-content {
+	md-grid-tile {
+		&.gray {
+			background: #f5f5f5;
+		}
+		&.green {
+			background: #b9f6ca;
+		}
+		&.blue {
+			background: #84ffff;
+		}
+		&.deepBlue {
+			background: #448aff;
+		}
+		&.white {
+			background: #ffffff;
+		}
+		&.brown{
+			background: #a1887f;
+		}
+		&.red {
+			background: #ff8a80;
+		}
+		&.pink {
+			background: #ff80ab;
+		}
+	}
+}

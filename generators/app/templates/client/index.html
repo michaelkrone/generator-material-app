@@ -42,9 +42,9 @@
 
 	<section layout="row" flex ng-viewport="content"></section>
 
-</main>
+</main><% if(features.socketio) { %>
 
-<script src="socket.io-client/socket.io.js"></script>
+<script src="socket.io-client/socket.io.js"></script><% }%>
 
 <!-- vendor:js -->
 <!-- endinject -->

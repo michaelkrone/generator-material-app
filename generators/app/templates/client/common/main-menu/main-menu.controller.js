@@ -20,21 +20,22 @@
 	 * @name mainMenu.provider:MainMenuController
 	 * @description
 	 * Provider of the {@link mainMenu.controller:MainMenuController MainMenuController}
-	 * @param {Service} mainMenu The mainMenu service to use
+	 * @param {Service} $router The router service to use
 	 * @param {Service} $mdSidenav The mdSidenav service to use
-	 * @param {Service} _ The lodash service to use
+	 * @param {Service} mainMenu The mainMenu service to use<% if (features.auth) { %>
+	  *@param {Service} Auth The auth service to use<% } %>
 	 * @returns {Service} {@link mainMenu.controller:MainMenuController MainMenuController}
 	 */
 
-	MainMenuController.$inject = ['mainMenu', '$router', '$mdSidenav', '_'<% if (features.auth) { %>, 'Auth'<% } %>];
+	MainMenuController.$inject = ['$router', '$mdSidenav', 'mainMenu'<% if (features.auth) { %>, 'Auth'<% } %>];
 
 
-	function MainMenuController(mainMenu, $router, $mdSidenav, _ <% if (features.auth) { %>, Auth<% } %>) {
+	function MainMenuController($router, $mdSidenav, mainMenu<% if (features.auth) { %>, Auth<% } %>) {
 		var vm = this;
 
 		// view model bindings
 		vm.sidenavId = 'mainMenu';
-		vm.items = _.sortBy(mainMenu.getMenu(), 'order');
+		vm.items = mainMenu.getMenu();
 		vm.navigateTo = navigateTo;
 		vm.close = close;
 		vm.isActive = isActive;<% if (features.auth) { %>

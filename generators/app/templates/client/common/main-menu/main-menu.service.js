@@ -27,12 +27,12 @@
 		/* jshint validthis:true */
 		// factory members
 		var menu = [];
-		var path;
 
 		// public configuration API
 		this.setMenu = setMenu;
 		this.addMenuItem = addMenuItem;
 		this.addSubMenuItem = addSubMenuItem;
+		this.addController = addController;
 
 		// Method for instantiating
 		this.$get = mainMenuFactory;
@@ -78,9 +78,18 @@
 			}
 		}
 
+		/**
+		 * @ngdoc function
+		 * @name addController
+		 * @methodOf mainMenu.service:mainMenu
+		 * @description
+		 * Uses the $routeConfig property of the controllers constructor
+		 * property to build a menu entry. The menu property of the $routeConfig
+		 * element is used for setting the menu item.
+		 * @param {Object} controller The routed controller to add to the menu
+		 */
 		function addController(controller) {
-			var config = controller.constructor.$routeConfig;
-			config.forEach(function (item) {
+			controller.constructor.$routeConfig.forEach(function (item) {
 				if (item.menu) {
 					item.menu.path = item.path;
 					addMenuItem(item.menu);
@@ -91,11 +100,11 @@
 		// a private constructor
 		function MainMenu() {
 			this.getMenu = getMenu;
-
+			this.addSubMenuItem = addSubMenuItem;
 			this.addController = addController;
 
 			function getMenu() {
-				return menu;
+				return _.sortBy(menu, 'order');
 			}
 		}
 

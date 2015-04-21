@@ -1,26 +1,80 @@
 #home-content {
+
+	md-card {
+		-webkit-transition: all ease-in-out 0.3s;
+		transition: all ease-in-out 0.3s;
+
+		&.ng-hide {
+			position: absolute;
+			opacity: 0;
+			margin-top: 330px;
+		}
+
+		@media (min-width: 960px) {
+			max-width: 450px;
+		}
+
+		md-card-content {
+			.md-headline {
+				line-height: 2.4rem;
+				margin-bottom: 0.16em;
+			}
+
+			.md-subhead {
+				color: rgba(0, 0, 0, 0.54);
+			}
+
+			p {
+				margin-top: 1.16rem;
+			}
+		}
+
+	}
+
+	div[ng-show="showGrid"] {
+		-webkit-transition: all ease-in-out 0.6s;
+		transition: all ease-in-out 0.6s;
+
+		&.ng-hide {
+			opacity: 0;
+			margin-top: 330px;
+		}
+
+	}
+
 	md-grid-tile {
+		img {
+			max-width: 100%;
+		}
+
 		&.gray {
 			background: #f5f5f5;
 		}
+
 		&.green {
 			background: #b9f6ca;
 		}
+
 		&.blue {
 			background: #84ffff;
 		}
+
 		&.deepBlue {
 			background: #448aff;
 		}
+
 		&.white {
-			background: #ffffff;
+			background: #f5f5f5;
 		}
-		&.brown{
+
+		&.brown {
 			background: #a1887f;
 		}
+
 		&.red {
 			background: #ff8a80;
 		}
+
 		&.pink {
 			background: #ff80ab;
 		}

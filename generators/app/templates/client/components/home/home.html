@@ -1,38 +1,51 @@
 <md-content flex class="md-padding" id="home-content">
-	<md-card>
-		<md-card-content>
 
-			<h2 class="md-headline">Welcome Home!</h2>
+	<md-card ng-hide="showGrid">
+		<div flex>
+			<md-grid-list md-cols="5" md-row-height="4:3" md-gutter-gt-sm="4px">
+				<md-grid-tile ng-repeat="feature in home.features"
+											md-rowspan="{{feature.size.row}}"
+											md-colspan="{{feature.size.col}}"
+											md-colspan-sm="1"
+											ng-class="feature.color">
+					<a ng-href="{{feature.link}}">
+						<img ng-src="{{feature.icon}}"></img>
+					</a>
+				</md-grid-tile>
+			</md-grid-list>
+		</div>
+		<md-card-content>
+			<h2 class="md-headline">Welcome!</h2>
 
 			<span class="md-subhead">{{home.greeting}}</span>
 
 			<p class="md-body-1">
-				This is the home route controlled by the <span class="md-body-2">HomeController</span>.
-				The route is accessible as <span class="md-body-2">'/home'</span>. <br/>
-				This is version <code>v<%= pkg.version %></code> of the awesome <%= appname %> App.
+				This is the <span class="md-body-2">'/home'</span> route controlled by the <span class="md-body-2">HomeController</span>,
+				which is a component of the astounding <span class="md-body-2"><%= appname %></span> App.<br/>
+				Please have a look at all the awesome technologies that make this possible.
 			</p>
 		</md-card-content>
+		<md-card-footer layout-align="end center">
+			<md-button class="md-accent md-noink" ng-click="showGrid = true">Nice</md-button>
+		</md-card-footer>
 	</md-card>
 
-	<md-card>
-		<md-card-content>
-			<div flex>
-				<md-grid-list md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="4:3"
-											md-gutter="8px" md-gutter-gt-sm="4px">
-					<md-grid-tile ng-repeat="feature in home.features"
-												md-rowspan="{{feature.size.row}}"
-												md-colspan="{{feature.size.col}}"
-												md-colspan-sm="1"
-												ng-class="feature.color">
-						<a ng-href="{{feature.link}}">
-							<img style="max-width: 100%" ng-src="{{feature.icon}}"></img>
-						</a>
-						<md-grid-tile-footer>
-							<h3>{{feature.name}}</h3>
-						</md-grid-tile-footer>
-					</md-grid-tile>
-				</md-grid-list>
-			</div>
-		</md-card-content>
-	</md-card>
+	<div flex ng-show="showGrid">
+		<md-grid-list md-cols-sm="1" md-cols-md="2" md-cols-gt-md="5" md-row-height-gt-md="1:1" md-row-height="4:3"
+									md-gutter="8px" md-gutter-gt-sm="4px">
+			<md-grid-tile ng-repeat="feature in home.features"
+										md-rowspan="{{feature.size.row}}"
+										md-colspan="{{feature.size.col}}"
+										md-colspan-sm="1"
+										ng-class="feature.color">
+				<a ng-href="{{feature.link}}">
+					<img ng-src="{{feature.icon}}"></img>
+				</a>
+				<md-grid-tile-footer>
+					<h3>{{feature.name}}</h3>
+				</md-grid-tile-footer>
+			</md-grid-tile>
+		</md-grid-list>
+	</div>
+
 </md-content>

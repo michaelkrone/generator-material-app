@@ -41,8 +41,4 @@ gulp.task('clean', function () {
 /**
  * Grouped task definitions
  */
-gulp.task('serve', ['jshint', 'codestyle', 'unit', 'watch']);
-
-gulp.task('build:all', ['development', 'test', 'reports']);
-
-gulp.task('default', ['build:all']);
+gulp.task('default', ['build']);

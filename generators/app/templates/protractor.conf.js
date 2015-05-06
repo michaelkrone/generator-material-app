@@ -13,7 +13,7 @@ exports.config = {
 
 	// A base URL for your application under test. Calls to protractor.get()
 	// with relative paths will be prepended with this.
-	baseUrl: 'http://localhost:' + (process.env.PORT || '9000'),
+	baseUrl: 'http://localhost:' + (process.env.PORT || '9001'),
 
 	// list of files / patterns to load in the browser
 	specs: conf.src.client.bower

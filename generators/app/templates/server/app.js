@@ -9,8 +9,9 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var express = require('express');
 var config = require('./config/index');<% if(features.socketio) { %>
 var socketio = require('socket.io');
-var socketConfig = require('./config/socketio');<% }%>
+var socketConfig = require('./config/socketio');
 var db = require('./config/mongoose');
+<% }%>
 var app = express();
 
 // Expose app

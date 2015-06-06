@@ -65,7 +65,7 @@ var conf = {
 			],
 			bower: bowerFiles
 		},
-		styles: ['client/styles/app.scss', 'client/common/**/*.scss', 'client/components/**/*.scss'],
+		styles: ['client/styles/app.scss', 'client/core/**/*.scss', 'client/components/**/*.scss'],
 		html: ['client/**/*.html'],
 		css: ['client/styles/app.css'],
 		e2eTests: ['e2e/**/*.spec.js']

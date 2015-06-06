@@ -23,20 +23,26 @@
 	 * @param {$location} $mdSidenav - The sidenav service used to communicate with the sidenav components
 	 */
 
-	AppController.$inject = [<% if(features.auth) { %> 'Auth', <% } %>'$router', '$mdSidenav', 'mainMenu'];
-
 	AppController.$routeConfig =[
 		{ path: '/', redirectTo: '/home' },
-		{ path: '/home', components: { content: 'home' }, menu: { name: 'Home', order: 1, icon: 'action:ic_home_24px' } }
+		{
+			path: '/home',
+			components: { content: 'home', toolbar: 'home.toolbar' },
+			menu: { name: 'Home', order: 1, icon: 'action:ic_home_24px' }
+		}
 		// add more routes here
 	];
 
-	function AppController(<% if(features.auth) { %> Auth,  <% } %>$router, $mdSidenav, mainMenu) {
+	AppController.$inject = [<% if(features.auth) { %>'Auth', <% } %>'$router', '$mdSidenav', 'mainMenu'];
+
+	function AppController(<% if(features.auth) { %>Auth,  <% } %>$router, $mdSidenav, mainMenu) {
 		var vm = this;
 
-		mainMenu.addController(this);
+		// the id component id of the main menu
+		var sidenavId = 'mainMenu';
 
-		vm.sidenavId = 'mainMenu';<% if(features.auth) { %>
+		// register this controller to add menu items to the main menu based on the $routeConfig property
+		mainMenu.addController(this);<% if(features.auth) { %>
 
 		/**
 		 * @ngdoc function
@@ -89,14 +95,14 @@
 		 * Close the main menu sidenav component
 		 */
 		function closeMainMenu() {
-			return $mdSidenav(vm.sidenavId).close();
+			return $mdSidenav(sidenavId).close();
 		}
 
 		/**
 		 * Open the main menu sidenav component
 		 */
 		function openMainMenu() {
-			return $mdSidenav(vm.sidenavId).open();
+			return $mdSidenav(sidenavId).open();
 		}
 	}
 

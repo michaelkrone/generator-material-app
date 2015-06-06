@@ -29,5 +29,9 @@ describe('Controller: HomeController', function () {
 		HomeController.features
 			.should.be.instanceof(Array)
 			.and.should.have.length(<% if(features.socketio) {%>8<% } else {%>7<% }%>);
-	});
+	});<% if(features.auth) { %>
+
+	it('should have an canActivate function', function () {
+		HomeController.canActivate.should.be.a.Function;
+	});<% }%>
 });

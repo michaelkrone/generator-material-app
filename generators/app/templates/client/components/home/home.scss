@@ -1,18 +1,8 @@
 #home-content {
 
 	md-card {
-		-webkit-transition: all ease-in-out 0.3s;
-		transition: all ease-in-out 0.3s;
 
-		&.ng-hide {
-			position: absolute;
-			opacity: 0;
-			margin-top: 330px;
-		}
-
-		@media (min-width: 960px) {
-			max-width: 450px;
-		}
+		max-width: 600px;
 
 		md-card-content {
 			.md-headline {
@@ -29,53 +19,35 @@
 			}
 		}
 
-	}
-
-	div[ng-show="showGrid"] {
-		-webkit-transition: all ease-in-out 0.6s;
-		transition: all ease-in-out 0.6s;
-
-		&.ng-hide {
-			opacity: 0;
-			margin-top: 330px;
-		}
-
-	}
-
-	md-grid-tile {
-		img {
-			max-width: 100%;
-		}
-
-		&.gray {
+		.gray {
 			background: #f5f5f5;
 		}
 
-		&.green {
+		.green {
 			background: #b9f6ca;
 		}
 
-		&.blue {
+		.blue {
 			background: #84ffff;
 		}
 
-		&.deepBlue {
+		.deepBlue {
 			background: #448aff;
 		}
 
-		&.white {
+		.white {
 			background: #f5f5f5;
 		}
 
-		&.brown {
+		.brown {
 			background: #a1887f;
 		}
 
-		&.red {
+		.red {
 			background: #ff8a80;
 		}
 
-		&.pink {
+		.pink {
 			background: #ff80ab;
 		}
 	}

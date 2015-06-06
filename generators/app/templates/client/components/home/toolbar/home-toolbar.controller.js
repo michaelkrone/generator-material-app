@@ -2,7 +2,7 @@
  * @ngdoc controller
  * @name <%= scriptAppName %>.home.controller:HomeToolbarController
  * @description
- * Controller for the main component
+ * Controller for the home toolbar component
  */
 
 (function () {
@@ -20,36 +20,25 @@
 	 * Provider of the {@link <%= scriptAppName %>.home.controller:HomeToolbarController HomeToolbarController}
 	 *
 	 * @param {Service} $router The router service to use
-	 */<% if(features.auth) { %>
-
-		HomeToolbarController.$inject = ['Auth'];<% }%>
+	 */
+	HomeToolbarController.$inject = [<% if(features.auth) { %>'Auth'<% }%>];
 
 	function HomeToolbarController(<% if(features.auth) { %>Auth<% }%>) {
-		var vm = this;
+		var vm = this;<% if(features.auth) { %>
 
 		/**
 		 * @ngdoc property
-		 * @name greeting
+		 * @name auth
 		 * @propertyOf <%= scriptAppName %>.home.controller:HomeToolbarController
 		 * @description
-		 * The polite greeting of this sublime controller
+		 * The auth service of this controller
 		 *
 		 */
-		vm.greeting = 'Milord, here be HomeToolbarControllers.';<% if(features.auth) { %>
-
-			/**
-			 * @ngdoc property
-			 * @name auth
-			 * @propertyOf <%= scriptAppName %>.home.controller:HomeToolbarController
-			 * @description
-			 * The auth service of this controller
-			 *
-			 */
-			vm.auth = Auth;<% }%>
+		vm.auth = Auth;<% }%>
 	}<% if(features.auth) { %>
 
-		HomeToolbarController.prototype.canActivate = function () {
-			return this.auth.isLoggedIn();
-		};<% }%>
+	HomeToolbarController.prototype.canActivate = function () {
+		return this.auth.isLoggedIn();
+	};<% }%>
 
 })();

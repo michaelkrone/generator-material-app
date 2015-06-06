@@ -63,7 +63,7 @@
 		 * Determine if the menu item is active for the current route
 		 */
 		function isActive(item) {
-			return item.link === $router.lastNavigationAttempt;
+			return $router.lastNavigationAttempt.indexOf(item.path) === 0;
 		}<% if (features.auth) { %>
 
 		/**

@@ -7,17 +7,17 @@
 		.directive('mainMenu', MainMenu);
 
 	// add MainMenu dependencies to inject
-	MainMenu.$inject = ['$rootScope', '$mdSidenav', '$document'];
+	MainMenu.$inject = [];
 
 	/**
 	 * MainMenu directive
 	 */
-	function MainMenu($rootScope, $mdSidenav, $document) {
+	function MainMenu() {
 		// directive definition members
 		var directive = {
 			restrict: 'E',
 			replace: true,
-			templateUrl: 'common/main-menu/main-menu.html'
+			templateUrl: 'core/main-menu/main-menu.html'
 		};
 
 		return directive;

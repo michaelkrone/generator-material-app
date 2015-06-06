@@ -6,7 +6,6 @@ md-sidenav[md-component-id="mainMenu"] {
 		.md-button {
 			display: block;
 			border-radius: 0;
-			color: inherit;
 			cursor: pointer;
 			font-weight: 500;
 			line-height: 48px;
@@ -23,7 +22,7 @@ md-sidenav[md-component-id="mainMenu"] {
 			md-icon {
 				width: 24px;
 				height: 24px;
-				margin-right: 32px;
+				margin-right: 8px;
 				margin-bottom: 4px;
 			}
 

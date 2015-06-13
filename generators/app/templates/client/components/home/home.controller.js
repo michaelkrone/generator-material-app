@@ -17,15 +17,25 @@
 	 * @ngdoc function
 	 * @name <%= scriptAppName %>.main.provider:HomeController
 	 * @description
-	 * Provider of the {@link <%= scriptAppName %>.home.controller:HomeController HomeController}
-	 *
-	 * @param {Service} $router The router service to use
+	 * Provider of the {@link <%= scriptAppName %>.home.controller:HomeController HomeController}<% if(features.auth) {%>
+	 * @param {Object} $router The router service to use
+	 * @param {Object} Auth The auth service to use<% }%>
 	 */
 
-	HomeController.$inject = ['$router'<% if(features.auth) { %>, 'Auth'<% }%>];
+	HomeController.$inject = [<% if(features.auth) { %>'$router', 'Auth'<% }%>];
 
-	function HomeController($router<% if(features.auth) { %>, Auth<% }%>) {
+	function HomeController(<% if(features.auth) { %>$router, Auth<% }%>) {
 		var vm = this;
+
+		/**
+		 * @ngdoc property
+		 * @name title
+		 * @propertyOf <%= scriptAppName %>.home.controller:HomeController
+		 * @description
+		 * The title of this component
+		 *
+		 */
+		vm.title = 'Home';
 
 		/**
 		 * @ngdoc property
@@ -68,6 +78,6 @@
 
 	HomeController.prototype.canActivate = function () {
 		return this.auth.isLoggedIn();
-	};<% }%>
+	};<%}%>
 
 })();

@@ -1,16 +1,16 @@
-<md-sidenav<%if (features.auth) {%> ng-show="app.isLoggedIn()"<% } %>
+<md-sidenav<%if (features.auth) {%> ng-show="menu.isLoggedIn()"<% } %>
 	md-is-locked-open="$mdMedia('gt-lg')"
 	md-component-id="mainMenu"
 	class="md-sidenav-left md-whiteframe-z2"
 	layout="column">
 
-	<md-toolbar class="md-tall md-whiteframe-z1">
-		<span class="md-toolbar-tools md-toolbar-tools-top" layout="column">
-			<h2 class="md-headline"><%= appname %> Menu</h2>
-		</span>
+	<md-toolbar class="md-tall md-hue-1">
+			<span class="md-toolbar-tools" layout="column">
+				<h2 class="md-headline"><%= appname %></h2>
+			</span>
 	</md-toolbar>
 
-	<md-content flex ng-controller="MainMenuController as menu"><% if (features.auth) { %>
+	<md-content flex><% if (features.auth) { %>
 
 		<md-list>
 			<md-item>

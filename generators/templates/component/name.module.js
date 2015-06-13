@@ -3,7 +3,7 @@
 
 	// register the route config on the application
 	angular
-		.module('<%= scriptAppName %>')
+		.module('<%= scriptAppName %>.<%= _.slugify(name) %>')
 		.config(config<%= classedName %>Route);
 
 	// inject config<%= classedName %>Route dependencies
@@ -15,7 +15,7 @@
 			.state('<%= name %>', {
 				url: '<%= route %>',
 				templateUrl: '<%= htmlUrl %>',
-				controller: '<%= classedName %>Ctrl',
+				controller: '<%= classedName %>Controller',
 				controllerAs: 'vm'
 		});
 	}

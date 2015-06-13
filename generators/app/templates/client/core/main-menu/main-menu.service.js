@@ -23,19 +23,36 @@
 	 * phase of your angular application
 	 * @returns {Object} Singleton
 	 */
+
 	function mainMenuProvider() {
 		/* jshint validthis:true */
+		var self = this;
 		// factory members
 		var menu = [];
+		var mdSidenav;
+		var componentId = 'mainMenu';
 
 		// public configuration API
-		this.setMenu = setMenu;
-		this.addMenuItem = addMenuItem;
-		this.addSubMenuItem = addSubMenuItem;
-		this.addController = addController;
+		self.setMenu = setMenu;
+		self.addMenuItem = addMenuItem;
+		self.addSubMenuItem = addSubMenuItem;
+		self.addController = addController;
 
 		// Method for instantiating
-		this.$get = mainMenuFactory;
+		mainMenuFactory.$inject = ['$mdSidenav'];
+		self.$get = mainMenuFactory;
+
+		/**
+		 * @ngdoc function
+		 * @name mainMenuFactory
+		 * @methodOf mainMenu.service:mainMenuFactory
+		 * @description
+		 * factory function for MainMenu
+		 * @param {Function} $mdSidenav The sidenav service to use
+		 */
+		function mainMenuFactory($mdSidenav) {
+			return new MainMenu($mdSidenav);
+		}
 
 		/**
 		 * @ngdoc function
@@ -97,20 +114,33 @@
 			});
 		}
 
+		/**
+		 * Close the main menu component
+		 */
+		function close() {
+			return mdSidenav(componentId).close();
+		}
+
+		/**
+		 * Open the main menu component
+		 */
+		function open() {
+			return mdSidenav(componentId).open();
+		}
+
 		// a private constructor
-		function MainMenu() {
+		function MainMenu($mdSidenav) {
+			mdSidenav = $mdSidenav;
 			this.getMenu = getMenu;
 			this.addSubMenuItem = addSubMenuItem;
 			this.addController = addController;
+			this.close = close;
+			this.open = open;
 
 			function getMenu() {
 				return _.sortBy(menu, 'order');
 			}
 		}
 
-		// factory function for MainMenu
-		function mainMenuFactory() {
-			return new MainMenu();
-		}
 	}
 })();

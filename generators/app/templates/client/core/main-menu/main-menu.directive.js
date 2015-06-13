@@ -17,7 +17,9 @@
 		var directive = {
 			restrict: 'E',
 			replace: true,
-			templateUrl: 'core/main-menu/main-menu.html'
+			templateUrl: 'core/main-menu/main-menu.html',
+			controller: 'MainMenuController',
+			controllerAs: 'menu'
 		};
 
 		return directive;

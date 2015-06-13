@@ -27,9 +27,7 @@
 
 <main layout="column" flex>
 
-	<md-toolbar ng-cloak class="md-whiteframe-z1"<%if (features.auth) {%> ng-show="app.isLoggedIn()"<% } %> ng-viewport="toolbar"></md-toolbar>
-
-	<section layout="column" flex ng-viewport="content"></section>
+	<section layout="column" flex ng-outlet id="main"></section>
 
 </main><% if(features.socketio) { %>
 

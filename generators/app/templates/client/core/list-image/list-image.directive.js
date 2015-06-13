@@ -6,9 +6,7 @@
 		.factory('AlphabetColor', AlphabetColor)
 		.directive('listImage', listImage);
 
-	AlphabetColor.$inject = ['_'];
-
-	function AlphabetColor(_) {
+	function AlphabetColor() {
 		var colors = [
 			'#f9a43e',
 			'#59a2be',
@@ -52,7 +50,7 @@
 	function listImage($mdTheming, AlphabetColor) {
 		var templateString = [
 			'<div ng-style="{background: bgColor}">',
-			'<span>{{::firstLetter}}</span>',
+			'<span>{{firstLetter}}</span>',
 			'</div>'].join('');
 
 		return {

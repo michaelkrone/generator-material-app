@@ -27,27 +27,21 @@
 	 * @returns {Service} {@link mainMenu.controller:MainMenuController MainMenuController}
 	 */
 
-	MainMenuController.$inject = ['$router', '$mdSidenav', 'mainMenu'<% if (features.auth) { %>, 'Auth'<% } %>];
+	MainMenuController.$inject = ['$router', 'mainMenu'<% if (features.auth) { %>, 'Auth'<% } %>];
 
 
-	function MainMenuController($router, $mdSidenav, mainMenu<% if (features.auth) { %>, Auth<% } %>) {
+	function MainMenuController($router, mainMenu<% if (features.auth) { %>, Auth<% } %>) {
 		var vm = this;
 
 		// view model bindings
-		vm.sidenavId = 'mainMenu';
 		vm.items = mainMenu.getMenu();
+		vm.open = mainMenu.open;
+		vm.close = mainMenu.close;
 		vm.navigateTo = navigateTo;
-		vm.close = close;
 		vm.isActive = isActive;<% if (features.auth) { %>
+		vm.isLoggedIn = Auth.isLoggedIn;
 		vm.canAccess = canAccess;
 		vm.logout = logout;<% } %>
-
-		/**
-		 * Close the sidenav component
-		 */
-		function close() {
-			return $mdSidenav(vm.sidenavId).close();
-		}
 
 		/**
 		 * Close the sidenav and navigate to the component

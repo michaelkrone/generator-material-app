@@ -1,9 +1,9 @@
 'use strict';
 
-describe('Controller: <%= classedName %>Ctrl', function () {
+describe('Controller: <%= classedName %>$router', function () {
 
 	// load the controller's module
-	beforeEach(module('<%= scriptAppName %>'));
+	beforeEach(module('<%= scriptAppName %>.<%= _.slugify(name) %>'));
 
 	var controller;
 	var scope;
@@ -11,7 +11,7 @@ describe('Controller: <%= classedName %>Ctrl', function () {
 	// Initialize the controller and a mock scope
 	beforeEach(inject(function ($controller, $rootScope) {
 		scope = $rootScope.$new();
-		controller = $controller('<%= classedName %>Ctrl', {
+		controller = $controller('<%= classedName %>$router', {
 			// $scope: scope
 		});
 	}));

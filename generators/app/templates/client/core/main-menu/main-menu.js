@@ -15,6 +15,7 @@
 
 	angular.module('<%= scriptAppName %>.mainMenu', [
 		'ngNewRouter',
+		'ngMaterial',
 		'<%= scriptAppName %>.lodash'<% if (features.auth) { %>,
 		'<%= scriptAppName %>.auth'<% } %>
 	])

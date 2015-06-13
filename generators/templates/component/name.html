@@ -1,0 +1,30 @@
+<md-toolbar class="md-medium <%= _.slugify(name) %>-toolbar" id="<%= _.slugify(name) %>-toolbar" md-scroll-shrink>
+	<span flex></span>
+
+	<div class="md-toolbar-tools">
+		<main-menu-button></main-menu-button>
+		<h2><%= name %></h2>
+	</div>
+</md-toolbar>
+
+<md-content flex class="md-padding <%= _.slugify(name) %>-content" id="<%= _.slugify(name) %>-content">
+
+	<div layout="column" layout-align="center center">
+
+		<md-card>
+			<md-card-content>
+				<h2 class="md-headline">Ahoi!</h2>
+
+				<span class="md-subhead">This is the {{<%= name %>.title}} view.</span>
+
+				<p class="md-body-1">
+					This is the <span class="md-body-2">'/<%= route %>'</span> route controlled by the <span class="md-body-2"><%= classedName %>Controller</span>,
+					which is a component of the astounding <span class="md-body-2"><%= appname %></span> App.<br/>
+					My controller can do something: "{{ <%= name %>.doSomething() }}"
+				</p>
+			</md-card-content>
+		</md-card>
+
+	</div>
+
+</md-content>

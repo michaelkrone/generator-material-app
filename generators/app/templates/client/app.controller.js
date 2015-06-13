@@ -27,22 +27,25 @@
 		{ path: '/', redirectTo: '/home' },
 		{
 			path: '/home',
-			components: { content: 'home', toolbar: 'home.toolbar' },
+			component: 'home',
 			menu: { name: 'Home', order: 1, icon: 'action:ic_home_24px' }
 		}
 		// add more routes here
 	];
 
-	AppController.$inject = [<% if(features.auth) { %>'Auth', <% } %>'$router', '$mdSidenav', 'mainMenu'];
+	AppController.$inject = ['$router'<% if(features.auth) { %>, 'Auth'<% }%>, 'mainMenu'];
 
-	function AppController(<% if(features.auth) { %>Auth,  <% } %>$router, $mdSidenav, mainMenu) {
+	function AppController($router<% if(features.auth) { %>, Auth<% } %>, mainMenu) {
 		var vm = this;
 
-		// the id component id of the main menu
-		var sidenavId = 'mainMenu';
-
-		// register this controller to add menu items to the main menu based on the $routeConfig property
-		mainMenu.addController(this);<% if(features.auth) { %>
+		/**
+		 * @ngdoc property
+		 * @name mainMenu
+		 * @methodOf <%= scriptAppName %>.controller:AppController
+		 * @description
+		 * Instance of the mainMenu service
+		 */
+		vm.mainMenu = mainMenu;<% if(features.auth) { %>
 
 		/**
 		 * @ngdoc function
@@ -79,7 +82,7 @@
 		 * Close the main menu sidenav component
 		 * @returns {Promise} The promise from mdSidenav
 		 */
-		vm.closeMainMenu = closeMainMenu;
+		vm.closeMainMenu = mainMenu.close;
 
 		/**
 		 * @ngdoc function
@@ -89,21 +92,14 @@
 		 * Open the main menu sidenav component
 		 * @returns {Promise} The promise from mdSidenav
 		 */
-		vm.openMainMenu = openMainMenu;
+		vm.openMainMenu = mainMenu.open;
 
-		/**
-		 * Close the main menu sidenav component
-		 */
-		function closeMainMenu() {
-			return $mdSidenav(sidenavId).close();
-		}
-
-		/**
-		 * Open the main menu sidenav component
-		 */
-		function openMainMenu() {
-			return $mdSidenav(sidenavId).open();
-		}
+		// activate this controller since it will not be activated by the router
+		vm.activate();
 	}
 
+	AppController.prototype.activate = function () {
+		// register this controller to add menu items to the main menu based on the $routeConfig property
+		this.mainMenu.addController(this);
+	}
 })();

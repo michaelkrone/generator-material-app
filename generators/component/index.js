@@ -19,7 +19,7 @@ Generator.prototype.askFor = function askFor() {
 	var prompts = [
 		{
 			name: 'dir',
-			message: 'Where would you like to create this route?',
+			message: 'Where would you like to create this component?',
 			default: self.config.get('routeDirectory')
 		},
 		{

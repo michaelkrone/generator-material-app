@@ -1,70 +1,62 @@
-<md-toolbar>
+<md-toolbar class="md-medium-tall md-whiteframe-z1" md-scroll-shrink>
+	<span flex></span>
+
 	<div class="md-toolbar-tools">
-		<span class="md-display-1">{{home.title}}</span>
+		<main-menu-button></main-menu-button>
+		<h2>List of awesome things</h2>
 	</div>
 </md-toolbar>
 
-<div layout="column" flex>
 
-	<md-toolbar class="md-medium-tall md-whiteframe-z1" md-scroll-shrink>
-		<span flex></span>
+<md-content flex class="md-padding" id="home-content">
 
-		<div class="md-toolbar-tools">
-			<main-menu-button></main-menu-button>
-			<h2>List of awesome things</h2>
-		</div>
-	</md-toolbar>
+	<div layout="column" layout-align="center center">
 
-	<md-content flex class="md-padding" id="home-content">
+		<md-card>
+			<div class="md-card-image">
+				<md-grid-list md-cols="5" md-row-height="4:3" md-gutter-gt-sm="4px">
+					<md-grid-tile ng-repeat="feature in home.features"
+												md-rowspan="{{feature.size.row}}"
+												md-colspan="{{feature.size.col}}"
+												md-colspan-sm="1"
+												ng-class="feature.color">
+						<a ng-href="{{feature.link}}">
+							<img ng-src="{{feature.icon}}"></img>
+						</a>
+					</md-grid-tile>
+				</md-grid-list>
+			</div>
+			<md-card-content>
+				<h2 class="md-headline">Welcome!</h2>
 
-		<div layout="column" layout-align="center center">
+				<span class="md-subhead">{{home.greeting}}</span>
 
-			<md-card>
-				<div class="md-card-image">
-					<md-grid-list md-cols="5" md-row-height="4:3" md-gutter-gt-sm="4px">
-						<md-grid-tile ng-repeat="feature in home.features"
-													md-rowspan="{{feature.size.row}}"
-													md-colspan="{{feature.size.col}}"
-													md-colspan-sm="1"
-													ng-class="feature.color">
-							<a ng-href="{{feature.link}}">
-								<img ng-src="{{feature.icon}}"></img>
-							</a>
-						</md-grid-tile>
-					</md-grid-list>
-				</div>
-				<md-card-content>
-					<h2 class="md-headline">Welcome!</h2>
+				<p class="md-body-1">
+					This is the <span class="md-body-2">'/home'</span> route controlled by the <span class="md-body-2">HomeController</span>,
+					which is a component of the astounding <span class="md-body-2"><%= appname %></span> App.<br/>
+					Please have a look at all the awesome technologies that make this possible.
+				</p>
+			</md-card-content>
+		</md-card>
 
-					<span class="md-subhead">{{home.greeting}}</span>
+		<md-card ng-repeat="feature in home.features">
+			<div class="md-card-image" ng-class="feature.color">
+				<img ng-src="{{feature.icon}}"></img>
+			</div>
+			<md-card-content>
+				<h2 class="md-headline">{{feature.name}}</h2>
 
-					<p class="md-body-1">
-						This is the <span class="md-body-2">'/home'</span> route controlled by the <span class="md-body-2">HomeController</span>,
-						which is a component of the astounding <span class="md-body-2"><%= appname %></span> App.<br/>
-						Please have a look at all the awesome technologies that make this possible.
-					</p>
-				</md-card-content>
-			</md-card>
+				<span class="md-subhead">{{feature.sub}}</span>
 
-			<md-card ng-repeat="feature in home.features">
-				<div class="md-card-image" ng-class="feature.color">
-					<img ng-src="{{feature.icon}}"></img>
-				</div>
-				<md-card-content>
-					<h2 class="md-headline">{{feature.name}}</h2>
+				<p class="md-body-1">
+					{{feature.text}}
+				</p>
+			</md-card-content>
+			<div class="md-actions" layout="row" layout-align="end center">
+				<a class="md-button" ng-href="{{feature.link}}">More</a>
+			</div>
+		</md-card>
 
-					<span class="md-subhead">{{feature.sub}}</span>
+	</div>
 
-					<p class="md-body-1">
-						{{feature.text}}
-					</p>
-				</md-card-content>
-				<div class="md-actions" layout="row" layout-align="end center">
-					<a class="md-button" ng-href="{{feature.link}}">More</a>
-				</div>
-			</md-card>
-
-		</div>
-
-	</md-content>
-</div>
+</md-content>

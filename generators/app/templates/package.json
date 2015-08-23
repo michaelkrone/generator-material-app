@@ -32,7 +32,7 @@
 		},
 		"scripts":{
 			"start": "node bin/server.js",
-			"postinstall": "./node_modules/gulp-protractor/node_modules/protractor/bin/webdriver-manager update"
+			"postinstall": "node ./node_modules/gulp-protractor/node_modules/protractor/bin/webdriver-manager update"
 		},
 		"repository": {
 			"type": "git",

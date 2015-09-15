@@ -1,0 +1,26 @@
+@import "variables";
+
+.main-list {
+	margin: 48px;
+
+	@media screen and (max-width: 960px) {
+		margin: 0;
+	}
+}
+
+md-list {
+
+	&.fab-padding {
+		padding-bottom: 56px;
+	}
+
+	.list-info {
+		color: $lighterText;
+	}
+
+	md-list-item {
+		&.selected > button {
+			background: $selectedItemBackground;
+		}
+	}
+}

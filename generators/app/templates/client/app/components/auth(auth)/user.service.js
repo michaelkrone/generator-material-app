@@ -2,7 +2,7 @@
  * @ngdoc overview
  * @name auth.user
  * @description
- * The `<%= scriptAppName %>.auth.user` module which provides:
+ * The `<%= componentModule %>.auth.user` module which provides:
  *
  * - {@link auth.user.service:User User-service}
  * - {@link auth.user.service:UserService UserService-service}
@@ -29,7 +29,7 @@
 
 	// register the service as User
 	angular
-		.module('<%= scriptAppName %>.auth.user', ['<%= scriptAppName %>.resource'])
+		.module('<%= componentModule %>.auth.user', ['<%= componentModule %>.resource'])
 		.factory('User', User)
 		.service('UserService', UserService);
 

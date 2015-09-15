@@ -18,17 +18,25 @@
 	 * @name <%= scriptAppName %>.provider:AppController
 	 * @description
 	 * Provider of the {@link <%= scriptAppName %>.controller:AppController AppController}
-	 *
-	 * @param {Auth} Auth - The authentication service used for logging out
-	 * @param {$location} $mdSidenav - The sidenav service used to communicate with the sidenav components
+	 * @param {Object} mainMenu - The mainMenu service used to communicate with the main menu component<% if (features.auth) { %>
+	 * @param {Auth} Auth - The authentication service used for logging out<% } %>
 	 */
 
-	AppController.$inject = ['Auth', '$mdSidenav'];
+	AppController.$inject = ['mainMenu'<% if (features.auth) { %>, 'Auth'<% } %>];
 
-	function AppController(Auth, $mdSidenav) {
+	function AppController(mainMenu<% if (features.auth) { %>, 'Auth'<% } %>) {
 		var vm = this;
 
-		vm.sidenavId = 'mainMenu';
+		/**
+		 * @ngdoc property
+		 * @name mainMenu
+		 * @propertyOf <%= scriptAppName %>.controller:AppController
+		 * @description
+		 * Instance of the main menu service, provides methods for opening
+		 * and closing the main app menu
+		 * @returns {Object} The injected main menu service
+		 */
+		vm.mainMenu = mainMenu;<% if (features.auth) { %>
 
 		/**
 		 * @ngdoc function
@@ -50,45 +58,11 @@
 
 		/**
 		 * @ngdoc function
-		 * @name closeMainMenu
-		 * @methodOf <%= scriptAppName %>.controller:AppController
-		 * @description
-		 * Close the main menu sidenav component
-		 * @returns {Promise} The promise from mdSidenav
-		 */
-		vm.closeMainMenu = closeMainMenu;
-
-		/**
-		 * @ngdoc function
-		 * @name openMainMenu
-		 * @methodOf <%= scriptAppName %>.controller:AppController
-		 * @description
-		 * Open the main menu sidenav component
-		 * @returns {Promise} The promise from mdSidenav
-		 */
-		vm.openMainMenu = openMainMenu;
-
-		/**
-		 * @ngdoc function
 		 * @name currentUser
 		 * @methodOf <%= scriptAppName %>.controller:AppController
 		 * @description
 		 * See {@link components/auth.service:Auth#getCurrentUser getCurrentUser} of the Auth service
 		 */
-		vm.currentUser = Auth.getCurrentUser();
-
-		/**
-		 * Close the main menu sidenav component
-		 */
-		function closeMainMenu() {
-			return $mdSidenav(vm.sidenavId).close();
-		}
-
-		/**
-		 * Open the main menu sidenav component
-		 */
-		function openMainMenu() {
-			return $mdSidenav(vm.sidenavId).open();
-		}
+		vm.currentUser = Auth.getCurrentUser();<% } %>
 	}
 })();

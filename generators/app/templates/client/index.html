@@ -12,22 +12,22 @@
 	<!--vendor:css-->
 	<!-- endinject -->
 
-	<!-- app:css -->
+	<!-- inject:css -->
 	<!-- endinject -->
 </head>
-<body ng-app="<%= scriptAppName %>" ng-controller="AppController as appController" layout="column">
+<body ng-strict-di ng-app="<%= scriptAppName %>" ng-controller="AppController as appController" layout="row">
 
-<!--[if lt IE 9]>
+<!--[if lt IE 10]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
 	your browser</a> to improve your experience.</p>
 <![endif]-->
 
-<main-menu <%if (features.auth) {%>ng-show="appController.isLoggedIn()"<% } %>></main-menu>
+<main-menu></main-menu>
 
 <!-- Add your site or application content here -->
-<main ng-cloak layout="column" layout-fill ui-view></main>
+<main ng-cloak layout="column" flex  flex ui-view id="main"></main><% if(features.socketio) { %>
 
-<script src="socket.io-client/socket.io.js"></script>
+<script src="socket.io-client/socket.io.js"></script><% }%>
 
 <!-- vendor:js -->
 <!-- endinject -->

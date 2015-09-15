@@ -7,23 +7,38 @@ var BaseGenerator = require('../base.js');
 
 var Generator = module.exports = function Generator() {
 	BaseGenerator.apply(this, arguments);
+
+	// only works with db support
+	if (!this.config.get('features').db) {
+		this.log('You said you do not like databases, sorry cannot create an API route.');
+		this.log('To use a database, the app generator has to install database support.');
+		process.exit(1);
+	}
+
+	this.option('dir');
+	this.option('moduleName');
+	this.option('createModuleFile');
+	this.option('composed');
+	this.recipe = 'Route';
 };
 
 util.inherits(Generator, BaseGenerator);
 
 Generator.prototype.askFor = function askFor() {
+
 	process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 	var self = this;
 	var name = this.name + (self.config.get('pluralizeRoutes') ? 's' : '');
 	var srvConfig = require(path.join(this.options.env.cwd, 'server', 'config'));
+	this.moduleName = this.scriptAppName + '.' + this._.slugify(this.name);
 
 	var done = this.async();
 	var prompts = [
 		{
 			name: 'dir',
 			message: 'Where would you like to create this resource?',
-			default: self.config.get('routeDirectory') + name
+			default: path.join(self.config.get('routeDirectory'), this.slugy())
 		},
 		{
 			name: 'route',
@@ -55,10 +70,32 @@ Generator.prototype.askFor = function askFor() {
 			}
 		},
 		{
+			name: 'useMenu',
+			message: 'Should this route be accessible by the menu?',
+			default: true
+		},
+		{
 			name: 'menuItem',
 			message: 'How should the menu item be labelled?',
-			default: this._.capitalize(name)
-		}
+			default: this._.capitalize(name),
+			when: function (answers) {
+				return answers.useMenu;
+			}
+		},
+		{
+			name: 'icon',
+			message: 'Do you like to provide a menu icon?',
+			default: this._.sample([
+				'social:ic_mood_24px',
+				'action:ic_face_24px',
+				'action:ic_favorite_24px',
+				'action:ic_explore_24px',
+				'action:ic_thumb_up_24px'
+			]),
+			when: function (answers) {
+				return answers.useMenu;
+			}
+		},
 	];
 
 	this.prompt(prompts, function (props) {
@@ -68,19 +105,13 @@ Generator.prototype.askFor = function askFor() {
 		this.secure = props.secure || false;
 		this.role = props.role || false;
 		this.menuItem = props.menuItem;
+		this.icon = props.icon;
 		done();
 	}.bind(this));
 };
 
-Generator.prototype.registerRoute = function registerRoute() {
-	var routeConfig = {
-		file: path.join('client', 'app', 'app.js'),
-		needle: this.config.get('modulesNeedle'),
-		splicable: [
-			"\'" + this.scriptAppName + '.' + this.name + "\',"
-		]
-	};
-	ngUtil.rewriteFile(routeConfig);
+Generator.prototype.registerModule = function registerModule() {
+	this.registerAngularModule(this.moduleName, this.modulePath);
 };
 
 Generator.prototype.createFiles = function createFiles() {
@@ -92,4 +123,8 @@ Generator.prototype.createFiles = function createFiles() {
 	this.listEditHtmlUrl = path.relative('client', path.join(this.dir, 'list', 'edit', 'edit.html'));
 	this.listItemsHtmlUrl = path.relative('client', path.join(this.dir, 'list', 'items', 'items.html'));
 	ngUtil.processDirectory(this, 'apiroute', this.dir);
+};
+
+Generator.prototype.build = function build() {
+	this.gulp();
 };

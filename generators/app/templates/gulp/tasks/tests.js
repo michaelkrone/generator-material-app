@@ -25,11 +25,12 @@ module.exports = {
  * @param src     glob of source files to lint
  * @param config  the jshint config object to use
  */
-function jshintFn(src, config) {
+function jshintFn(src, config, cb) {
 	return gulp.src(src)
 		.pipe(jshint(config))
 		.pipe(jshint.reporter('jshint-stylish'))
 		.pipe(jshint.reporter('fail'))
+		.on('end', cb)
 		.on('error', utils.log);
 };
 
@@ -38,10 +39,11 @@ function jshintFn(src, config) {
  * @param src     glob of test files to run
  * @param reporter the mocha reporter to use
  */
-function testFn(src, reporter) {
+function testFn(src, reporter, cb) {
 	reporter = reporter && { reporter: reporter } || {};
 	return gulp.src(src, {read: false})
 		.pipe(mocha( _.defaults(reporter, conf.options.mocha) ))
+		.on('end', cb)
 		.on('error', utils.log);
 };
 
@@ -50,9 +52,10 @@ function testFn(src, reporter) {
  * @param src     glob of source files to check
  * @param config  the jscs config object to use
  */
-function jscsFn(src, config) {
+function jscsFn(src, config, cb) {
 	return gulp.src(src)
 		.pipe(jscs(config))
+		.on('end', cb)
 		.on('error', utils.log);
 };
 
@@ -60,46 +63,49 @@ function jscsFn(src, config) {
  * jshint:client tasks
  * Lint client JavaScript source files
  */
-gulp.task('jshint:client', function () {
-	return jshintFn(conf.src.client.js, conf.options.jshint.client.src);
+gulp.task('jshint:client', function (cb) {
+	return jshintFn(conf.src.client.js, conf.options.jshint.client.src, cb);
 });
 
 /**
  * jshint:client tasks
  * Lint server JavaScript source files
  */
-gulp.task('jshint:server', function () {
+gulp.task('jshint:server', function (cb) {
 	return jshintFn(
 		conf.src.server.js,
-		conf.options.jshint.server.src);
+		conf.options.jshint.server.src,
+		cb);
 });
 
 /**
  * jshint:test:client tasks
  * Lint client JavaScript unit and e2e test files
  */
-gulp.task('jshint:test:client', function () {
+gulp.task('jshint:test:client', function (cb) {
 	return jshintFn(
 		conf.src.client.unitTests.concat(conf.src.e2eTests),
-		conf.options.jshint.client.test);
+		conf.options.jshint.client.test,
+		cb);
 });
 
 /**
  * jshint:test:server tasks
  * Lint server JavaScript unit and e2e test files
  */
-gulp.task('jshint:test:server', function () {
+gulp.task('jshint:test:server', function (cb) {
 	return jshintFn(
 		conf.src.server.unitTests.concat(conf.src.e2eTests),
-		conf.options.jshint.server.test);
+		conf.options.jshint.server.test,
+		cb);
 });
 
 /**
  * test task
  * Run server unit tests
  */
-gulp.task('unit:server', function () {
-	return testFn(conf.src.server.unitTests, null);
+gulp.task('unit:server', function (cb) {
+	return testFn(conf.src.server.unitTests, null, cb);
 });
 
 /**

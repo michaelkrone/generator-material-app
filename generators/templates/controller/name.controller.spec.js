@@ -1,9 +1,9 @@
 'use strict';
 
-describe('Controller: <%= classedName %>Controller', function () {
+describe('<%= moduleName %> Controller: <%= controllerName  %>', function () {
 
 	// load the controller's module
-	beforeEach(module('<%= scriptAppName %>'));
+	beforeEach(module('<%= moduleName %>'));
 
 	var controller;
 	var scope;
@@ -11,7 +11,7 @@ describe('Controller: <%= classedName %>Controller', function () {
 	// Initialize the controller and a mock scope
 	beforeEach(inject(function ($controller, $rootScope) {
 		scope = $rootScope.$new();
-		controller = $controller('<%= classedName %>Controller', {
+		controller = $controller('<%= controllerName  %>', {
 			// $scope: scope
 		});
 	}));
@@ -23,11 +23,12 @@ describe('Controller: <%= classedName %>Controller', function () {
 
 	it('should have an awesome title property', function () {
 		Should.exist(controller.title);
-		controller.title.should.equal('<%= name %>');
+		controller.title.should.be.a.String;
 	});
 
 	it('should have a working doSomething method', function () {
 		Should.exist(controller.doSomething);
-		controller.doSomething().should.equal('<%= name %> - a sublime controller');
+		controller.doSomething.should.be.a.Function;
+		controller.doSomething().should.be.a.String;
 	});
 });

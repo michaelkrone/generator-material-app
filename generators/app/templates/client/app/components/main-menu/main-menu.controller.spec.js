@@ -4,7 +4,7 @@
 describe('Controller: MainMenuController', function () {
 
 	// load the controller's module
-	beforeEach(module('<%= scriptAppName %>.mainMenu'));
+	beforeEach(module('<%= componentModule %>.mainMenu'));
 
 	var controller;
 	var menuEntry = {name: 'test', state: 'test.main'};

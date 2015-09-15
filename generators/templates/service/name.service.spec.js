@@ -1,15 +1,15 @@
 'use strict';
 
-describe('Service: <%= classedName %>', function () {
+describe('Service: <%= controllerName %>', function () {
 
 	// load the service's module
-	beforeEach(module('<%= scriptAppName %>'));
+	beforeEach(module('<%= moduleName %>'));
 
 	// instantiate service
 	var service;
 
-	beforeEach(inject(function (_<%= classedName %>_) {
-		service = _<%= classedName %>_;
+	beforeEach(inject(function (_<%= controllerName %>_) {
+		service = _<%= controllerName %>_;
 	}));
 
 	it('should be defined', function () {

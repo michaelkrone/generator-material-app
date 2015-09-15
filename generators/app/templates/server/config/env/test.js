@@ -1,12 +1,12 @@
-'use strict';
+'use strict';<% if (features.db) { %>
 
-process.env.DATABASE_NAME = process.env.DATABASE_NAME || '<%= appname %>-test';
+process.env.DATABASE_NAME = process.env.DATABASE_NAME || '<%= appname %>-test';<% } %>
 
-module.exports = {
+module.exports = {<% if (features.db) { %>
 
 	mongo: {
-		uri: 'mongodb://localhost/' + process.env.DATABASE_NAME
+		uri: 'mongodb://127.0.0.1/' + process.env.DATABASE_NAME
 	},
 
-	seedDB: true
+	seedDB: true<% } %>
 };

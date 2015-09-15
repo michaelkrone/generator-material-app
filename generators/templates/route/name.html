@@ -1,4 +1,23 @@
-<div class="<%= name %>-view">
-	This is the <%= name %> view.
-	My controller can do something: "{{ vm.doSomething() }}"
-</div>
+<md-toolbar class="md-medium-tall md-whiteframe-z1" md-scroll-shrink id="<%= name %>-toolbar">
+    <span flex></span>
+
+    <div class="md-toolbar-tools">
+        <main-menu-button></main-menu-button>
+        <h2>{{<%= lowerCameledName %>.title}}</h2>
+    </div>
+</md-toolbar>
+
+<md-content flex class="md-padding" id="<%= name %>-content" layout="column" layout-align="start center">
+    <md-card>
+        <md-card-content class="text-card">
+            <h2 class="md-headline"><%= route %> route</h2>
+
+            <span class="md-subhead">{{<%= lowerCameledName %>.doSomething()}}</span>
+
+            <p class="md-body-1">
+                This is the  <b><%= route %></b> route of the <%= moduleName %> module, a sublime component of the astounding <%= humanAppName %> App.<br/>
+                Great. Let's turn this into something useful.
+            </p>
+        </md-card-content>
+    </md-card>
+</md-content>

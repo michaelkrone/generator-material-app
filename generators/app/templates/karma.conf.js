@@ -24,7 +24,6 @@ module.exports = function(config) {
 		preprocessors: {
 		},
 
-
 		// test results reporter to use
 		// possible values: 'dots', 'progress'
 		// available reporters: https://npmjs.org/browse/keyword/karma-reporter
@@ -36,6 +35,7 @@ module.exports = function(config) {
 			type : 'html',
 			dir : 'build/coverage/client'
 		},
+
 
 		// web server port
 		port: 9654,
@@ -56,7 +56,7 @@ module.exports = function(config) {
 
 		// start these browsers
 		// available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-		browsers: ['PhantomJS']
+		browsers: ['Chrome']
 
 		// Continuous Integration mode
 		// if true, Karma captures browsers, runs the tests and exits

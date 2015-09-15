@@ -48,7 +48,8 @@
 		mainMenuProvider.addMenuItem({
 			name: 'Administration',
 			state: mainState.name,
-			role: 'admin'
+			role: 'admin',
+			icon: 'action:ic_settings_24px'
 		});
 	}
 

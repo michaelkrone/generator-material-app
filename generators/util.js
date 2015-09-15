@@ -60,14 +60,13 @@ function rewrite(args) {
 
 function appName(self) {
 	var counter = 0, suffix = self.options['app-suffix'];
-	// Have to check this because of generator bug #386
 	process.argv.forEach(function (val) {
 		if (val.indexOf('--app-suffix') > -1) {
 			counter++;
 		}
 	});
 	if (counter === 0 || (typeof suffix === 'boolean' && suffix)) {
-		suffix = 'App';
+		suffix = '';
 	}
 	return suffix ? self._.classify(suffix) : '';
 }
@@ -162,7 +161,6 @@ function copyTemplates(self, type, templateDir, configName) {
 		.forEach(function (template) {
 			try {
 				var processedName = createFileName(template, self.name);
-
 				var fileName = processedName.name;
 				var templateFile = path.join(templateDir, template);
 

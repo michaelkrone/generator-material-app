@@ -1,14 +1,3 @@
-/**
- * @ngdoc overview
- * @name auth
- * @description
- * The `<%= scriptAppName %>.auth` module
- *
- * @requires ngResource
- * @requires ngCookies
- * @requires auth.interceptor
- * @requires auth.user
- */
 
 /**
  * @ngdoc service
@@ -22,15 +11,12 @@
 
 	// register the service as Auth
 	angular
-		.module('<%= scriptAppName %>.auth', [
+		.module('<%= componentModule %>.auth.service', [
 			'ngResource',
-			'ngCookies',
-			'<%= scriptAppName %>.auth.interceptor',
-			'<%= scriptAppName %>.auth.user'
+			'ngCookies'
 		])
 		.factory('Auth', Auth)
 		.constant('userRoles', getUserRoles());
-
 
 	/**
 	 * @ngdoc function
@@ -93,15 +79,12 @@
 			/* jshint validthis:true */
 			var cb = callback || angular.noop;
 			var deferred = $q.defer();
-			$cookies.customerId = user.customerId;
 
 			$http.post('/auth/local', {
-				customerId: user.customerId,
 				name: user.name,
 				password: user.password
 			}).success(function (data) {
 				$cookieStore.put('token', data.token);
-				$cookieStore.remove('customerID');
 				currentUser = User.get();
 				deferred.resolve(data);
 				return cb();

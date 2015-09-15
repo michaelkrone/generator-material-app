@@ -6,11 +6,11 @@
 // Set default node environment to development
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-var express = require('express');
+var express = require('express');<% if (features.socketio) { %>
 var socketio = require('socket.io');
-var config = require('./config/index');
-var socketConfig = require('./config/socketio');
-var db = require('./config/mongoose');
+var socketConfig = require('./config/socketio');<% } %>
+var config = require('./config/index');<% if (features.db) { %>
+var db = require('./config/mongoose');<% } %>
 var app = express();
 
 // Expose app
@@ -38,24 +38,26 @@ process
  * @return
  */
 function startServer() {
-	var server = require('http').createServer(app);
+	var server = require('http').createServer(app);<% if (features.socketio) { %>
 	var socket = socketio(server, {
 		serveClient: (config.env !== 'production'),
 		path: '/socket.io-client'
 	});
 	// Setup SocketIO
-	socketConfig(socket);
+	socketConfig(socket);<% } %>
 	return server;
 }
 
 /**
  * Shutdown handler
- * Closes the database connection on iterrupt and exits the process
+ * Closes the database connection on interrupt and exits the process
  * @api private
  */
 function serverShutdown() {
+	console.log('Shutdown handler called');<% if (features.db) { %>
 	db.connection.close(function connectionClose() {
 		console.log('Database connection disconnected through app termination');
 		process.exit(0);
-	});
+	});<% } else { %>
+	process.exit(0);<% } %>
 }

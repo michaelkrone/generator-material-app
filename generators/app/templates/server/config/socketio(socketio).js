@@ -27,7 +27,7 @@ function onConnect(socket) {
 		console.info('[%s] %s', socket.address, JSON.stringify(data, null, 2));
 	});
 
-	// Insert sockets below<% if (features.socketio) { %>
+	// Insert sockets below<% if (features.auth) { %>
 	require('../api/user/user.socket').register(socket);<% } %>
 }
 

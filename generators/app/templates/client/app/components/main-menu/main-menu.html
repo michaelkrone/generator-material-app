@@ -1,29 +1,45 @@
-<md-sidenav
+<md-sidenav <%if (features.auth) {%>ng-show="menu.isLoggedIn()"<% } %>
+	md-is-locked-open="$mdMedia('gt-lg')"
 	md-component-id="mainMenu"
 	class="md-sidenav-left md-whiteframe-z2"
 	layout="column">
-	<md-toolbar>
-		<span class="md-toolbar-tools md-toolbar-tools-top" layout="column">
-			<h1>{{::<%= appname %>}}</h1>
-		</span>
-	</md-toolbar>
 
-	<md-content flex ng-controller="MainMenuController as menu"><% if (features.auth) { %>
-		<ul>
-			<li>
-				<md-button ng-click="menu.logout()">Logout</md-button>
-			</li>
-		</ul><% } %>
-		<ul ng-repeat="item in menu.items">
-			<li ng-show="menu.canAccess(item)">
-				<md-button ui-sref-active="md-primary" ui-sref="{{item.state}}" >{{item.name}}</md-button>
-				<ul ng-if="item.subItems" ng-repeat="subItem in item.subItems">
-					<li>
-						<md-button ui-sref-active="md-primary" ui-sref="{{subItem.state}}" >{{subItem.name}}</md-button>
-					</li>
-				</ul>
-			</li>
-		</ul>
-	</md-content>
+<md-toolbar class="md-tall md-hue-1">
+	<span class="md-toolbar-tools" layout="column">
+		<h2 class="md-headline"><%= humanName %></h2>
+	</span>
+</md-toolbar>
+
+<md-content flex><% if (features.auth) { %>
+
+	<md-list>
+		<md-item>
+			<md-button ng-click="menu.logout()">
+				<md-icon md-svg-icon="navigation:ic_cancel_24px"></md-icon>
+				<span class="md-body-2">Logout</span>
+			</md-button>
+		</md-item>
+		<md-divider></md-divider>
+	</md-list><% } %>
+
+	<md-list>
+
+	<md-item layout="row" layout-align="start center" ng-repeat="item in menu.items"<% if (features.auth) { %> ng-show="menu.canAccess(item)"<% } %>>
+		<md-button ng-class="{'md-primary': menu.isActive(item)}" ng-click="menu.navigateTo(item)">
+			<md-icon ng-class="{'md-primary': menu.isActive(item)}" md-svg-icon="{{item.icon}}"></md-icon>
+			<span class="md-body-2">{{item.name}}</span>
+		</md-button>
+	</md-item>
+
+	<md-item layout="row" layout-align="start center" ng-repeat="subItem in item.subItems"<% if (features.auth) { %> ng-show="menu.canAccess(subItem)"<% } %>>
+	<md-button  ui-sref-active="md-primary" ng-click="menu.navigateTo(subItem)">
+		<md-icon  ui-sref-active="md-primary" md-svg-icon="{{subItem.icon}}"></md-icon>
+		<span class="md-body-2">{{subItem.name}}</span>
+	</md-button>
+	</md-item>
+
+	</md-list>
+
+</md-content>
 
 </md-sidenav>

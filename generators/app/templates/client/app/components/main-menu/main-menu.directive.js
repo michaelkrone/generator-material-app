@@ -3,46 +3,26 @@
 
 	// register the service as MainMenu
 	angular
-		.module('<%= scriptAppName %>.mainMenu')
+		.module('<%= componentModule %>.mainMenu')
 		.directive('mainMenu', MainMenu);
 
 	// add MainMenu dependencies to inject
-	MainMenu.$inject = ['$rootScope', '$mdSidenav', '$document'];
+	MainMenu.$inject = [];
 
 	/**
 	 * MainMenu directive
 	 */
-	function MainMenu($rootScope, $mdSidenav, $document) {
+	function MainMenu() {
 		// directive definition members
 		var directive = {
-			link: link,
 			restrict: 'E',
 			replace: true,
-			templateUrl: 'app/components/main-menu/main-menu.html'
+			templateUrl: 'app/components/main-menu/main-menu.html',
+			controller: 'MainMenuController',
+			controllerAs: 'menu'
 		};
 
 		return directive;
-
-		// directives link definition
-		function link(scope, elem, attrs) {
-			var componentId = attrs.mdComponentId || 'mainMenu';
-			var mainContentArea = $document[0].querySelector(attrs.mainContent || 'main');
-
-			$rootScope.$on('$locationChangeSuccess', openPage);
-
-			/**
-			 * @ngdoc function
-			 * @name openPage
-			 * @methodOf mainMenu.directive:
-			 * @description
-			 * Open a page
-			 */
-			function openPage() {
-				$mdSidenav(componentId)
-					.close()
-					.then(mainContentArea.focus());
-			}
-		}
 	}
 
 

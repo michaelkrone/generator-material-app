@@ -24,7 +24,9 @@ module.exports = router;
  * The api controller
  * @type {user:controller~UserController}
  */
-var controller = new UserController(router);
+var controller = new UserController();
+
+controller.registerRouter(router);
 
 // add context for auth sensitive resources
 var addRequestContext = contextService.middleware('request');
@@ -42,14 +44,14 @@ var isAdmin = auth.hasRole('admin');
 router.route('*')
 	.all(addRequestContext, isAuthenticated, addUserContext);
 
+// fetch authenticated user info
+router.route('/me')
+	.get(controller.me);
+
 // register user routes
 router.route('/')
 	.get(isAdmin, controller.index)
 	.post(isAdmin, controller.create);
-
-// fetch authenticated user info
-router.route('/me')
-	.get(controller.me);
 
 // user crud routes
 router.route('/' + controller.paramString)

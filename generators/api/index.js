@@ -7,6 +7,13 @@ var BaseGenerator = require('../base.js');
 
 var Generator = module.exports = function Generator() {
 	BaseGenerator.apply(this, arguments);
+
+	// only works with db support
+	if (!this.config.get('features').db) {
+		this.log('You said you do not like databases, sorry cannot create an API.');
+		this.log('To use a database, the app generator has to install database support.');
+		process.exit(1);
+	}
 };
 
 util.inherits(Generator, BaseGenerator);
@@ -24,7 +31,6 @@ Generator.prototype.askFor = function askFor() {
 		base = base + '/';
 	}
 
-	// pluralization defaults to true for backwards compat
 	if (this.config.get('pluralizeRoutes') !== false) {
 		name = name + 's';
 	}

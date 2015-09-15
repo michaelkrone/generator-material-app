@@ -1,6 +1,6 @@
 /**
  * @ngdoc service
- * @name <%= scriptAppName %>.mainMenu.service:mainMenu
+ * @name <%= componentModule %>.mainMenu.service:mainMenu
  * @description
  * Service to manage the main menu
  */
@@ -9,12 +9,12 @@
 	'use strict';
 
 	// register the service as MenuService
-	angular.module('<%= scriptAppName %>.mainMenu')
+	angular.module('<%= componentModule %>.mainMenu')
 		.provider('mainMenu', mainMenuProvider);
 
 	/**
 	 * @ngdoc function
-	 * @name mainMenu.provider:mainMenu
+	 * @name <%= componentModule %>.mainMenu.provider:mainMenu
 	 * @description
 	 * MenuProvider definition
 	 * AngularJS will instantiate a singleton which is
@@ -23,15 +23,40 @@
 	 * phase of your angular application
 	 * @returns {Object} Singleton
 	 */
-	function mainMenuProvider() {
+
+	mainMenuProvider.$inject = ['_'];
+
+	function mainMenuProvider(_) {
 		/* jshint validthis:true */
+		var self = this;
 		// factory members
 		var menu = [];
+		var mdSidenav;
+		var componentId = 'mainMenu';
 
 		// public configuration API
-		this.setMenu = setMenu;
-		this.addMenuItem = addMenuItem;
-		this.addSubMenuItem = addSubMenuItem;
+		self.setMenu = setMenu;
+		self.addMenuItem = addMenuItem;
+		self.addSubMenuItem = addSubMenuItem;
+		self.addState = addState;
+
+		// Method for instantiating
+		self.$get = mainMenuFactory;
+
+		/**
+		 * @ngdoc function
+		 * @name mainMenuFactory
+		 * @methodOf <%= componentModule %>.mainMenu.service:mainMenuFactory
+		 * @description
+		 * factory function for MainMenu
+		 * @param {Function} $mdSidenav The sidenav service to use
+		 */
+
+		mainMenuFactory.$inject = ['$mdSidenav', '_'];
+
+		function mainMenuFactory($mdSidenav, _) {
+			return new MainMenu($mdSidenav, _);
+		}
 
 		/**
 		 * @ngdoc function
@@ -51,9 +76,34 @@
 		 * @methodOf mainMenu.service:mainMenu
 		 * @description
 		 * Adds a new menu item to the current menu
-		 * @param {*} menuData The menu data to add
+		 * @param {Object} menuData The menu data to add
 		 */
 		function addMenuItem(menuData) {
+			menu.push(menuData);
+		}
+
+		/**
+		 * @ngdoc function
+		 * @name addState
+		 * @methodOf mainMenu.service:mainMenu
+		 * @description
+		 * Adds a new menu item to the current menu
+		 * @param {Object} state The state definition to get the menu
+		 * items from.
+		 */
+		function addState(state) {
+			var menuData = state.menu;
+
+			if (!menuData || !state.hasOwnProperty('name')) {
+				return;
+			}
+
+			menuData.state = state.name;
+
+			if (state.hasOwnProperty('role')) {
+				menuData.role = state.role;
+			}
+
 			menu.push(menuData);
 		}
 
@@ -63,29 +113,55 @@
 		 * @methodOf mainMenu.service:mainMenu
 		 * @description
 		 * Adds a new submenu item to a parent menu
-		 * @param {String} parent The state of the parent element
-		 * @param {*} menuData The menu data to add
+		 * @param {String} parent The path of the parent element
+		 * @param {Object} menuData The sub item data to add
 		 */
 		function addSubMenuItem(parent, menuData) {
-			var menuItem = _.find(menu, {state: parent});
+			var menuItem = _.find(menu, {path: parent});
 			if (menuItem) {
 				menuItem.subItems = menuItem.subItems || [];
 				menuItem.subItems.push(menuData);
 			}
 		}
 
-		// a private constructor
-		function MainMenu() {
-			this.getMenu = getMenu;
+		/**
+		 * Close the main menu component
+		 */
+		function close() {
+			return mdSidenav(componentId).close();
+		}
 
+		/**
+		 * Open the main menu component
+		 */
+		function open() {
+			return mdSidenav(componentId).open();
+		}
+
+		/**
+		 * Toggle the main menu component
+		 */
+		function toggle() {
+			return mdSidenav(componentId).toggle();
+		}
+
+		// a private constructor
+		function MainMenu($mdSidenav, _) {
+			mdSidenav = $mdSidenav;
+			this.getMenu = getMenu;
+			this.addSubMenuItem = addSubMenuItem;
+			this.close = close;
+			this.open = open;
+			this.toggle = toggle;
+
+			/**
+			 * Return the current ordered menu
+			 * @returns {Array}
+			 */
 			function getMenu() {
-				return menu;
+				return _.sortBy(menu, 'order');
 			}
 		}
 
-		// Method for instantiating
-		this.$get = function mainMenuFactory() {
-			return new MainMenu();
-		};
 	}
 })();

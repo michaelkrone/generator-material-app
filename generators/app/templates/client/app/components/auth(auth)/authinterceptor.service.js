@@ -2,7 +2,7 @@
  * @ngdoc overview
  * @name auth.interceptor
  * @description
- * The `<%= scriptAppName %>.auth.interceptor` module which provides:
+ * The `<%= componentModule %>.auth.interceptor` module which provides:
  *
  * - {@link auth.interceptor.service:AuthInterceptor AuthInterceptor-service}
  */
@@ -19,7 +19,7 @@
 
 	// register the AuthInterceptor on the application module
 	angular
-		.module('<%= scriptAppName %>.auth.interceptor', [])
+		.module('<%= componentModule %>.auth.interceptor', ['ngCookies'])
 		.factory('AuthInterceptor', AuthInterceptor);
 
 

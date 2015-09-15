@@ -3,7 +3,7 @@
 describe('Service: Toast', function () {
 
 	// load the service's module
-	beforeEach(module('<%= scriptAppName %>.toast'));
+	beforeEach(module('<%= componentModule %>.toast'));
 
 	// instantiate service
 	var service;
@@ -22,5 +22,9 @@ describe('Service: Toast', function () {
 
 	it('should expose a hide function', function () {
 		Should.exist(service.hide);
+	});
+
+	it('should expose a warn function', function () {
+		Should.exist(service.warn);
 	});
 });

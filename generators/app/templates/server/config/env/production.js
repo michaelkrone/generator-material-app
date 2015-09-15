@@ -1,6 +1,6 @@
-'use strict';
+'use strict';<% if (features.db) { %>
 
-process.env.DATABASE_NAME = process.env.DATABASE_NAME || '<%= appname %>';
+process.env.DATABASE_NAME = process.env.DATABASE_NAME || '<%= appname %>';<% } %>
 
 module.exports = {
 
@@ -8,9 +8,9 @@ module.exports = {
 
 	port: process.env.PORT || 8080,
 
-	publicDir: 'public',
+	publicDir: 'public'<% if (features.db) { %>,
 
 	mongo: {
-		uri: 'mongodb://localhost/' + process.env.DATABASE_NAME
-	}
+		uri: 'mongodb://127.0.0.1/' + process.env.DATABASE_NAME
+	}<% } %>
 };

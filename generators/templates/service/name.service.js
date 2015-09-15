@@ -1,26 +1,48 @@
+/**
+ * @ngdoc service
+ * @name <%= moduleName %>.service:<%= controllerName %>
+ * @description
+ * Makes stuff with this '<%= name %>' thingy.
+ */
+
 (function () {
 	'use strict';
 
-	// register the service as <%= classedName %>Service
+	// register the service as <%= controllerName %>
 	angular
-		.module('<%= scriptAppName %>')
-		.service('<%= classedName %>', <%= classedName %>);
-
-	// add <%= classedName %> dependencies to inject
-	// <%= classedName %>.$inject = [''];
+		.module('<%= moduleName %>')
+		.service('<%= controllerName %>', <%= controllerName %>);
 
 	/**
-	 * <%= classedName %> constructor
+	 * @ngdoc function
+	 * @constructor
+	 * @name <%= moduleName %>.provider:<%= controllerName %>
+	 * @description
+	 * Provider of the {@link <%= moduleName %>.service:<%= controllerName %> <%= controllerName %>}.
 	 * AngularJS will instantiate a singleton by calling "new" on this function
-	 * @returns {Object} The service definition for the <%= classedName %> Service
+	 *
+	 * @returns {Object} The service definition for the <%= controllerName %> service
 	 */
-	function <%= classedName %>() {
 
+	// add <%= controllerName %> dependencies to inject
+	// <%= controllerName %>.$inject = [''];
+
+	function <%= controllerName %>() {
+
+		// return public API
 		return {
 			doSomething: doSomething
 		};
 
-		// define instance methods
+		/**
+		 * @ngdoc function
+		 * @name title
+		 * @methodOf <%= moduleName %>.service:<%= controllerName %>
+		 * @description
+		 * Exported instance method that returns the name of this service.
+		 *
+		 * @returns {String} The name of this service
+		 */
 		function doSomething () {
 			return '<%= name %>';
 		}

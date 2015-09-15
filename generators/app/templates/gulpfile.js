@@ -35,7 +35,7 @@ requireDir('./gulp/tasks');
  * Removes the dist and build directories
  */
 gulp.task('clean', function () {
-	return del([conf.dirs.dist, conf.dirs.build]);
+	return del([conf.dirs.dist, conf.dirs.build, '.sass-cache', '.tmp']);
 });
 
 /**

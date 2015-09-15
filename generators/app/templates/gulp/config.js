@@ -5,10 +5,8 @@
 
 var path = require('path');
 var fs = require('fs');
+var bowerFiles = require('main-bower-files')({bowerrc: '.bowerrc', bowerJson: 'bower.json'});
 var rootPath = path.normalize(__dirname + '../../');
-var bowerFiles = require('main-bower-files');
-
-bowerFiles = bowerFiles({bowerrc: '.bowerrc', bowerJson: 'bower.json'});
 
 var conf = {
 	dirs: {
@@ -37,24 +35,24 @@ var conf = {
 	},
 	src: {
 		server: {
-			js: ['!server/**/*.spec.js', 'server/**/*.js', 'bin/**/*.js'],
+			js: ['server/**/*.js', 'bin/**/*.js', '!*.spec.js'],
 			unitTests: ['server/**/*.spec.js']
 		},
 		client: {
 			js: [
+				'client/app/**/*.js',
 				'!client/**/*.spec.js',
-				'!client/**/*.mock.js',
-				'client/app/**/*.js'
+				'!client/**/*.mock.js'
 			],
 			docs: {
 				components: [
+					'client/app/components/**/*.js',
 					'!client/app/components/**/*.spec.js',
-					'!client/app/components/**/*.mock.js',
-					'client/app/components/**/*.js'
+					'!client/app/components/**/*.mock.js'
 				],
 				app: [
-					'!client/app/components/**/*.js',
-					'client/app/**/*.js'
+					'client/app/**/*.js',
+					'!client/app/components/**/*.js'
 				]
 			},
 			unitTests: ['client/app/**/*.spec.js'],
@@ -64,7 +62,7 @@ var conf = {
 			],
 			bower: bowerFiles
 		},
-		styles: ['client/styles/**/*.scss', 'client/app/**/*.scss'],
+		styles: ['client/styles/app.scss', 'client/app/**/*.scss'],
 		html: ['client/**/*.html'],
 		css: ['client/styles/app.css'],
 		e2eTests: ['e2e/**/*.spec.js']
@@ -84,7 +82,7 @@ var conf = {
 		livereload: {
 			port: 9090
 		},
-		expressPort: 9000,
+		expressPort: 9001,
 		protractor: {
 			args: [
 				'--seleniumServerJar',
@@ -105,6 +103,8 @@ var conf = {
 			},
 			appFiles: [
 				'app/**/*.js',
+				'bower_components/angular/angular.js',
+				'bower_components/angular-mocks/angular-mocks.js',
 				'bower_components/should/should.js',
 				'bower_components/sinonjs/sinon.js'
 			]
@@ -124,12 +124,11 @@ var conf = {
 			}
 		},
 		inject: {
-			name: 'app',
 			ignorePath: 'client',
 			addRootSlash: false
 		},
 		browserSync: {
-			proxy: 'localhost:9001',
+			proxy: '127.0.0.1:9001',
 			ghostMode: {
 				clicks: true,
 				forms: true,
@@ -157,23 +156,30 @@ conf.targets.html.path = path.join(conf.targets.html.dir, conf.targets.html.file
 
 // files needed for running client unit tests (karma tests)
 // rewrite absolute paths for karma, options doesn't work?
-conf.options.karma.files = (
-	conf.src.client.bower.map(function (e) { // rewrite absolute file system paths
-		return e.substr(e.indexOf('bower_components') - 1);
-	})
+conf.options.karma.files =
+	conf.src.client.bower.map(stripBowerComponents)
 		.concat(conf.src.client.mocks)
 		.concat(conf.src.client.unitTests)
-		.concat(conf.options.karma.appFiles)
-).map(function (e) {
-		if (e.indexOf(conf.options.karma.basePath) === 0) {
-			e = e.substr(conf.options.karma.basePath.length);
-		}
+		.concat(conf.options.karma.appFiles);
 
-		if (e.indexOf('/') === 0) {
-			return e.substr(1);
-		}
+conf.options.karma.files.map(rewriteFilePath);
 
-		return e;
-	});
+function stripBowerComponents(e) {
+	return e.substr(e.indexOf('bower_components') - 1);
+}
+
+function rewriteFilePath(e) {
+	var basePath = conf.options.karma.basePath;
+
+	if (e.indexOf(basePath) === 0) {
+		e = e.substr(basePath.length);
+	}
+
+	if (e.indexOf('/') === 0) {
+		return e.substr(1);
+	}
+
+	return e;
+}
 
 module.exports = conf;

@@ -6,8 +6,8 @@
 'use strict';
 
 var _ = require('lodash');
-var customResponses = require('../responses');
-var reserved = ['__v'].concat(Object.keys(require('mongoose').Schema.reserved));
+var customResponses = require('../responses');<% if (features.db) { %>
+var reserved = ['__v'].concat(Object.keys(require('mongoose').Schema.reserved));<% } %>
 
 /**
  * The default error handler
@@ -28,7 +28,7 @@ exports.defaultErrorHandler = function defaultErrorHandler(err, req, res, next) 
 	if (next) {
 		return next(err);
 	}
-};
+};<% if (features.db) { %>
 
 /**
  * Removes reserved properties from the request body.
@@ -43,7 +43,7 @@ exports.removeReservedSchemaKeywords = function removeReservedSchemaKeywords(req
 	}
 	req.body = _.omit(req.body, reserved);
 	return next();
-};
+};<% } %>
 
 /**
  * Extends the response with custom methods.

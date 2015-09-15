@@ -1,9 +1,9 @@
 'use strict';
 
-describe('Directive: <%= classedName %>', function () {
+describe('<%= moduleName %> Directive: <%= controllerName %>', function () {
 
 	// load the directive's module
-	beforeEach(module('<%= scriptAppName %>'));
+	beforeEach(module('<%= moduleName %>'));
 
 	var element, scope;
 
@@ -14,6 +14,6 @@ describe('Directive: <%= classedName %>', function () {
 	}));
 
 	it('should set the element text', function () {
-		element.text().should.equal('this is the <%= classedName %> directive');
+		element.text().should.equal('this is the <%= _.camelize(name) %> directive');
 	});
 });

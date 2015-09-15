@@ -1,23 +1,23 @@
 'use strict';
 
-describe('Filter: <%= classedName %>', function () {
+describe('<%= moduleName %> Filter: <%= controllerName %>', function () {
 
 	// load the filter's module
-	beforeEach(module('<%= scriptAppName %>'));
+	beforeEach(module('<%= moduleName %>'));
 
 	// initialize a new instance of the filter before each test
-	var <%= classedName %>;
+	var <%= controllerName %>;
 	beforeEach(inject(function ($filter) {
-		<%= classedName %> = $filter('<%= classedName %>');
+		<%= controllerName %> = $filter('<%= controllerName %>');
 	}));
 
 	it('should be defined', function () {
-		Should.exist(<%= classedName %>);
+		Should.exist(<%= controllerName %>);
 	});
 
-	it('should return the input prefixed with "<%= classedName %> filter"', function () {
-		var text = '<%= scriptAppName %>';
-		<%= classedName %>(text).should.equal('<%= classedName %> filter: ' + text)
+	it('should return the input prefixed with "<%= controllerName %> filter"', function () {
+		var text = '<%= moduleName %>';
+		<%= controllerName %>(text).should.equal('<%= controllerName %> filter: ' + text)
 	});
 
 });

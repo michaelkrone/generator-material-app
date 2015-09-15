@@ -1,39 +1,48 @@
 md-sidenav[md-component-id="mainMenu"] {
 
-	md-toolbar list-image div {
-		margin: 0 16px 0 0;
-	}
-
-	ul {
-		list-style: none;
-		padding: 0;
-	}
-
-	li {
-		margin: 0;
-	}
-
-	md-content {
-
-		ul > li > ul > li > .md-button {
-			padding-left: 42px;
-		}
+	md-list {
+		width: 100%;
 
 		.md-button {
 			display: block;
 			border-radius: 0;
-			color: inherit;
 			cursor: pointer;
-			font-weight: 400;
-			line-height: 40px;
+			font-weight: 500;
+			line-height: 48px;
 			margin: 0;
-			max-height: 40px;
+			max-height: 48px;
 			overflow: hidden;
 			padding: 0px 16px;
 			text-align: left;
 			text-decoration: none;
+			text-transform: none;
 			white-space: normal;
 			width: 100%;
+
+			md-icon {
+				width: 24px;
+				height: 24px;
+				margin-right: 8px;
+				margin-bottom: 4px;
+			}
+
+			span {
+				margin-right: 32px;
+			}
+		}
+
+		md-item {
+			padding: 0;
+
+			md-list {
+				.md-button {
+					padding-left: 32px;
+					font-weight: 400;
+					text-transform: none;
+					text-decoration: none;
+				}
+			}
 		}
 	}
+
 }

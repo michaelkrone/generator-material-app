@@ -8,7 +8,7 @@
 'use strict';
 
 var _ = require('lodash');
-var ParamController = require('../../lib/controllers/param.controller');
+var ParamController = require('.././param.controller');
 var config = require('../../config');
 
 /**
@@ -30,7 +30,7 @@ exports = module.exports = UserController;
  * @see user:model~User
  */
 function UserController(router) {
-	ParamController.call(this, User, 'id', 'userDocument', router);
+	ParamController.call(this, User, 'id', 'userDocument');
 	this.select = ['-salt', '-hashedPassword'];
 	this.omit = ['salt', 'hashedPassword'];
 	this.defaultReturn = 'profile';

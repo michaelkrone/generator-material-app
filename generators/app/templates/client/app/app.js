@@ -29,34 +29,40 @@
 	 * @param $locationProvider
 	 */
 	function appConfig($urlRouterProvider, $urlMatcherFactoryProvider, $locationProvider, $mdThemingProvider, $mdIconProvider<% if (features.auth) { %>, $httpProvider<% } %>) {
-		$urlRouterProvider.otherwise('/');
+		$urlRouterProvider.otherwise('/home');
 		$urlMatcherFactoryProvider.strictMode(false);
-		$locationProvider.html5Mode(true);
-	<% if(features.auth) { %>
+		$locationProvider.html5Mode(true);<% if(features.auth) { %>
+
 		$httpProvider.interceptors.push('AuthInterceptor');<% } %>
 
-
 		// set the default palette name
-		var defaultPalette = 'blue';
-		// define a palette to darken the background of components
-		var greyBackgroundMap = $mdThemingProvider.extendPalette(defaultPalette, {'A100': 'fafafa'});
-
-		$mdThemingProvider.definePalette('grey-background', greyBackgroundMap);
+		var defaultPalette = '<%= materialPrimaryTheme %>';
 		$mdThemingProvider.setDefaultTheme(defaultPalette);
 
 		// customize the theme
 		$mdThemingProvider
 			.theme(defaultPalette)
 			.primaryPalette(defaultPalette)
-			.accentPalette('pink')
-			.backgroundPalette('grey-background');
+			.accentPalette('<%= materialAccentTheme %>');
 
-		var spritePath = 'bower_components/material-design-icons/sprites/svg-sprite/';
-		$mdIconProvider.iconSet('navigation', spritePath + 'svg-sprite-navigation.svg');
-		$mdIconProvider.iconSet('action', spritePath + 'svg-sprite-action.svg');
-		$mdIconProvider.iconSet('content', spritePath + 'svg-sprite-content.svg');
-		$mdIconProvider.iconSet('toggle', spritePath + 'svg-sprite-toggle.svg');
-		$mdIconProvider.iconSet('alert', spritePath + 'svg-sprite-alert.svg');
+		loadSVGSprite('navigation');
+		loadSVGSprite('action');
+		loadSVGSprite('content');
+		loadSVGSprite('toggle');
+		loadSVGSprite('alert');
+		loadSVGSprite('social');
+
+		/**
+		 * Load an SVG sprite from the bower components.
+		 * @api private
+		 * @param {String} name The name of the sprite
+		 * @param {String} [spriteName] The name of the svg sprite, defaults to name
+		 */
+		function loadSVGSprite(name, spriteName) {
+			spriteName = spriteName || 'svg-sprite-' + name + '.svg';
+			spriteName = 'bower_components/material-design-icons/sprites/svg-sprite/' + spriteName;
+			$mdIconProvider.iconSet(name, spriteName);
+		}
 	}<% if(features.auth) { %>
 
 	/* App run bootstrap */

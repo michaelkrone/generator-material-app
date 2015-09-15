@@ -1,0 +1,37 @@
+/**
+ * @ngdoc service
+ * @name <%= moduleName %>:<%= controllerName %>
+ * @description
+ * Factory for wrapping a '<%= wrappedResource %>' resource and provide promisified methods
+ * and an easy to extend base class for adding custom resource related functionality.
+ * @returns {Object}
+ */
+
+(function () {
+	'use strict';
+
+	// register the service as <%= controllerName %>
+	angular
+		.module('<%= moduleName %>')
+		.service('<%= controllerName %>', <%= controllerName %>);
+
+	/**
+	 * @ngdoc function
+	 * @constructor
+	 * @name <%= moduleName %>.provider:<%= controllerName %>
+	 * @description
+	 * Provider of the {@link <%= moduleName %>.service:<%= controllerName %> <%= controllerName %>} resource.
+	 *
+	 * @extends <%= componentModule %>.apiservice:ApiService
+	 */
+
+	// add <%= controllerName %> dependencies to inject
+	<%= controllerName %>.$inject  = ['ApiService', '<%= wrappedResource %>'];
+
+	function <%= controllerName %>(ApiService, <%= wrappedResource %>) {
+		// extend from ApiService, you might want to extend this with
+		// methods which are useful for <%= wrappedResource %> related work
+		ApiService.call(this, <%= wrappedResource %>);
+	}
+
+})();

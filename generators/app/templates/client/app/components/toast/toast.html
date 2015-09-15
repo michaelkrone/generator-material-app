@@ -8,7 +8,11 @@
 		Show
 	</md-button>
 
-	<span ng-if="::vm.link">|</span>
+	<span ng-if="vm.link && vm.ok">|</span>
 
-	<md-button ng-click="vm.close()">OK</md-button>
+	<md-button ng-if="::vm.ok"
+		ng-class="{'md-primary': !vm.link, 'md-accent': !vm.link && vm.type === 'warn'}"
+		ng-click="vm.close()">
+			OK
+	</md-button>
 </md-toast>

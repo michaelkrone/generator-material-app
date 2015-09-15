@@ -17,7 +17,7 @@ var conf = require('../config');
  * Start the browser-sync server
  */
 // browser-sync task for starting the server.
-gulp.task('browser-sync', function() {
+gulp.task('browser-sync', function () {
 	browserSync(conf.options.browserSync);
 });
 
@@ -25,10 +25,12 @@ gulp.task('browser-sync', function() {
  * watch task`
  * Watch on javascript files, tests and sass files
  */
-gulp.task('watch', ['build', 'browser-sync'], function () {
+gulp.task('watch', ['browser-sync'], function () {
 	require(path.join(conf.dirs.root, 'bin/server.js'));
 	gulp.watch(conf.src.js, ['test', reload]);
 	gulp.watch(conf.src.styles, ['sass', reload]);
 	gulp.watch(conf.src.html, reload);
 	gulp.watch(conf.src.css, reload);
 });
+
+gulp.task('dev', ['build', 'watch']);

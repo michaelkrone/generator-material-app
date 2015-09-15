@@ -11,7 +11,16 @@
 	angular
 		.module('<%= scriptAppName %>.<%= _.slugify(name) %>.service', ['<%= scriptAppName %>.resource'])
 		.factory('<%= classedName %>', <%= classedName %>)
-		.service('<%= classedName %>Service', <%= classedName %>Service);
+
+	/**
+	 * @ngdoc function
+	 * @name <%= moduleName %>.provider:<%= controllerName %>
+	 * @description
+	 * Provider of the {@link <%= moduleName %>.service:<%= cont
+	 *
+	 * @returns {Object} The directive definition object
+	 */
+	 .service('<%= classedName %>Service', <%= classedName %>Service);
 
 	// add <%= classedName %> dependencies to inject
 	<%= classedName %>.$inject = ['Resource'];

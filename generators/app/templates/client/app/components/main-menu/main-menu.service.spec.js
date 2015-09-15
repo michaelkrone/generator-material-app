@@ -14,21 +14,13 @@ describe('Provider: mainMenuProvider', function () {
 	// load the provider's module and configure it with help of a dummy module
 	beforeEach(function () {
 		menuData = [menuEntry];
-
-		angular.module('config.module', function () {})
-			.config(['mainMenuProvider', function (_mainMenuProvider_) {
-				provider = _mainMenuProvider_;
-			}]);
-
-		module('<%= scriptAppName %>.mainMenu', 'config.module');
-
-		// trigger the injection config.module
-		inject(function () {});
+		module('<%= componentModule %>.mainMenu');
 	});
 
-	it('should be defined', function () {
-		Should.exist(provider);
-	});
+	it('should be defined', inject(function (mainMenuProvider) {
+			Should.exist(mainMenuProvider);
+		})
+	);
 
 	it('should have a getMenu function which returns an Object', inject(function (mainMenu) {
 		(mainMenu.getMenu()).should.be.an.Array;

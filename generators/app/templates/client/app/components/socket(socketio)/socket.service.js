@@ -3,9 +3,10 @@
 
 	// register factory as socket
 	angular
-		.module('<%= scriptAppName %>.socket', [
-			'<%= scriptAppName %>.io',
-			'<%= scriptAppName %>.lodash'
+		.module('<%= componentModule %>.socket', [
+			'btford.socket-io',
+			'<%= componentModule %>.io',
+			'<%= componentModule %>.lodash'
 		])
 		.factory('socket', SocketService);
 

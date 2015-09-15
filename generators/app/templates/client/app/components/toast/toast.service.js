@@ -4,7 +4,7 @@
  * @requires ui.router
  * @requires ngMaterial
  * @description
- * The <%= scriptAppName %>.toast module
+ * The <%= componentModule %>.toast module
  */
 
 /**
@@ -18,7 +18,7 @@
 	'use strict';
 
 	angular
-		.module('<%= scriptAppName %>.toast', [
+		.module('<%= componentModule %>.toast', [
 			'ui.router',
 			'ngMaterial'
 		])
@@ -44,7 +44,8 @@
 
 		return {
 			show: showToast,
-			hide: hideToast
+			hide: hideToast,
+			warn: warnToast
 		};
 
 		/**
@@ -71,7 +72,8 @@
 					locals: {
 						type: content.type || 'info',
 						text: content.text || content,
-						link: content.link || false
+						link: content.link || false,
+						ok: content.ok || true
 					}
 				};
 
@@ -97,8 +99,25 @@
 		function hideToast() {
 			return $mdToast.hide();
 		}
-	}
 
+		/**
+		 * @ngdoc function
+		 * @name warnToast
+		 * @methodOf toast.service:Toast
+		 * @description
+		 * Display a warning toast with the given content
+		 *
+		 * @param {String} content The toasts content.
+		 *
+		 * @returns {Promise} The mdToast promise
+		 */
+		function warnToast(content) {
+			return showToast({
+				text: content,
+				type: 'warn'
+			});
+		}
+	}
 
 	/**
 	 * @ngdoc controller
@@ -116,9 +135,9 @@
 	 * @returns {Object} The service definition for the Toast Service
 	 */
 
-	ToastController.$inject = ['$mdToast', '$state', 'type', 'text', 'link'];
+	ToastController.$inject = ['$mdToast', '$state', 'type', 'text', 'link', 'ok'];
 
-	function ToastController($mdToast, $state, type, text, link) {
+	function ToastController($mdToast, $state, type, text, link, ok) {
 		var vm = this;
 
 		/**
@@ -138,6 +157,15 @@
 		 * @propertyOf toast.controller:ToastController
 		 */
 		vm.link = link;
+		
+		/**
+		 * @ngdoc property
+		 * @name ok
+		 * @description
+		 * Defines if the ok button should be displayed on the toast
+		 * @propertyOf toast.controller:ToastController
+		 */
+		vm.ok = ok;
 
 		/**
 		 * @ngdoc property

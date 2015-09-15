@@ -1,27 +1,75 @@
+/**
+ * @ngdoc controller
+ * @name <%= moduleName %>.controller:<%= controllerName %>
+ * @description
+ * Controls this '<%= name %>' thingy.
+ */
+
 (function () {
 	'use strict';
 
-	// register the controller as <%= classedName %>Controller
+	// register the controller as <%= controllerName %>
 	angular
-		.module('<%= scriptAppName %>')
-		.controller('<%= classedName %>Controller', <%= classedName %>Controller);
-
-	// add <%= classedName %>Controller dependencies to inject
-	<%= classedName %>Controller.$inject = [];
+		.module('<%= moduleName %>'<% if (soloModule) { %>, []<% } %>)
+		.controller('<%= controllerName %>', <%= controllerName %>);
 
 	/**
-	 * <%= classedName %>Controller constructor
+	 * @ngdoc function
+	 * @constructor
+	 * @name <%= moduleName %>.provider:<%= controllerName %>
+	 * @description
+	 * Provider of the {@link <%= moduleName %>.controller:<%= controllerName %> <%= controllerName %>}
 	 */
-	function <%= classedName %>Controller() {
+
+	// add <%= controllerName %> dependencies to inject
+	<%= controllerName %>.$inject = [];
+
+	function <%= controllerName %>() {
 		var vm = this;
 
-		// view model bindings
-		vm.title = '<%= name %>';
+		/**
+		 * @ngdoc property
+		 * @name title
+		 * @propertyOf <%= moduleName %>.controller:<%= controllerName %>
+		 * @description
+		 * The title of this component
+		 * @returns {String}
+		 */
+		vm.title = '<%= _.capitalize(name) %>';
+
+		/**
+		 * @ngdoc function
+		 * @name doSomething
+		 * @methodOf <%= moduleName %>.controller:<%= controllerName %>
+		 * @description
+		 * Does something
+		 * @returns {String} A self-assessment of this controller
+		 */
 		vm.doSomething = doSomething;
 
-		// view model implementations
+		// call the activate function to init the controller
+		// after all variables have been introduced
+		// activate();
+
+		/**
+		 * @ngdoc function
+		 * @name activate
+		 * @api private
+		 * @methodOf <%= moduleName %>.controller:<%= controllerName %>
+		 * @description
+		 * Activates the <%= controllerName %>, initializes variables, calls services,
+		 * register sockets, bind to events ...
+		 */
+		function activate() {}
+
+		/**
+		 * @ngdoc function
+		 * @name doSomething
+		 * @api private
+		 * @see <%= moduleName %>.controller:<%= controllerName %>#doSomething
+		 */
 		function doSomething() {
-			return [vm.title, 'a sublime controller'].join(' - ');
+			return [vm.title, 'has a sublime controller'].join(' - ');
 		}
 	}
 

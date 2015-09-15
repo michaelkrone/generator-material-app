@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular
-		.module('<%= scriptAppName %>.io', [])
+		.module('<%= componentModule %>.io', [])
 		.factory('io', IOService);
 
 	// inject IOService dependencies

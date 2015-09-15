@@ -1,37 +1,86 @@
+/**
+ * @ngdoc service
+ * @name <%= moduleName %>.decorator:<%= controllerName %>
+ * @description
+ * Decorates the <%= serviceToDecorate %> service.
+ */
+
 (function () {
 	'use strict';
 
 	// register the decorator config
 	angular
-		.module('<%= scriptAppName %>')
-		.config(<%= name %>Config);
+		.module('<%= moduleName %>')
+		.config(<%= controllerName %>Config);
 
-	// add <%= name %>Config dependencies to inject
-	<%= name %>Config.$inject = ['$provide'];
+	// add <%= controllerName %>Config dependencies to inject
+	<%= controllerName %>Config.$inject = ['$provide'];
 
-	// the config function to decorate the service
-	function <%= name %>Config($provide) {
-		$provide.decorator('<%= serviceToDecorate %>', <%= classedName %>Decorator);
+	/*
+	 * @ngdoc function
+	 * @api private
+	 * @methodOf <%= moduleName %>
+	 * @description
+	 * The config function to decorate the <%= serviceToDecorate %> service. Decorates
+	 * <%= serviceToDecorate %>' with the <%= controllerName %>.
+	 *
+	 * @param {Object} $provide the Angular.js provide service
+	 */
+	function <%= controllerName %>Config($provide) {
+		$provide.decorator('<%= serviceToDecorate %>', <%= controllerName %>);
 	}
 
-	// add <%= classedName %> dependencies to inject
-	<%= classedName %>Decorator.$inject = ['$delegate'];
+	// add <%= controllerName %> dependencies to inject
+	<%= controllerName %>.$inject = ['$delegate'];
 
 	/**
-	 * <%= classedName %>Decorator constructor
+	 * @ngdoc function
+	 * @constructor
+	 * @name <%= moduleName %>.provider:<%= controllerName %>
+	 * @description
+	 * Provider of the {@link <%= moduleName %>.provider:<%= controllerName %> <%= controllerName %>}
 	 */
-	function <%= classedName %>Decorator($delegate) {
-		// factory members
+	function <%= controllerName %>($delegate) {
+
+		/**
+		 * @ngdoc property
+		 * @name name
+		 * @api private
+		 * @propertyOf <%= moduleName %>.decorator:<%= controllerName %>
+		 * @description
+		 * A name
+		 *
+		 * @returns {String}
+		 */
 		var name = '<%= name %>';
 
-		// public API
-		return function <%= classedName %>DecoratorFunction() {
+		/**
+		 * @ngdoc function
+		 * @name <%= controllerName %>Function
+		 * @methodOf <%= moduleName %>.decorator:<%= controllerName %>
+		 * @description
+		 * Decorate the service with a 'getDelegatedName' that returns the name of this decorator.
+		 *
+		 * @returns {Function} The decorated <%= serviceToDecorate %> service
+		 */
+		return function <%= controllerName %>Function() {
 			// apply decorations to $delegate
-			$delegate.getName = function getDelegatedName() {
-				return name;
-			};
+			$delegate.getName = getDelegatedName;
 
 			return $delegate;
+
+			/**
+			 * @ngdoc function
+			 * @name getDelegatedName
+			 * @methodOf <%= serviceToDecorate %>
+			 * @description
+			 * A function to return the name of this decorator.
+			 *
+			 * @returns {Function} The new <%= serviceToDecorate %> method
+			 */
+			function getDelegatedName() {
+				return name;
+			};
 		}
 	}
 

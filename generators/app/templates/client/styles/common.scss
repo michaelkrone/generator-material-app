@@ -1,3 +1,4 @@
+@import "variables";
 /**
  * App-wide Styles
  */
@@ -6,8 +7,12 @@ body {
 	overflow: hidden;
 }
 
-main {
-	overflow: auto;
+main[ui-view] {
+	overflow: hidden;
+
+	& > md-content {
+		background-color: $darkBackground;
+	}
 }
 
 button.md-button {
@@ -21,43 +26,11 @@ button.md-button {
 	}
 }
 
-md-list {
-	&.fab-padding {
-		padding-bottom: 56px;
-	}
-
-	.list-info {
-		color: rgba(0, 0, 0, 0.24);
-	}
-
-	md-item {
-		&.selected {
-			background: rgb(227, 242, 253);
-		}
-
-		&.list-head {
-			color: #888;
-
-			md-item-content {
-				padding-left: 64px;
-			}
-		}
-	}
-}
-
-md-dialog {
-	max-height: 85%;
-}
-
 md-toolbar {
 	.md-toolbar-tools {
 		&.toolbar-tools-fab-overlap {
 			padding-left: 78px;
 		}
-	}
-
-	.md-button:not(.md-fab) {
-		min-width: 1em;
 	}
 
 	.subtitle {
@@ -87,13 +60,5 @@ md-toolbar {
 				}
 			}
 		}
-	}
-}
-
-md-content[ui-view="detail"] {
-	background-color: rgb(245, 245, 245);
-
-	md-content, md-tabs {
-		background-color: rgb(245, 245, 245);
 	}
 }

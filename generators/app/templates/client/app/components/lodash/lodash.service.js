@@ -3,8 +3,8 @@
 
 	// register the service as _
 	angular
-		.module('<%= scriptAppName %>.lodash', [])
-		.factory('_', LodashService);
+		.module('<%= componentModule %>.lodash', [])
+		.constant('_', _);
 
 	// add LodashService dependencies to inject
 	LodashService.$inject = ['$window'];

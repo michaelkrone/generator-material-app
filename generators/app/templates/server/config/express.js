@@ -9,13 +9,14 @@
 var express = require('express');
 var path = require('path');
 var morgan = require('morgan');
-var compression = require('compression');
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
-var methodOverride = require('method-override');
 var favicon = require('serve-favicon');
-var errorHandler = require('errorhandler');
-var passport = require('passport');
+var compression = require('compression');<% if (features.db) { %>
+var bodyParser = require('body-parser');
+var methodOverride = require('method-override');<% } %>
+var errorHandler = require('errorhandler');<% if (features.auth) { %>
+var cookieParser = require('cookie-parser');
+var passport = require('passport');<% } %>
+
 var config =  require('./index');
 
 // export the express configuration function
@@ -37,18 +38,18 @@ function initExpress(app) {
 	app.engine('html', require('ejs').renderFile);
 	app.set('view engine', 'html');
 
-	app.use(compression());
+	app.use(compression());<% if (features.db) { %>
 	app.use(bodyParser.urlencoded({ extended: false }));
 	app.use(bodyParser.json());
-	app.use(methodOverride());
+	app.use(methodOverride());<% } %><% if (features.auth) { %>
 	app.use(cookieParser());
-	app.use(passport.initialize());
+	app.use(passport.initialize());<% } %>
 	app.use(favicon(path.join(publicDir, 'favicon.ico')));
 
 	if ('production' === env) {
 		app.use(express.static(publicDir));
 		app.set('appPath', publicDir);
-		app.use(morgan('tiny'));
+		app.use(morgan('common'));
 	}
 
 	if ('development' === env || 'test' === env) {

@@ -1,0 +1,15 @@
+@import "variables";
+
+md-card-content {
+	&.text-card {
+		.md-headline {
+			line-height: 2.4rem;
+			margin-bottom: 0.16em;
+		}
+
+		.md-subhead {
+			color: $lightText;
+		}
+	}
+}
+

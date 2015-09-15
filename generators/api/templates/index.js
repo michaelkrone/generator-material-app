@@ -27,21 +27,24 @@ module.exports = router;
  */
 var controller = new <%= modelName %>Controller(router);
 
+// register the controller to this router
+controller.registerRouter(router);
+
 // register <%= name %> route parameters, uncomment if needed
 // var register<%= modelName %>Parameters = require('./<%= name %>.params');
 // register<%= modelName %>Parameters(router);<% if (secure) { %>
 
 // add context for auth sensitive resources
-var addRequestContext = contextService.middleware('request');
+var addRequestContext = contextService.middleware('request');<% if (features.auth) { %>
 
 // add the authenticated user to the created acl context
 var addUserContext = auth.addAuthContext('request:acl.user');
 
 // check if the request is made by an authenticated user with at least the <%= role %> role
-var isAuthenticated = auth.hasRole('<%= role %>');
+var isAuthenticated = auth.hasRole('<%= role %>');<% } %>
 
 // apply auth middleware to all routes
-router.route('*').all(addRequestContext, isAuthenticated, addUserContext);<% } %>
+router.route('*').all(addRequestContext<% if (features.auth) { %>, isAuthenticated, addUserContext<% } %>);<% } %>
 
 // register <%= name %> routes
 router.route('/')

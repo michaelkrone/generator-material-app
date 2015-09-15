@@ -1,39 +1,55 @@
+/**
+ * @ngdoc directive
+ * @name toggleComponent.directive:toggleComponent
+ * @restrict A
+ * @requires ngModel
+ * @description
+ * Directive for components that can be toggled.
+ *
+ * @element ANY
+ * @param {Boolean} toggleComponentIsOpen If the component is open
+ * @param {Event} toggleComponentOnKeyDown OnKeyDown-Event for handling keypresses
+ */
+
+/**
+ * @ngdoc controller
+ * @name toggleComponent.controller:ToggleComponentController
+ * @description
+ * Controller which is used by the {@link toggleComponent.directive:toggleComponent toggleComponent-directive}
+ */
+
 (function () {
 	'use strict';
 
 	/**
 	 * Register the ToggleComponentDirective directive as toggleComponent.
 	 * Register the directive controller as ToggleComponentController
-	 * @module <%= scriptAppName %>.toggleComponent
-	 * @name ToggleComponent
 	 */
-
 	angular
-		.module('<%= scriptAppName %>.toggleComponent')
+		.module('<%= componentModule %>.toggleComponent')
 		.directive('toggleComponent', ToggleComponentDirective)
 		.controller('ToggleComponentController', ToggleComponentController);
 
-	// inject dependencies for the ToggleComponentDirective
-	ToggleComponentDirective.$inject = ['$timeout', '$animate', '$parse', '$mdMedia', '$mdConstant', '$q', '$document'];
 
 	/**
-	 * Directive for components that can be toggled.
+	 * @ngdoc function
+	 * @name toggleComponent.provider:ToggleComponentDirective
+	 * @description
+	 * Provider for the {@link toggleComponent.directive:toggleComponent toggleComponent-directive}
 	 *
-	 * @ngdoc directive
-	 * @name ToggleComponentDirective
-	 * @module <%= scriptAppName %>.toggleComponent
-	 *
-	 * @param $timeout
-	 * @param $animate
-	 * @param $parse
-	 * @param $mdMedia
-	 * @param $mdConstant
-	 * @param $q
-	 * @param $document
-	 * @returns {{restrict: string, scope: {isOpen: string}, controller: string, compile: Function}}
-	 * @constructor
+	 * @param {Service} $timeout Timeout service
+	 * @param {Service} $animate Animate service
+	 * @param {Service} $parse parse service
+	 * @param {Service} $mdMedia Material service
+	 * @param {Service} $mdConstant Material constant
+	 * @param {Service} $q Promise service
+	 * @param {Service} $document Document service
+	 * @returns {Object} Directive factory
 	 */
-	function ToggleComponentDirective($timeout, $animate, $parse, $mdMedia, $mdConstant, $q, $document) {
+
+	ToggleComponentDirective.$inject = ['$timeout', '$animate', '$mdConstant', '$q', '$document'];
+
+	function ToggleComponentDirective($timeout, $animate, $mdConstant, $q, $document) {
 		return {
 			restrict: 'A',
 
@@ -57,29 +73,12 @@
 		function postLink(scope, element, attr, toggleComponentCtrl) {
 			var triggeringElement = null;
 			var promise = $q.when(true);
-			var isLockedOpenParsed = $parse(attr.toggleComponentIsOpen);
-			var isLocked = function () {
-				return isLockedOpenParsed(scope.$parent, {$media: $mdMedia});
-			};
 
 			element.on('$destroy', toggleComponentCtrl.destroy);
-			scope.$watch(isLocked, updateIsLocked);
 			scope.$watch('isOpen', updateIsOpen);
 
 			// Publish special accessor for the Controller instance
 			toggleComponentCtrl.$toggleOpen = toggleOpen;
-
-			/**
-			 * Toggle the DOM classes to indicate `locked`
-			 * @param isLocked
-			 */
-			function updateIsLocked(isLocked, oldValue) {
-				if (isLocked === oldValue) {
-					element.toggleClass('toggle-component-locked-open', !!isLocked);
-				} else {
-					$animate[isLocked ? 'addClass' : 'removeClass'](element, 'toggle-component-locked-open');
-				}
-			}
 
 			/**
 			 * Toggle the toggleComponent view and attach/detach listeners
@@ -96,7 +95,7 @@
 					triggeringElement = $document[0].activeElement;
 				}
 
-				return promise = $q.all([
+				promise = $q.all([
 					$animate[isOpen ? 'removeClass' : 'addClass'](element, 'toggle-component-closed')
 						.then(function setElementFocus() {
 							if (scope.isOpen) {
@@ -104,6 +103,8 @@
 							}
 						})
 				]);
+
+				return promise;
 			}
 
 			/**
@@ -117,7 +118,9 @@
 				if (scope.isOpen === isOpen) {
 					return $q.when(true);
 				}
+
 				var deferred = $q.defer();
+
 				// Toggle value to force an async `updateIsOpen()` to run
 				scope.isOpen = isOpen;
 				$timeout(setElementFocus, 0, false);
@@ -129,7 +132,9 @@
 					promise.then(function (result) {
 						if (!scope.isOpen) {
 							// reset focus to originating element (if available) upon close
-							triggeringElement && triggeringElement.focus();
+							if (triggeringElement) {
+								triggeringElement.focus();
+							}
 							triggeringElement = null;
 						}
 
@@ -149,7 +154,7 @@
 
 			/**
 			 * With backdrop `clicks` or `escape` key-press, immediately
-			 * apply the CSS close transition... Then notify the controller
+			 * apply the CSS close transition. Then notify the controller
 			 * to close() and perform its own actions.
 			 */
 			function close(ev) {
@@ -160,42 +165,84 @@
 		}
 	}
 
-	// inject dependencies for the ToggleComponentController
-	ToggleComponentController.$inject = ['$scope', '$element', '$attrs', '$q', '$mdComponentRegistry'];
-
 	/**
-	 * @private
-	 * @ngdoc controller
-	 * @name ToggleComponentController
-	 * @module <%= scriptAppName %>.toggleComponent
+	 * @ngdoc function
+	 * @name toggleComponent.provider:ToggleComponentController
+	 * @description
+	 * Provider of the {@link toggleComponent.controller:ToggleComponentController ToggleComponentController}
 	 *
+	 * @param {Service} $scope The scope to use
+	 * @param {Service} $element The element to use
+	 * @param {Service} $attrs The attributes to use
+	 * @param {Service} $q The promise service to use
+	 * @param {Service} $mdComponentRegistry The component registry service to use
+	 * @returns {Controller} The Controller
 	 */
-	function ToggleComponentController($scope, $element, $attrs, $q, $mdComponentRegistry) {
+	ToggleComponentController.$inject = ['$scope', '$element', '$attrs', '$q', 'componentRegistry'];
+
+	function ToggleComponentController($scope, $element, $attrs, $q, componentRegistry) {
 		var self = this;
 
 		// Use Default internal method until overridden by directive postLink
 
+		/**
+		 * @ngdoc function
+		 * @name toggleOpen
+		 * @methodOf toggleComponent.controller:ToggleComponentController
+		 * @returns {Promise} Promise
+		 */
 		self.toggleOpen = function () {
 			return $q.when($scope.isOpen);
 		};
 
+		/**
+		 * @ngdoc function
+		 * @name isOpen
+		 * @methodOf toggleComponent.controller:ToggleComponentController
+		 * @description
+		 * Returns true, if the component is currently open
+		 *
+		 * @returns {Boolean} True, if component is open
+		 */
 		self.isOpen = function () {
 			return !!$scope.isOpen;
 		};
 
+		/**
+		 * @ngdoc function
+		 * @name open
+		 * @methodOf toggleComponent.controller:ToggleComponentController
+		 * @description
+		 * Opens the component
+		 *
+		 * Calls {@link toggleComponent.controller:ToggleComponentController#toggleOpen toggleOpen(true)} internally
+		 * @returns {Promise} Promise
+		 */
 		self.open = function () {
 			return self.$toggleOpen(true);
 		};
 
+		/**
+		 * @ngdoc function
+		 * @name close
+		 * @methodOf toggleComponent.controller:ToggleComponentController
+		 * @returns {Promise} Promise
+		 */
 		self.close = function () {
 			return self.$toggleOpen(false);
 		};
 
+		/**
+		 * @ngdoc function
+		 * @name toggle
+		 * @methodOf toggleComponent.controller:ToggleComponentController
+		 * @returns {Promise} Promise
+		 */
 		self.toggle = function () {
 			return self.$toggleOpen(!$scope.isOpen);
 		};
 
-		self.destroy = $mdComponentRegistry.register(self, $attrs.mdComponentId);
+		self.destroy = componentRegistry.register(self, $attrs.toggleComponent);
 	}
 
 })();

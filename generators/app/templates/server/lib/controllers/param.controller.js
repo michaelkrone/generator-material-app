@@ -110,7 +110,7 @@ ParamController.prototype = {
 				return res.handleError(err);
 			}
 
-			req[this.paramName] = updated;
+			req[self.paramName] = updated;
 			return res.ok(self.getResponseObject(updated));
 		});
 	},
@@ -123,12 +123,14 @@ ParamController.prototype = {
 	 * @returns {ServerResponse} The response status 201 CREATED or an error response
 	 */
 	destroy: function (req, res) {
+		var self = this;
+
 		req[this.paramName].remove(function (err) {
 			if (err) {
 				return res.handleError(err);
 			}
 
-			delete req[this.paramName];
+			delete req[self.paramName];
 			return res.noContent();
 		});
 	},

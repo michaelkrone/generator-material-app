@@ -82,7 +82,6 @@
 		 */
 		function onStateChange() {
 			unregisterListener();
-			$mdDialog.hide();
 		}
 	}
 

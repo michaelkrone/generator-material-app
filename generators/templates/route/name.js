@@ -15,7 +15,7 @@
 			.state('<%= name %>', {
 				url: '<%= route %>',
 				templateUrl: '<%= htmlUrl %>',
-				controller: '<%= classedName %>Ctrl',
+				controller: '<%= classedName %>Controller',
 				controllerAs: 'vm'
 		});
 	}

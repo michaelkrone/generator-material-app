@@ -1,18 +1,18 @@
 (function () {
 	'use strict';
 
-	// register the controller as <%= classedName %>Ctrl
+	// register the controller as <%= classedName %>Controller
 	angular
 		.module('<%= scriptAppName %>')
-		.controller('<%= classedName %>Ctrl', <%= classedName %>Ctrl);
+		.controller('<%= classedName %>Controller', <%= classedName %>Controller);
 
-	// add <%= classedName %>Ctrl dependencies to inject
-	// <%= classedName %>Ctrl.$inject = ['$scope'];
+	// add <%= classedName %>Controller dependencies to inject
+	// <%= classedName %>Controller.$inject = ['$scope'];
 
 	/**
-	 * <%= classedName %>Ctrl constructor
+	 * <%= classedName %>Controller constructor
  	 */
-	function <%= classedName %>Ctrl() {
+	function <%= classedName %>Controller() {
 		var vm = this;
 
 		// view model bindings

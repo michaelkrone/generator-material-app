@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Controller: <%= classedName %>Ctrl', function () {
+describe('Controller: <%= classedName %>ListController', function () {
 
 	// load the controller's module
 	beforeEach(module('<%= scriptAppName %>.<%= _.slugify(name) %>'));

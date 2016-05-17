@@ -35,7 +35,7 @@ process
  * Create an express http server and return it
  * Config the socketio service to use this server
  * @api private
- * @return
+ * @return {}
  */
 function startServer() {
 	var server = require('http').createServer(app);

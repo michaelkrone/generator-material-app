@@ -10,6 +10,7 @@
  * @ngdoc service
  * @name resource.service:Resource
  * @description
+ * resource.service:Resource
  *
  */
 

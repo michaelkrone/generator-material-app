@@ -1,6 +1,6 @@
 {
   "name": "generator-material-app",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Generates a material web application with AngularJS, Express and Mongoose",
   "repository": "https://github.com/michaelkrone/generator-material-app.git",
   "keywords": [

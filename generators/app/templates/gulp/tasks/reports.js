@@ -11,7 +11,7 @@ var istanbul = require('gulp-istanbul');
 var karma = require('karma').server;
 var plato = require('gulp-plato');
 var utils = require('gulp-util');
-var jsdoc = require('gulp-jsdoc');
+var jsdoc = require('gulp-jsdoc3');
 var conf = require('../config');
 var tests = require('./tests.js'); // require tests for reuse of test functions
 

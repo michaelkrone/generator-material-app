@@ -27,8 +27,8 @@ router.post('/', authenticate);
  * [callback function]{@link auth:local~authCallback}
  */
 function authenticate(req, res, next) {
-	var callback = _.bind(authCallback, {req: req, res: res});
-	passport.authenticate('local', callback)(req, res, next)
+  var callback = _.bind(authCallback, {req: req, res: res});
+  passport.authenticate('local', callback)(req, res, next)
 }
 
 /**
@@ -42,16 +42,16 @@ function authenticate(req, res, next) {
  * as the 'token' property.
  */
 function authCallback(err, user, info) {
-	// jshint validthis: true
-	var error = err || info;
-	if (error) {
-		return this.res.unauthorized(error);
-	}
+  // jshint validthis: true
+  var error = err || info;
+  if (error) {
+    return this.res.unauthorized(error);
+  }
 
-	if (!user) {
-		return this.res.notFound('Error, please try again.');
-	}
+  if (!user) {
+    return this.res.notFound('Error, please try again.');
+  }
 
-	var token = auth.signToken(user._id, user.role);
-	this.res.ok({token: token});
+  var token = auth.signToken(user._id, user.role);
+  this.res.ok({token: token});
 }

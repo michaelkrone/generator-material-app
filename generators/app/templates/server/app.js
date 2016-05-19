@@ -28,8 +28,8 @@ require('./routes')(app);
 
 // register the shutdown handler to close the database connection on interrupt signals
 process
-	.on('SIGINT', serverShutdown)
-	.on('SIGTERM', serverShutdown);
+  .on('SIGINT', serverShutdown)
+  .on('SIGTERM', serverShutdown);
 
 /**
  * Create an express http server and return it
@@ -38,14 +38,14 @@ process
  * @return {}
  */
 function startServer() {
-	var server = require('http').createServer(app);
-	var socket = socketio(server, {
-		serveClient: (config.env !== 'production'),
-		path: '/socket.io-client'
-	});
-	// Setup SocketIO
-	socketConfig(socket);
-	return server;
+  var server = require('http').createServer(app);
+  var socket = socketio(server, {
+    serveClient: (config.env !== 'production'),
+    path: '/socket.io-client'
+  });
+  // Setup SocketIO
+  socketConfig(socket);
+  return server;
 }
 
 /**
@@ -54,8 +54,8 @@ function startServer() {
  * @api private
  */
 function serverShutdown() {
-	db.connection.close(function connectionClose() {
-		console.log('Database connection disconnected through app termination');
-		process.exit(0);
-	});
+  db.connection.close(function connectionClose() {
+    console.log('Database connection disconnected through app termination');
+    process.exit(0);
+  });
 }

@@ -22,13 +22,13 @@ exports.register = registerUserSockets;
  * @param {socket.io} socket - The socket object to register the User model events on
  */
 function registerUserSockets(socket) {
-	User.schema.post('save', function (doc) {
-		onSave(socket, doc);
-	});
+  User.schema.post('save', function (doc) {
+    onSave(socket, doc);
+  });
 
-	User.schema.post('remove', function (doc) {
-		onRemove(socket, doc);
-	});
+  User.schema.post('remove', function (doc) {
+    onRemove(socket, doc);
+  });
 }
 
 /**
@@ -38,7 +38,7 @@ function registerUserSockets(socket) {
  * @param {function} cb - The callback function
  */
 function onSave(socket, doc, cb) {
-	socket.emit('user:save', doc);
+  socket.emit('user:save', doc);
 }
 
 /**
@@ -48,5 +48,5 @@ function onSave(socket, doc, cb) {
  * @param {function} cb - The callback function
  */
 function onRemove(socket, doc, cb) {
-	socket.emit('user:remove', doc);
+  socket.emit('user:remove', doc);
 }

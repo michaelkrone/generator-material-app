@@ -27,36 +27,36 @@ module.exports = initExpress;
  * @param {express.app} app - The express application instance to configure
  */
 function initExpress(app) {
-	var env = app.get('env');
-	var publicDir = path.join(config.root, config.publicDir);
+  var env = app.get('env');
+  var publicDir = path.join(config.root, config.publicDir);
 
-	app.set('ip', config.ip);
-	app.set('port', config.port);
+  app.set('ip', config.ip);
+  app.set('port', config.port);
 
-	app.set('views', config.root + '/server/views');
-	app.engine('html', require('ejs').renderFile);
-	app.set('view engine', 'html');
+  app.set('views', config.root + '/server/views');
+  app.engine('html', require('ejs').renderFile);
+  app.set('view engine', 'html');
 
-	app.use(compression());
-	app.use(bodyParser.urlencoded({ extended: false }));
-	app.use(bodyParser.json());
-	app.use(methodOverride());
-	app.use(cookieParser());
-	app.use(passport.initialize());
-	app.use(favicon(path.join(publicDir, 'favicon.ico')));
+  app.use(compression());
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(bodyParser.json());
+  app.use(methodOverride());
+  app.use(cookieParser());
+  app.use(passport.initialize());
+  app.use(favicon(path.join(publicDir, 'favicon.ico')));
 
-	if ('production' === env) {
-		app.use(express.static(publicDir));
-		app.set('appPath', publicDir);
-		app.use(morgan('tiny'));
-	}
+  if ('production' === env) {
+    app.use(express.static(publicDir));
+    app.set('appPath', publicDir);
+    app.use(morgan('tiny'));
+  }
 
-	if ('development' === env || 'test' === env) {
-		app.use(express.static(path.join(config.root, '.tmp')));
-		app.use(express.static(publicDir));
-		app.set('appPath', publicDir);
-		app.use(morgan('dev'));
-		// Error handler - has to be last
-		app.use(errorHandler());
-	}
+  if ('development' === env || 'test' === env) {
+    app.use(express.static(path.join(config.root, '.tmp')));
+    app.use(express.static(publicDir));
+    app.set('appPath', publicDir);
+    app.use(morgan('dev'));
+    // Error handler - has to be last
+    app.use(errorHandler());
+  }
 }

@@ -6,39 +6,39 @@ var ngUtil = require('../util');
 var BaseGenerator = require('../base.js');
 
 var Generator = module.exports = function Generator() {
-	BaseGenerator.apply(this, arguments);
+  BaseGenerator.apply(this, arguments);
 };
 
 util.inherits(Generator, BaseGenerator);
 
 Generator.prototype.askFor = function askFor() {
-	var self = this;
-	var name = this.name;
+  var self = this;
+  var name = this.name;
 
-	var done = this.async();
-	var prompts = [
-		{
-			name: 'dir',
-			message: 'Where would you like to create this route?',
-			default: self.config.get('routeDirectory')
-		},
-		{
-			name: 'route',
-			message: 'What will the url of your route be?',
-			default: '/' + name
-		}
-	];
+  var done = this.async();
+  var prompts = [
+    {
+      name: 'dir',
+      message: 'Where would you like to create this route?',
+      default: self.config.get('routeDirectory')
+    },
+    {
+      name: 'route',
+      message: 'What will the url of your route be?',
+      default: '/' + name
+    }
+  ];
 
-	this.prompt(prompts, function (props) {
-		this.route = props.route;
-		this.dir = path.join(props.dir, this.name);
-		done();
-	}.bind(this));
+  this.prompt(prompts, function (props) {
+    this.route = props.route;
+    this.dir = path.join(props.dir, this.name);
+    done();
+  }.bind(this));
 };
 
 Generator.prototype.createFiles = function createFiles() {
-	var basePath = this.config.get('basePath') || '';
-	// this.htmlUrl = ngUtil.relativeUrl(basePath, path.join(this.dir, this.name + '.html'));
-	this.htmlUrl = path.relative('client', path.join(this.dir, this.name + '.html'));
-	ngUtil.copyTemplates(this, 'route');
+  var basePath = this.config.get('basePath') || '';
+  // this.htmlUrl = ngUtil.relativeUrl(basePath, path.join(this.dir, this.name + '.html'));
+  this.htmlUrl = path.relative('client', path.join(this.dir, this.name + '.html'));
+  ngUtil.copyTemplates(this, 'route');
 };

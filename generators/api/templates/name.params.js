@@ -15,8 +15,8 @@ module.exports = register<%= modelName %>Params;
  * @param router {express.Router} - The router to attach the parameters to
  */
 function register<%= modelName %>Params(router) {
-	// router.param('id', registerParamName);
-	// add params below
+  // router.param('id', registerParamName);
+  // add params below
 }
 
 /*
@@ -31,22 +31,22 @@ function register<%= modelName %>Params(router) {
  * id's and a status of 404 if no document has been found for the passed
  * parameter. Calls the passed next function when done.
 
-	function registerParamName(req, res, next, id) {
-		// attach the document to the request
-		Model.findById(id, function (err, doc) {
-			if (err) {
-				return next(err);
-			}
+  function registerParamName(req, res, next, id) {
+    // attach the document to the request
+    Model.findById(id, function (err, doc) {
+      if (err) {
+        return next(err);
+      }
 
-			if (!doc) {
-				res.notFound();
-				return next('route');
-			}
+      if (!doc) {
+        res.notFound();
+        return next('route');
+      }
 
-			req.paramName = doc;
-			return next();
-		});
-	}
+      req.paramName = doc;
+      return next();
+    });
+  }
  */
 
 // add param functions below

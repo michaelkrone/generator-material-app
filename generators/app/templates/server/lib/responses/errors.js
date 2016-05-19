@@ -5,112 +5,112 @@
 'use strict';
 
 module.exports = {
-	/**
-	 * Handles malformed requests
-	 * @type {function}
-	 * @see responses:errors~badRequest
-	 */
-	badRequest: badRequest,
+  /**
+   * Handles malformed requests
+   * @type {function}
+   * @see responses:errors~badRequest
+   */
+  badRequest: badRequest,
 
-	/**
-	 * Handles malformed requests
-	 * @type {function}
-	 * @see responses:errors~badRequest
-	 */
-	400: badRequest,
+  /**
+   * Handles malformed requests
+   * @type {function}
+   * @see responses:errors~badRequest
+   */
+  400: badRequest,
 
-	/**
-	 * Handles unauthorized requests
-	 * @type {function}
-	 * @see responses:errors~unauthorized
-	 */
-	unauthorized: unauthorized,
+  /**
+   * Handles unauthorized requests
+   * @type {function}
+   * @see responses:errors~unauthorized
+   */
+  unauthorized: unauthorized,
 
-	/**
-	 * Handles unauthorized requests
-	 * @type {function}
-	 * @see responses:errors~unauthorized
-	 */
-	401: unauthorized,
+  /**
+   * Handles unauthorized requests
+   * @type {function}
+   * @see responses:errors~unauthorized
+   */
+  401: unauthorized,
 
-	/**
-	 * Handles forbidden requests
-	 * @type {function}
-	 * @see responses:errors~forbidden
-	 */
-	forbidden: forbidden,
+  /**
+   * Handles forbidden requests
+   * @type {function}
+   * @see responses:errors~forbidden
+   */
+  forbidden: forbidden,
 
-	/**
-	 * Handles forbidden requests
-	 * @type {function}
-	 * @see responses:errors~forbidden
-	 */
-	403: forbidden,
+  /**
+   * Handles forbidden requests
+   * @type {function}
+   * @see responses:errors~forbidden
+   */
+  403: forbidden,
 
-	/**
-	 * Handles not found requests
-	 * @type {function}
-	 * @see responses:errors~notFound
-	 */
-	notFound: notFound,
+  /**
+   * Handles not found requests
+   * @type {function}
+   * @see responses:errors~notFound
+   */
+  notFound: notFound,
 
-	/**
-	 * Handles not found requests
-	 * @type {function}
-	 * @see responses:errors~notFound
-	 */
-	404: notFound,
+  /**
+   * Handles not found requests
+   * @type {function}
+   * @see responses:errors~notFound
+   */
+  404: notFound,
 
-	/**
-	 * Handles unprocessable entities
-	 * @type {function}
-	 * @see responses:errors~unprocessableEntity
-	 */
-	unprocessableEntity: unprocessableEntity,
+  /**
+   * Handles unprocessable entities
+   * @type {function}
+   * @see responses:errors~unprocessableEntity
+   */
+  unprocessableEntity: unprocessableEntity,
 
-	/**
-	 * Handles unprocessable entities
-	 * @type {function}
-	 * @see responses:errors~unprocessableEntity
-	 */
-	422: unprocessableEntity,
-
-
-	/**
-	 * Handles generic errors
-	 * @type {function}
-	 * @see responses:errors~handleError
-	 */
-	handleError: handleError,
-
-	/**
-	 * Handles generic errors
-	 * @type {function}
-	 * @see responses:errors~handleError
-	 */
-	500: handleError,
+  /**
+   * Handles unprocessable entities
+   * @type {function}
+   * @see responses:errors~unprocessableEntity
+   */
+  422: unprocessableEntity,
 
 
-	/**
-	 * Handles not implemented errors
-	 * @type {function}
-	 * @see responses:errors~notImplemented
-	 */
-	notImplemented: notImplemented,
+  /**
+   * Handles generic errors
+   * @type {function}
+   * @see responses:errors~handleError
+   */
+  handleError: handleError,
 
-	/**
-	 * Handles not implemented errors
-	 * @type {function}
-	 * @see responses:errors~notImplemented
-	 */
-	501: notImplemented,
+  /**
+   * Handles generic errors
+   * @type {function}
+   * @see responses:errors~handleError
+   */
+  500: handleError,
 
-	/**
-	 * Handles server errors
-	 * @type {function}
-	 * @see responses:errors~serverError
-	 */
-	serverError: serverError
+
+  /**
+   * Handles not implemented errors
+   * @type {function}
+   * @see responses:errors~notImplemented
+   */
+  notImplemented: notImplemented,
+
+  /**
+   * Handles not implemented errors
+   * @type {function}
+   * @see responses:errors~notImplemented
+   */
+  501: notImplemented,
+
+  /**
+   * Handles server errors
+   * @type {function}
+   * @see responses:errors~serverError
+   */
+  serverError: serverError
 };
 
 // 400
@@ -122,8 +122,8 @@ module.exports = {
  * @return A Response with status 400 set
  */
 function badRequest(data, options) {
-	// jshint validthis: true
-	return this.res.status(400).sendData(data, options);
+  // jshint validthis: true
+  return this.res.status(400).sendData(data, options);
 }
 
 /**
@@ -133,8 +133,8 @@ function badRequest(data, options) {
  * @return A Response with status 401 set
  */
 function unauthorized(data, options) {
-	// jshint validthis: true
-	return this.res.status(401).sendData(data, options);
+  // jshint validthis: true
+  return this.res.status(401).sendData(data, options);
 }
 
 /**
@@ -144,8 +144,8 @@ function unauthorized(data, options) {
  * @return A Response with status 403 set
  */
 function forbidden(data, options) {
-	// jshint validthis: true
-	return this.res.status(403).sendData(data, options);
+  // jshint validthis: true
+  return this.res.status(403).sendData(data, options);
 }
 
 /**
@@ -157,8 +157,8 @@ function forbidden(data, options) {
  * redered correctly, otherwise the error object set as json body
  */
 function notFound(data, options) {
-	// jshint validthis: true
-	return this.res.status(404).sendData(data, options || '404');
+  // jshint validthis: true
+  return this.res.status(404).sendData(data, options || '404');
 }
 
 /**
@@ -169,8 +169,8 @@ function notFound(data, options) {
  * @return A Response with status 422 set
  */
 function unprocessableEntity(data, options) {
-	// jshint validthis: true
-	return this.res.status(422).sendData(data, options);
+  // jshint validthis: true
+  return this.res.status(422).sendData(data, options);
 }
 
 // 500
@@ -187,57 +187,57 @@ function unprocessableEntity(data, options) {
  */
 
 function serverError(data, options) {
-	// jshint validthis: true
-	// Get access to request and response
-	var req = this.req;
-	var res = this.res;
-	console.log('serverError', data, options);
-	// Set status code
-	res.status(500);
+  // jshint validthis: true
+  // Get access to request and response
+  var req = this.req;
+  var res = this.res;
+  console.log('serverError', data, options);
+  // Set status code
+  res.status(500);
 
-	// Log error to console
-	if (data !== undefined) {
-		console.error('Sending 500 ("Server Error") response: \n', data);
-	} else {
-		console.error('Sending empty 500 ("Server Error") response');
-	}
+  // Log error to console
+  if (data !== undefined) {
+    console.error('Sending 500 ("Server Error") response: \n', data);
+  } else {
+    console.error('Sending empty 500 ("Server Error") response');
+  }
 
-	// Only include errors in response if application environment
-	// is not set to 'production'
-	if (process.env.NODE_ENV === 'production') {
-		data = undefined;
-	}
+  // Only include errors in response if application environment
+  // is not set to 'production'
+  if (process.env.NODE_ENV === 'production') {
+    data = undefined;
+  }
 
-	// If appropriate, serve data as JSON
-	if (req.xhr || req.accepts('application/json')) {
-		return res.json(data);
-	}
+  // If appropriate, serve data as JSON
+  if (req.xhr || req.accepts('application/json')) {
+    return res.json(data);
+  }
 
-	// if a template string is given as the options param
-	// use it to render a view
-	var viewFilePath = (typeof options === 'string') ? options : options && options.view;
+  // if a template string is given as the options param
+  // use it to render a view
+  var viewFilePath = (typeof options === 'string') ? options : options && options.view;
 
-	// If a view was provided in options, serve it.
-	// Otherwise try to guess an appropriate view, or if that doesn't
-	// work, just send JSON.
-	if (viewFilePath) {
-		return res.view(viewFilePath, {data: data});
-	} else {
-		// If no second argument provided, try to serve the default view,
-		// but fall back to sending JSON if any errors occur.
-		return res.view('500', {data: data}, function (err, html) {
-			if (err) {
-				if (err.code === 'E_VIEW_FAILED') { // log a missing view
-					console.log('res.serverError() :: Could not locate view for error page (sending JSON instead).  Details: ', err);
-				} else { // serious error
-					console.error('res.serverError() :: When attempting to render error page view, an error occured (sending JSON instead).  Details: ', err);
-				}
-				return res.json(data);
-			}
+  // If a view was provided in options, serve it.
+  // Otherwise try to guess an appropriate view, or if that doesn't
+  // work, just send JSON.
+  if (viewFilePath) {
+    return res.view(viewFilePath, {data: data});
+  } else {
+    // If no second argument provided, try to serve the default view,
+    // but fall back to sending JSON if any errors occur.
+    return res.view('500', {data: data}, function (err, html) {
+      if (err) {
+        if (err.code === 'E_VIEW_FAILED') { // log a missing view
+          console.log('res.serverError() :: Could not locate view for error page (sending JSON instead).  Details: ', err);
+        } else { // serious error
+          console.error('res.serverError() :: When attempting to render error page view, an error occured (sending JSON instead).  Details: ', err);
+        }
+        return res.json(data);
+      }
 
-			return res.send(html);
-		});
-	}
+      return res.send(html);
+    });
+  }
 }
 
 /**
@@ -249,30 +249,30 @@ function serverError(data, options) {
  * and the error object set as response body.
  */
 function handleError(err, options) {
-	// jshint validthis: true
-	// Get access to response object
-	var res = this.res;
-	var statusCode;
+  // jshint validthis: true
+  // Get access to response object
+  var res = this.res;
+  var statusCode;
 
-	console.log('handleError', err, options);
+  console.log('handleError', err, options);
 
-	if (err.name && err.name === 'ValidationError') {
-		return res.badRequest(err);
-	}
+  if (err.name && err.name === 'ValidationError') {
+    return res.badRequest(err);
+  }
 
-	try {
-		statusCode = err.status || 500;
-		// set the status as a default
-		res.status(statusCode);
+  try {
+    statusCode = err.status || 500;
+    // set the status as a default
+    res.status(statusCode);
 
-		if (statusCode !== 500 && typeof res[statusCode] === 'function') {
-			return res[statusCode](err);
-		}
-	} catch (e) {
-		console.log('Exception while handling error: %s', e);
-	}
+    if (statusCode !== 500 && typeof res[statusCode] === 'function') {
+      return res[statusCode](err);
+    }
+  } catch (e) {
+    console.log('Exception while handling error: %s', e);
+  }
 
-	return res.serverError(err);
+  return res.serverError(err);
 }
 
 /**
@@ -285,6 +285,6 @@ function handleError(err, options) {
  * object set as json body
  */
 function notImplemented(data, options) {
-	// jshint validthis: true
-	return this.res.status(501).sendData(data, options);
+  // jshint validthis: true
+  return this.res.status(501).sendData(data, options);
 }

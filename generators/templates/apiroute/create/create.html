@@ -16,16 +16,16 @@
         <form name="createForm">
 
             <section class="section slim" layout="column">
-				<span layout="row" layout-align="start center">
-					<span flex="33"><%= modelName %> is active</span>
-					<md-switch name="active" class="no-label" aria-label="<%= name %> active" ng-model="create.<%= name %>.active"></md-switch>
-				</span>
+        <span layout="row" layout-align="start center">
+          <span flex="33"><%= modelName %> is active</span>
+          <md-switch name="active" class="no-label" aria-label="<%= name %> active" ng-model="create.<%= name %>.active"></md-switch>
+        </span>
             </section>
 
             <section class="section" layout="column">
 
-				<span layout="row" layout-sm="column">
-					<md-input-container flex>
+        <span layout="row" layout-sm="column">
+          <md-input-container flex>
                         <label>Name</label>
                         <input name="name" ng-model="create.<%= name %>.name"
                                ng-model-options="{updateOn: 'default blur', debounce: {'default': 500, 'blur': 0}}"
@@ -36,14 +36,14 @@
                             <div ng-message="remote-unique">Name already in use</div>
                         </div>
                     </md-input-container>
-				</span>
+        </span>
 
-				<span layout="row" layout-sm="column">
-					<md-input-container flex class="last">
+        <span layout="row" layout-sm="column">
+          <md-input-container flex class="last">
                         <label>Info</label>
                         <textarea name="info" ng-model="create.<%= name %>.info"></textarea>
                     </md-input-container>
-				</span>
+        </span>
 
             </section>
 

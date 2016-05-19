@@ -1,25 +1,25 @@
 <!doctype html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<base href="/">
-	<title><%= name %></title>
-	<meta name="description" content="">
-	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
-	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <base href="/">
+  <title><%= name %></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-	<!--vendor:css-->
-	<!-- endinject -->
+  <!--vendor:css-->
+  <!-- endinject -->
 
-	<!-- app:css -->
-	<!-- endinject -->
+  <!-- app:css -->
+  <!-- endinject -->
 </head>
 <body ng-app="<%= scriptAppName %>" ng-controller="AppController as appController" layout="column">
 
 <!--[if lt IE 9]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
-	your browser</a> to improve your experience.</p>
+  your browser</a> to improve your experience.</p>
 <![endif]-->
 
 <main-menu <%if (features.auth) {%>ng-show="appController.isLoggedIn()"<% } %>></main-menu>

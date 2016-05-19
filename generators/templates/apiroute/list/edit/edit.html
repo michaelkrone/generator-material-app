@@ -1,17 +1,17 @@
 <md-toolbar class="md-hue-1 md-tall">
 
-	<span layout="row" layout-align="space-between" class="md-toolbar-tools md-toolbar-tools-top">
-		<md-button ng-click="edit.goBack()" aria-label="Back to detail view">
+  <span layout="row" layout-align="space-between" class="md-toolbar-tools md-toolbar-tools-top">
+    <md-button ng-click="edit.goBack()" aria-label="Back to detail view">
             <md-icon md-svg-icon="navigation:ic_arrow_back_24px"></md-icon>
         </md-button>
-		<md-button ng-click="edit.remove(editForm, $event)" aria-label="Delete <%= name %>">
+    <md-button ng-click="edit.remove(editForm, $event)" aria-label="Delete <%= name %>">
             <md-icon md-svg-icon="action:ic_delete_24px"></md-icon>
         </md-button>
-	</span>
+  </span>
 
-	<span class="md-toolbar-tools md-toolbar-tools-bottom" layout="column">
-		<h3>{{edit.displayName}}</h3>
-	</span>
+  <span class="md-toolbar-tools md-toolbar-tools-bottom" layout="column">
+    <h3>{{edit.displayName}}</h3>
+  </span>
 
 </md-toolbar>
 
@@ -30,13 +30,13 @@
 
             <span class="section-title"><%= _.capitalize(name) %> data</span>
 
-			<span layout="row" layout-align="start center">
-				<span flex="33"><%= _.capitalize(name) %> is active</span>
-				<md-switch name="active" class="no-label" aria-label="<%= name %> active" ng-model="edit.<%= name %>.active"></md-switch>
-			</span>
+      <span layout="row" layout-align="start center">
+        <span flex="33"><%= _.capitalize(name) %> is active</span>
+        <md-switch name="active" class="no-label" aria-label="<%= name %> active" ng-model="edit.<%= name %>.active"></md-switch>
+      </span>
 
-			<span layout="row" layout-sm="column">
-				<md-input-container flex>
+      <span layout="row" layout-sm="column">
+        <md-input-container flex>
                     <label>Name</label>
                     <input name="name" ng-model="edit.<%= name %>.name" required mongoose-error>
                     <div ng-messages="editForm.name.$error">
@@ -44,14 +44,14 @@
                         <div ng-message="mongoose">Name is already taken</div>
                     </div>
                 </md-input-container>
-			</span>
+      </span>
 
-			<span layout="row" layout-sm="column">
-				<md-input-container flex>
+      <span layout="row" layout-sm="column">
+        <md-input-container flex>
                     <label>Info</label>
                     <textarea name="info" ng-model="edit.<%= name %>.info"></textarea>
                 </md-input-container>
-			</span>
+      </span>
 
         </section>
 

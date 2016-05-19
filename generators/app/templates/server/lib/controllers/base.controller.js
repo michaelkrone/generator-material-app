@@ -12,5 +12,5 @@ exports = module.exports = BaseController;
  * @constructor
  */
 function BaseController() {
-	_.bindAll(this);
+  _.bindAll(this);
 }

@@ -16,8 +16,8 @@ var LocalStrategy = require('passport-local').Strategy;
  * @type {Object}
  */
 var strategyConfig = {
-	usernameField: 'name',
-	passwordField: 'password' // virtual model field
+  usernameField: 'name',
+  passwordField: 'password' // virtual model field
 };
 
 /**
@@ -29,7 +29,7 @@ var strategyConfig = {
  * @param {Object} [config] - The application configuration, may be passed to the service some day
  */
 exports.setup = function (AuthModel, config) {
-	passport.use( new LocalStrategy(strategyConfig, getAuthentication(AuthModel, config)) );
+  passport.use( new LocalStrategy(strategyConfig, getAuthentication(AuthModel, config)) );
 };
 
 /**
@@ -41,33 +41,33 @@ exports.setup = function (AuthModel, config) {
  */
 function getAuthentication(authModel, config) {
 
-	/**
-	 * @name authenticate
-	 * @function
-	 * @memberOf getAuthentication
-	 * Authenticate the user.
-	 * @param {String} name - The name used to authenticate the user
-	 * @param {String} password - The hashed password
-	 * @param {function} done - The callback function called with an error or the valid user object
-	 */
-	function authenticate(name, password, done) {
-		authModel.findOne({name: name, active: true}, function (err, user) {
-			if (err) {
-				return done(err);
-			}
+  /**
+   * @name authenticate
+   * @function
+   * @memberOf getAuthentication
+   * Authenticate the user.
+   * @param {String} name - The name used to authenticate the user
+   * @param {String} password - The hashed password
+   * @param {function} done - The callback function called with an error or the valid user object
+   */
+  function authenticate(name, password, done) {
+    authModel.findOne({name: name, active: true}, function (err, user) {
+      if (err) {
+        return done(err);
+      }
 
-			if (!user) {
-				return done(null, false, {message: 'Unknown user'});
-			}
+      if (!user) {
+        return done(null, false, {message: 'Unknown user'});
+      }
 
-			if (!user.authenticate(password)) {
-				return done(null, false, {message: 'Wrong password'});
-			}
+      if (!user.authenticate(password)) {
+        return done(null, false, {message: 'Wrong password'});
+      }
 
-			return done(null, user);
-		});
-	}
+      return done(null, user);
+    });
+  }
 
-	return authenticate;
+  return authenticate;
 }
 

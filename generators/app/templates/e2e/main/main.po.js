@@ -6,7 +6,7 @@
 'use strict';
 
 var MainPage = function () {
-	this.headline = element(by.css('.md-card-content > h2'));
+  this.headline = element(by.css('.md-card-content > h2'));
 };
 
 module.exports = new MainPage();

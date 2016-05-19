@@ -22,12 +22,12 @@ var reserved = ['__v'].concat(Object.keys(require('mongoose').Schema.reserved));
  * @param {function} [next] - The next handler callback
  */
 exports.defaultErrorHandler = function defaultErrorHandler(err, req, res, next) {
-	console.error('defaultErrorHandler', req.originalUrl, res.statusCode, err);
-	_.bind(customResponses.handleError, {res: res, req: req}, err);
-	// pass the error to following handlers (if next if passed)
-	if (next) {
-		return next(err);
-	}
+  console.error('defaultErrorHandler', req.originalUrl, res.statusCode, err);
+  _.bind(customResponses.handleError, {res: res, req: req}, err);
+  // pass the error to following handlers (if next if passed)
+  if (next) {
+    return next(err);
+  }
 };
 
 /**
@@ -38,11 +38,11 @@ exports.defaultErrorHandler = function defaultErrorHandler(err, req, res, next) 
  * @param {function} next - The next handler callback
  */
 exports.removeReservedSchemaKeywords = function removeReservedSchemaKeywords(req, res, next) {
-	if (!_.isObject(req.body)) {
-		return next();
-	}
-	req.body = _.omit(req.body, reserved);
-	return next();
+  if (!_.isObject(req.body)) {
+    return next();
+  }
+  req.body = _.omit(req.body, reserved);
+  return next();
 };
 
 /**
@@ -55,11 +55,11 @@ exports.removeReservedSchemaKeywords = function removeReservedSchemaKeywords(req
  * @param {function} next - The next handler callback
  */
 exports.extendResponse = function extendResponse(req, res, next) {
-	_.forEach(customResponses, function eachResponse(fn, name) {
-		res[name] = _.bind(fn, {
-			req: req,
-			res: res
-		});
-	});
-	return next();
+  _.forEach(customResponses, function eachResponse(fn, name) {
+    res[name] = _.bind(fn, {
+      req: req,
+      res: res
+    });
+  });
+  return next();
 };

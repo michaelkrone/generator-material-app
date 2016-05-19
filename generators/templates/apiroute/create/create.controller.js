@@ -1,8 +1,8 @@
 /**
  * @ngdoc controller
- * @name <%= scriptAppName %>.<%= _.slugify(name) %>.create.controller:<%= modelName %>CreateController
+ * @name <%= scriptAppName %>.<%= moduleName %>.create.controller:<%= modelName %>CreateController
  * @description
- * Controller of the <%= name %> create page of the admin section
+ * Controller of the <%= cameledName %> create page of the admin section
  */
 
 (function () {
@@ -13,21 +13,21 @@
    */
 
   angular
-    .module('<%= scriptAppName %>.<%= _.slugify(name) %>.create')
+    .module('<%= scriptAppName %>.<%= moduleName %>.create')
     .controller('<%= modelName %>CreateController', <%= modelName %>CreateController);
 
   /**
    * @ngdoc function
-   * @name <%= scriptAppName %>.<%= _.slugify(name) %>.create.provider:<%= modelName %>CreateController
+   * @name <%= scriptAppName %>.<%= moduleName %>.create.provider:<%= modelName %>CreateController
    * @description
-   * Provider of the {@link <%= scriptAppName %>.<%= _.slugify(name) %>.create.controller:<%= modelName %>CreateController <%= modelName %>CreateController}
+   * Provider of the {@link <%= scriptAppName %>.<%= moduleName %>.create.controller:<%= modelName %>CreateController <%= modelName %>CreateController}
    *
    * @param {Service} Auth The Auth service to use
    * @param {Service} $mdDialog The mdDialog service to use
    * @param {Service} <%= modelName %> The <%= modelName %> resource
    * @param {Service} <%= modelName %>Service The <%= modelName %> service to use
    * @param {Service} Toast The Toast service to use
-   * @returns {Service} {@link <%= scriptAppName %>.<%= _.slugify(name) %>.create.controller:<%= modelName %>CreateController <%= modelName %>CreateController}
+   * @returns {Service} {@link <%= scriptAppName %>.<%= moduleName %>.create.controller:<%= modelName %>CreateController <%= modelName %>CreateController}
    */
 
   <%= modelName %>CreateController.$inject = ['$mdDialog', '<%= modelName %>', '<%= modelName %>Service', 'Toast'];
@@ -37,14 +37,14 @@
 
     /**
      * @ngdoc property
-     * @name <%= name %>
-     * @propertyOf <%= scriptAppName %>.<%= _.slugify(name) %>.create.controller:<%= modelName %>CreateController
+     * @name <%= cameledName %>
+     * @propertyOf <%= scriptAppName %>.<%= moduleName %>.create.controller:<%= modelName %>CreateController
      * @description
-     * The new <%= name %> data
+     * The new <%= cameledName %> data
      *
-     * @returns {Object} The <%= name %> data
+     * @returns {Object} The <%= cameledName %> data
      */
-    vm.<%= name %> = new <%= modelName %>();
+    vm.<%= cameledName %> = new <%= modelName %>();
 
     // view model bindings (documented below)
     vm.create = create<%= modelName %>;
@@ -54,19 +54,19 @@
     /**
      * @ngdoc function
      * @name create<%= modelName %>
-     * @methodOf <%= scriptAppName %>.<%= _.slugify(name) %>.create.controller:<%= modelName %>CreateController
+     * @methodOf <%= scriptAppName %>.<%= moduleName %>.create.controller:<%= modelName %>CreateController
      * @description
-     * Create a new <%= name %> by using the <%= modelName %>Service create method
+     * Create a new <%= cameledName %> by using the <%= modelName %>Service create method
      *
      * @param {form} [form] The form to gather the information from
      */
     function create<%= modelName %>(form) {
       // refuse to work with invalid data
-      if (vm.<%= name %>._id || (form && !form.$valid)) {
+      if (vm.<%= cameledName %>._id || (form && !form.$valid)) {
         return;
       }
 
-      <%= modelName %>Service.create(vm.<%= name %>)
+      <%= modelName %>Service.create(vm.<%= cameledName %>)
         .then(create<%= modelName %>Success)
         .catch(create<%= modelName %>Catch);
 
@@ -74,7 +74,7 @@
         Toast.show({
           type: 'success',
           text: '<%= modelName %> ' + new<%= modelName %>.name + ' has been created',
-          link: {state: '<%= name %>.list.detail', params: {id: new<%= modelName %>._id}}
+          link: {state: '<%= moduleName %>.list.detail', params: {id: new<%= modelName %>._id}}
         });
         vm.close();
       }
@@ -94,7 +94,7 @@
     /**
      * @ngdoc function
      * @name hide
-     * @methodOf <%= scriptAppName %>.<%= _.slugify(name) %>.create.controller:<%= modelName %>CreateController
+     * @methodOf <%= scriptAppName %>.<%= moduleName %>.create.controller:<%= modelName %>CreateController
      * @description
      * Hide the dialog
      */
@@ -105,7 +105,7 @@
     /**
      * @ngdoc function
      * @name cancel
-     * @methodOf <%= scriptAppName %>.<%= _.slugify(name) %>.create.controller:<%= modelName %>CreateController
+     * @methodOf <%= scriptAppName %>.<%= moduleName %>.create.controller:<%= modelName %>CreateController
      * @description
      * Cancel the dialog
      */

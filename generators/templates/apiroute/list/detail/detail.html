@@ -1,38 +1,38 @@
-<md-toolbar class="md-hue-1 md-tall" id="<%= name %>-detail-toolbar">
+<md-toolbar class="md-hue-1 md-tall" id="<%= dashedName %>-detail-toolbar">
 
   <span layout="row" layout-align="space-between" class="md-toolbar-tools md-toolbar-tools-top">
     <md-button ng-click="detail.goBack()" aria-label="Close detail view">
             <md-icon md-svg-icon="navigation:ic_close_24px"></md-icon>
         </md-button>
-    <md-button ng-click="detail.edit()" aria-label="Edit <%= name %>">
+    <md-button ng-click="detail.edit()" aria-label="Edit <%= cameledName %>">
             <md-icon md-svg-icon="content:ic_create_24px"></md-icon>
         </md-button>
   </span>
 
   <span class="md-toolbar-tools md-toolbar-tools-bottom" layout="column">
-    <h3>{{::detail.<%= name %>.name}}</h3>
+    <h3>{{::detail.<%= cameledName %>.name}}</h3>
   </span>
 
 </md-toolbar>
 
-<md-content class="md-padding" flex id="<%= name %>-detail-content">
+<md-content class="md-padding" flex id="<%= dashedName %>-detail-content">
 
     <section class="section" layout="column">
 
         <span class="section-title"><%= modelName %> data</span>
 
-    <span layout="row" layout-align="start center" class="detail-info" ng-hide="detail.<%= name %>.active">
-        <span flex>This <%= name %> is not active</span>
+    <span layout="row" layout-align="start center" class="detail-info" ng-hide="detail.<%= cameledName %>.active">
+        <span flex>This <%= cameledName %> is not active</span>
     </span>
 
     <span layout="row" layout-sm="column" class="detail-info">
       <span flex="45">Name</span>
-      <span flex>{{::detail.<%= name %>.name}}</span>
+      <span flex>{{::detail.<%= cameledName %>.name}}</span>
     </span>
 
-    <span ng-if="detail.<%= name %>.info" layout="row" layout-sm="column" class="detail-info">
+    <span ng-if="detail.<%= cameledName %>.info" layout="row" layout-sm="column" class="detail-info">
       <span flex="45">Info</span>
-      <span flex>{{::detail.<%= name %>.info}}</span>
+      <span flex>{{::detail.<%= cameledName %>.info}}</span>
     </span>
 
     </section>
@@ -43,16 +43,16 @@
 
     <span layout="row" layout-sm="column" class="detail-info">
       <span flex="45">Modified</span>
-      <span flex ng-show="detail.<%= name %>.modified" class="subtitle">
-        <span am-time-ago="detail.<%= name %>.modified"></span>
-        <md-tooltip>{{detail.<%= name %>.modified | date:'dd. MMMM yyyy H:mm'}}</md-tooltip>
-        {{detail.<%= name %>.modifiedBy && 'by ' + detail.<%= name %>.modifiedBy}}
+      <span flex ng-show="detail.<%= cameledName %>.modified" class="subtitle">
+        <span am-time-ago="detail.<%= cameledName %>.modified"></span>
+        <md-tooltip>{{detail.<%= cameledName %>.modified | date:'dd. MMMM yyyy H:mm'}}</md-tooltip>
+        {{detail.<%= cameledName %>.modifiedBy && 'by ' + detail.<%= cameledName %>.modifiedBy}}
       </span>
     </span>
 
     <span layout="row" layout-sm="column" class="detail-info">
       <span flex="45">Created</span>
-      <span flex ng-show="detail.<%= name %>.created" class="subtitle">{{detail.<%= name %>.created | date:'dd. MMMM yyyy H:mm'}}</span>
+      <span flex ng-show="detail.<%= cameledName %>.created" class="subtitle">{{detail.<%= cameledName %>.created | date:'dd. MMMM yyyy H:mm'}}</span>
     </span>
 
     </section>

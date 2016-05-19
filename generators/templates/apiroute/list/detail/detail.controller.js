@@ -6,31 +6,31 @@
     */
 
   angular
-    .module('<%= scriptAppName %>.<%= _.slugify(name) %>.list.detail')
+    .module('<%= scriptAppName %>.<%= moduleName %>.list.detail')
     .controller('<%= classedName %>DetailController', <%= classedName %>DetailController);
 
   // add <%= classedName %>DetailController dependencies to inject
-  <%= classedName %>DetailController.$inject = ['$state', '<%= name %>'];
+  <%= classedName %>DetailController.$inject = ['$state', '<%= cameledName %>'];
 
   /**
    * <%= classedName %>DetailController constructor
    */
-  function <%= classedName %>DetailController($state, <%= name %>) {
+  function <%= classedName %>DetailController($state, <%= cameledName %>) {
     var vm = this;
 
-    // the current <%= name %> to display
-    vm.<%= name %> = <%= name %>;
+    // the current <%= cameledName %> to display
+    vm.<%= cameledName %> = <%= cameledName %>;
     // switch to the edit state
     vm.edit = edit;
     // switch to the parent state
     vm.goBack = goBack
 
     /**
-     * Open the edit state with the current <%= name %>
+     * Open the edit state with the current <%= cameledName %>
      *
      */
     function edit() {
-      $state.go('^.edit', {'id': vm.<%= name %>._id});
+      $state.go('^.edit', {'id': vm.<%= cameledName %>._id});
     }
 
     /**

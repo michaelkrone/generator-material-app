@@ -3,7 +3,7 @@
 describe('Controller: <%= classedName %>ListController', function () {
 
   // load the controller's module
-  beforeEach(module('<%= scriptAppName %>.<%= _.slugify(name) %>'));
+  beforeEach(module('<%= scriptAppName %>.<%= moduleName %>'));
 
   var controller;
   var scope;

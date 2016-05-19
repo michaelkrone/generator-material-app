@@ -2,7 +2,7 @@
   'use strict';
 
   /**
-   * Introduce the <%= scriptAppName %>.<%= _.slugify(name) %>.list.detail submodule
+   * Introduce the <%= scriptAppName %>.<%= moduleName %>.list.detail submodule
    * and configure it.
    *
    * @requires ui.router
@@ -10,7 +10,7 @@
    */
 
   angular
-    .module('<%= scriptAppName %>.<%= _.slugify(name) %>.list.detail', [
+    .module('<%= scriptAppName %>.<%= moduleName %>.list.detail', [
       'ui.router',
       'angularMoment'
     ])
@@ -21,10 +21,10 @@
 
   /**
    * Route configuration function configuring the passed $stateProvider.
-   * Register the '<%= name %>.detail' state with the detail template
+   * Register the '<%= moduleName %>.detail' state with the detail template
    * paired with the <%= classedName %>DetailController as 'detail' for the
    * 'sidenav' sub view.
-   * '<%= name %>' is resolved as the <%= name %> with the id found in
+   * '<%= cameledName %>' is resolved as the <%= cameledName %> with the id found in
    * the state parameters.
    *
    * @param {$stateProvider} $stateProvider - The state provider to configure
@@ -32,18 +32,18 @@
   function configure<%= classedName %>ListDetail($stateProvider) {
     // The detail state configuration
     var detailState = {
-      name: '<%= name %>.list.detail',
-      parent: '<%= name %>.list',<% if (secure) {%>
+      name: '<%= moduleName %>.list.detail',
+      parent: '<%= moduleName %>.list',<% if (secure) {%>
       url: '/:id',
       authenticate: true,
       role: '<%= role %>',<%}%>
       onEnter: onEnter<%= classedName %>ListDetail,
       views: {
-        'detail@<%= name %>.list': {
+        'detail@<%= moduleName %>.list': {
           templateUrl: '<%= listDetailHtmlUrl %>',
           controller: '<%= classedName %>DetailController',
           controllerAs: 'detail',
-          resolve: {<%= name %>: resolve<%= classedName %>FromArray}
+          resolve: {<%= cameledName %>: resolve<%= classedName %>FromArray}
         }
       }
     };
@@ -55,8 +55,8 @@
   onEnter<%= classedName %>ListDetail.$inject = ['$timeout', 'ToggleComponent'];
 
   /**
-   * Executed when entering the <%= name %>.list.detail state. Open the component
-   * registered with the component id '<%= name %>.detailView'.
+   * Executed when entering the <%= moduleName %>.list.detail state. Open the component
+   * registered with the component id '<%= moduleName %>.detailView'.
    *
     * @params {$timeout} $timeout - The $timeout service to wait for view initialization
    * @params {ToggleComponent} ToggleComponent - The service to toggle the detail view
@@ -65,22 +65,22 @@
     $timeout(showDetails, 0, false);
 
     function showDetails() {
-      ToggleComponent('<%= name %>.detailView').open();
+      ToggleComponent('<%= moduleName %>.detailView').open();
     }
   }
 
   // inject resolve<%= classedName %>FromArray dependencies
-  resolve<%= classedName %>FromArray.$inject = ['<%= name %>s', '$stateParams', '_'];
+  resolve<%= classedName %>FromArray.$inject = ['<%= cameledName %>s', '$stateParams', '_'];
 
   /**
-   * Resolve dependencies for the <%= name %>.detail state
+   * Resolve dependencies for the <%= moduleName %>.detail state
    *
-   * @params {Array} <%= name %>s - The array of <%= name %>s
-   * @params {Object} $stateParams - The $stateParams to read the <%= name %> id from
-   * @returns {Object|null} The <%= name %> whose value of the _id property equals $stateParams._id
+   * @params {Array} <%= cameledName %>s - The array of <%= cameledName %>s
+   * @params {Object} $stateParams - The $stateParams to read the <%= cameledName %> id from
+   * @returns {Object|null} The <%= cameledName %> whose value of the _id property equals $stateParams._id
    */
-  function resolve<%= classedName %>FromArray(<%= name %>s, $stateParams, _) {
-    return _.find(<%= name %>s, {'_id': $stateParams.id});
+  function resolve<%= classedName %>FromArray(<%= cameledName %>s, $stateParams, _) {
+    return _.find(<%= moduleName %>s, {'_id': $stateParams.id});
   }
 
 })();

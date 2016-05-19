@@ -6,7 +6,7 @@
    */
 
   angular
-    .module('<%= scriptAppName %>.<%= _.slugify(name) %>.list.items')
+    .module('<%= scriptAppName %>.<%= moduleName %>.list.items')
     .controller('<%= classedName %>ItemsController', <%= classedName %>ItemsController);
 
   // add <%= classedName %>ItemsController dependencies to inject
@@ -29,20 +29,20 @@
     /**
      * Check if the passed item is the current selected item
      *
-     * @param {Object} <%= name %> - The object to check for selection
+     * @param {Object} <%= cameledName %> - The object to check for selection
      */
-    function isSelected(<%= name %>) {
-      return cur<%= classedName %>Id === <%= name %>._id;
+    function isSelected(<%= cameledName %>) {
+      return cur<%= classedName %>Id === <%= cameledName %>._id;
     }
 
     /**
      * Open the detail state with the selected item
      *
-     * @param {Object} <%= name %> - The <%= name %> to edit
+     * @param {Object} <%= cameledName %> - The <%= cameledName %> to edit
      */
-    function showInDetails(<%= name %>) {
-      cur<%= classedName %>Id = <%= name %>._id;
-      $state.go('<%= name %>.list.detail', {'id': cur<%= classedName %>Id});
+    function showInDetails(<%= cameledName %>) {
+      cur<%= classedName %>Id = <%= cameledName %>._id;
+      $state.go('<%= moduleName %>.list.detail', {'id': cur<%= classedName %>Id});
     }
   }
 

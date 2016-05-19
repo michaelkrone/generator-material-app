@@ -2,22 +2,22 @@
   'use strict';
 
   /**
-   * Introduce the <%= scriptAppName %>.<%= _.slugify(name) %> module
+   * Introduce the <%= scriptAppName %>.<%= moduleName %> module
    * and configure it.
    *
    * @requires ui.router
    * @requires ngResource
-   * @requires <%= scriptAppName %>.<%= _.slugify(name) %>.main
-   * @requires <%= scriptAppName %>.<%= _.slugify(name) %>.list
-   * @requires <%= scriptAppName %>.<%= _.slugify(name) %>.create
+   * @requires <%= scriptAppName %>.<%= moduleName %>.main
+   * @requires <%= scriptAppName %>.<%= moduleName %>.list
+   * @requires <%= scriptAppName %>.<%= moduleName %>.create
    */
   angular
-    .module('<%= scriptAppName %>.<%= _.slugify(name) %>', [
+    .module('<%= scriptAppName %>.<%= moduleName %>', [
       'ngResource',
       'ui.router',
-      '<%= scriptAppName %>.<%= _.slugify(name) %>.main',
-      '<%= scriptAppName %>.<%= _.slugify(name) %>.list',
-      '<%= scriptAppName %>.<%= _.slugify(name) %>.create'
+      '<%= scriptAppName %>.<%= moduleName %>.main',
+      '<%= scriptAppName %>.<%= moduleName %>.list',
+      '<%= scriptAppName %>.<%= moduleName %>.create'
     ])
     .config(config<%= classedName %>Routes);
 
@@ -26,17 +26,18 @@
 
   /**
    * Route configuration function configuring the passed $stateProvider.
-   * Register the abstract <%= name %> state with the <%= name %> template
+   * Register the abstract <%= moduleName %> state with the <%= moduleName %> template
    * paired with the <%= classedName %>Controller as 'index'.
-   * The injectable '<%= name %>s' is resolved as a list of all <%= name %>s
+   * The injectable '<%= cameledName %>s' is resolved as a list of all <%= cameledName %>s
    * and can be injected in all sub controllers.
    *
    * @param {$stateProvider} $stateProvider - The state provider to configure
    */
   function config<%= classedName %>Routes($urlRouterProvider, $stateProvider) {
-    // The <%= name %> state configuration
-    var <%= name %>State = {
-      name: '<%= name %>',
+    // The <%= moduleName %> state configuration
+    var <%= cameledName %>State = {
+      name: '<%= name %>',<% if (isSubRoute && ancestors.length) { %>
+      parent: '<%= ancestors.join('.') %>',<% } %>
       url: '<%= route %>',
       abstract: true,
       templateUrl: '<%= htmlUrl %>',
@@ -44,8 +45,8 @@
       controllerAs: 'index'
     };
 
-    $urlRouterProvider.when('/<%= name %>', '/<%= name %>/');
-    $stateProvider.state(<%= name %>State);
+    $urlRouterProvider.when('/<%= slashedName %>', '/<%= slashedName %>/');
+    $stateProvider.state(<%= cameledName %>State);
   }
 
 })();

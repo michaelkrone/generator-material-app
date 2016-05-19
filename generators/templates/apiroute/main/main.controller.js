@@ -6,7 +6,7 @@
    */
 
   angular
-    .module('<%= scriptAppName %>.<%= _.slugify(name) %>.main')
+    .module('<%= scriptAppName %>.<%= moduleName %>.main')
     .controller('<%= classedName %>MainController', <%= classedName %>MainController);
 
   // add <%= classedName %>MainController dependencies to inject
@@ -21,10 +21,10 @@
     vm.showList = showList;
 
     /**
-     * Activate the <%= name %>.list state
+     * Activate the <%= moduleName %>.list state
      */
     function showList() {
-      $state.go('<%= name %>.list');
+      $state.go('<%= moduleName %>.list');
     }
   }
 

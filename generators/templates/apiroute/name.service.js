@@ -2,14 +2,14 @@
   'use strict';
 
   /**
-   * Introduce the <%= scriptAppName %>.<%= _.slugify(name) %>.service module.
+   * Introduce the <%= scriptAppName %>.<%= moduleName %>.service module.
    * Register the <%= name %> resource as <%= classedName %>, register the
    * service as <%= classedName %>Service.
    *
    * @requires {<%= scriptAppName %>.resource}
    */
   angular
-    .module('<%= scriptAppName %>.<%= _.slugify(name) %>.service', ['<%= scriptAppName %>.resource'])
+    .module('<%= scriptAppName %>.<%= moduleName %>.service', ['<%= scriptAppName %>.resource'])
     .factory('<%= classedName %>', <%= classedName %>)
     .service('<%= classedName %>Service', <%= classedName %>Service);
 
@@ -33,7 +33,7 @@
    * <%= classedName %>Service constructor
    * AngularJS will instantiate a singleton by calling "new" on this function
    *
-   * @param {$resource} <%= classedName %> The resource provided by <%= scriptAppName %>.<%= _.slugify(name) %>.resource
+   * @param {$resource} <%= classedName %> The resource provided by <%= scriptAppName %>.<%= moduleName %>.resource
    * @returns {Object} The service definition for the <%= classedName %>Service service
    */
   function <%= classedName %>Service(<%= classedName %>) {
@@ -45,18 +45,18 @@
     };
 
     /**
-     * Save a new <%= name %>
+     * Save a new <%= cameledName %>
      *
-     * @param  {Object}   <%= name %> - <%= name %>Data
+     * @param  {Object}   <%= cameledName %> - <%= cameledName %>Data
      * @param  {Function} callback - optional
      * @return {Promise}
      */
-    function create(<%= name %>, callback) {
+    function create(<%= cameledName %>, callback) {
       var cb = callback || angular.noop;
 
-      return <%= classedName %>.create(<%= name %>,
-        function (<%= name %>) {
-          return cb(<%= name %>);
+      return <%= classedName %>.create(<%= cameledName %>,
+        function (<%= cameledName %>) {
+          return cb(<%= cameledName %>);
         },
         function (err) {
           return cb(err);
@@ -64,18 +64,18 @@
     }
 
     /**
-     * Remove a <%= name %>
+     * Remove a <%= cameledName %>
      *
-     * @param  {Object}   <%= name %> - <%= name %>Data
+     * @param  {Object}   <%= cameledName %> - <%= cameledName %>Data
      * @param  {Function} callback - optional
      * @return {Promise}
      */
-    function remove(<%= name %>, callback) {
+    function remove(<%= cameledName %>, callback) {
       var cb = callback || angular.noop;
 
-      return <%= classedName %>.remove({id: <%= name %>._id},
-        function (<%= name %>) {
-          return cb(<%= name %>);
+      return <%= classedName %>.remove({id: <%= cameledName %>._id},
+        function (<%= cameledName %>) {
+          return cb(<%= cameledName %>);
         },
         function (err) {
           return cb(err);
@@ -83,18 +83,18 @@
     }
 
     /**
-     * Create a new <%= name %>
+     * Create a new <%= cameledName %>
      *
-     * @param  {Object}   <%= name %> - <%= name %>Data
+     * @param  {Object}   <%= cameledName %> - <%= cameledName %>Data
      * @param  {Function} callback - optional
      * @return {Promise}
      */
-    function update(<%= name %>, callback) {
+    function update(<%= cameledName %>, callback) {
       var cb = callback || angular.noop;
 
-      return <%= classedName %>.update(<%= name %>,
-        function (<%= name %>) {
-          return cb(<%= name %>);
+      return <%= classedName %>.update(<%= cameledName %>,
+        function (<%= cameledName %>) {
+          return cb(<%= cameledName %>);
         },
         function (err) {
           return cb(err);

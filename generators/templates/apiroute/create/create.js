@@ -2,7 +2,7 @@
   'use strict';
 
   /**
-   * Introduce the <%= scriptAppName %>.<%= _.slugify(name) %>.create module
+   * Introduce the <%= scriptAppName %>.<%= moduleName %>.create module
    * and configure it.
    *
    * @requires ui.router
@@ -10,17 +10,17 @@
    * @requires ngMaterial
    * @requires {<%= scriptAppName %>.mongooseError}
    * @requires {<%= scriptAppName %>.remoteUnique}
-   * @requires {<%= scriptAppName %>.<%= _.slugify(name) %>.service}
+   * @requires {<%= scriptAppName %>.<%= moduleName %>.service}
    */
 
   angular
-    .module('<%= scriptAppName %>.<%= _.slugify(name) %>.create', [
+    .module('<%= scriptAppName %>.<%= moduleName %>.create', [
       'ui.router',
       'ngMessages',
       'ngMaterial',
       '<%= scriptAppName %>.mongooseError',
       '<%= scriptAppName %>.remoteUnique',
-      '<%= scriptAppName %>.<%= _.slugify(name) %>.service'
+      '<%= scriptAppName %>.<%= moduleName %>.service'
     ])
     .config(configure<%= classedName %>CreateRoutes);
 
@@ -29,7 +29,7 @@
 
   /**
    * Route configuration function configuring the passed $stateProvider.
-   * Register the '<%= name %>.list.create' state. The onEnter<%= classedName %>ListCreateView
+   * Register the '<%= moduleName %>.list.create' state. The onEnter<%= classedName %>ListCreateView
    * function will be called when entering the state and open a modal dialog
    * with the <%= createHtmlUrl %> template loaded.
    *
@@ -37,8 +37,8 @@
    */
   function configure<%= classedName %>CreateRoutes($stateProvider) {
     var  createListState = {
-      name: '<%= name %>.list.create',
-      parent: '<%= name %>.list',
+      name: '<%= moduleName %>.list.create',
+      parent: '<%= moduleName %>.list',
       url: '/create',<% if (secure) {%>
       authenticate: true,
       role: '<%= role %>',<%}%>
@@ -49,7 +49,7 @@
   }
 
   /**
-   * Function that executes when entering the <%= name %>.list.create state.
+   * Function that executes when entering the <%= moduleName %>.list.create state.
    * Open the create dialog
    */
 
@@ -73,7 +73,7 @@
      * @returns {promise}
      */
     function transitionTo(answer) {
-      return $state.transitionTo('<%= name %>.list');
+      return $state.transitionTo('<%= moduleName %>.list');
     }
 
     /**

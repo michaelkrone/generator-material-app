@@ -3,7 +3,7 @@
 
   // register the controller as <%= classedName %>Controller
   angular
-    .module('<%= scriptAppName %>')
+    .module('<%= scriptAppName %>.<%= moduleName %>')
     .controller('<%= classedName %>Controller', <%= classedName %>Controller);
 
   // add <%= classedName %>Controller dependencies to inject

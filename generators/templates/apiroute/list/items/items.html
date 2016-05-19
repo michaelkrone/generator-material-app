@@ -12,15 +12,15 @@
         <span><%= menuItem %> List</span>
     </h2>
 
-  <a ui-sref="<%= name %>.list.create">
-    <md-button hide show-gt-md ng-if="list.<%= name %>s.length" class="md-fab md-accent md-fab-top-left fab-overlap" aria-label="Create a new <%= name %>">
+  <a ui-sref="<%= moduleName %>.list.create">
+    <md-button hide show-gt-md ng-if="list.<%= cameledName %>s.length" class="md-fab md-accent md-fab-top-left fab-overlap" aria-label="Create a new <%= cameledName %>">
         <md-icon md-svg-icon="content:ic_add_24px"></md-icon>
     </md-button>
   </a>
 
 </md-toolbar>
 
-<md-content ng-if="list.<%= name %>s.length" id="<%= name %>-items-content" flex>
+<md-content ng-if="list.<%= cameledName %>s.length" id="<%= dashedName %>-items-content" flex>
 
   <md-list layout="column">
 
@@ -39,25 +39,25 @@
 
     </md-item>
 
-    <md-item ng-repeat="<%= name %> in list.<%= name %>s"
-        ng-click="items.showInDetails(<%= name %>)"
-        ng-class="{'selected': items.isSelected(<%= name %>)}">
+    <md-item ng-repeat="<%= cameledName %> in list.<%= cameledName %>s"
+        ng-click="items.showInDetails(<%= cameledName %>)"
+        ng-class="{'selected': items.isSelected(<%= cameledName %>)}">
 
       <md-item-content>
 
         <div class="md-tile-left">
-            <list-image string="{{<%= name %>.name}}"></list-image>
+            <list-image string="{{<%= cameledName %>.name}}"></list-image>
         </div>
 
         <div class="md-tile-content" flex="66">
-          <h3>{{<%= name %>.name}}</h3>
-                    <p ng-show="<%= name %>.info">{{<%= name %>.info}}</p>
+          <h3>{{<%= cameledName %>.name}}</h3>
+                    <p ng-show="<%= cameledName %>.info">{{<%= cameledName %>.info}}</p>
         </div>
 
         <div class="md-tile-content" flex hide show-gt-md>
                     <h3>
-                        <md-icon ng-show="<%= name %>.active" class="list-info" md-svg-icon="toggle:ic_check_box_24px"></md-icon>
-                        <md-icon ng-show="!<%= name %>.active" class="list-info" md-svg-icon="toggle:ic_check_box_outline_blank_24px"></md-icon>
+                        <md-icon ng-show="<%= cameledName %>.active" class="list-info" md-svg-icon="toggle:ic_check_box_24px"></md-icon>
+                        <md-icon ng-show="!<%= cameledName %>.active" class="list-info" md-svg-icon="toggle:ic_check_box_outline_blank_24px"></md-icon>
                     </h3>
                 </div>
 
@@ -71,20 +71,20 @@
 
 </md-content>
 
-<md-content ng-if="!list.<%= name %>s.length">
+<md-content ng-if="!list.<%= cameledName %>s.length">
   <md-card>
     <md-card-content>
       <h2>No <%= _.capitalize(name) %>s found</h2>
       <p>
         There are no <%= _.capitalize(name) %>s!
-        <a ui-sref="<%= name %>.list.create">Create one!</a>
+        <a ui-sref="<%= moduleName %>.list.create">Create one!</a>
       </p>
     </md-card-content>
   </md-card>
 </md-content>
 
-<a ui-sref="<%= name %>.list.create">
-  <md-button hide-gt-md ui-sref="<%= name %>.list.create" class="md-fab md-accent md-fab-bottom-right" aria-label="Create a new <%= name %>">
+<a ui-sref="<%= moduleName %>.list.create">
+  <md-button hide-gt-md ui-sref="<%= moduleName %>.list.create" class="md-fab md-accent md-fab-bottom-right" aria-label="Create a new <%= cameledName %>">
       <md-icon md-svg-icon="content:ic_add_24px"></md-icon>
   </md-button>
 </a>

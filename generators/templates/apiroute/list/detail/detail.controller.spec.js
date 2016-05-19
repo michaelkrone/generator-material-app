@@ -7,13 +7,13 @@ describe('Controller: <%= classedName %>DetailController', function () {
   beforeEach(module('<%= scriptAppName %>.list.detail'));
 
   var controller;
-  var <%= name %>;
+  var <%= cameledName %>;
   var stateSpy;
 
   // Setup some states to test the navigation functions
   beforeEach(inject(function ($state) {
     stateSpy = sinon.stub($state, 'go');
-    <%= name %> = {_id: '1337id', name: 'admin', active: true};
+    <%= cameledName %> = {_id: '1337id', name: 'admin', active: true};
   }));
 
   // Initialize the controller and a mock scope
@@ -26,13 +26,6 @@ describe('Controller: <%= classedName %>DetailController', function () {
   it('should exist as an object', function () {
     Should.exist(controller);
     controller.should.be.an.Object;
-  });
-
-  it('should have a user property which is the current <%= name %>', function () {
-    Should.exist(controller.user);
-    controller.user
-      .should.be.an.Object
-      .and.eql(user);
   });
 
   it('should have a method to navigate to the parent state', function () {

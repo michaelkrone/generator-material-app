@@ -2,7 +2,7 @@
   'use strict';
 
   /**
-   * Introduce the <%= scriptAppName %>.<%= _.slugify(name) %>.main module
+   * Introduce the <%= scriptAppName %>.<%= moduleName %>.main module
    * and configure it.
    *
    * @requires ui.router
@@ -10,7 +10,7 @@
    */
 
   angular
-    .module('<%= scriptAppName %>.<%= _.slugify(name) %>.main', [
+    .module('<%= scriptAppName %>.<%= moduleName %>.main', [
       'ui.router',
       '<%= scriptAppName %>.mainMenu'
     ])
@@ -21,7 +21,7 @@
 
   /**
    * Route configuration function configuring the passed $stateProvider.
-   * Register the <%= name %>.main state with the list template for the
+   * Register the <%= moduleName %>.main state with the list template for the
    * 'main' view paired with the <%= classedName %>MainController as 'main'.
    *
    * @param {$stateProvider} $stateProvider - The state provider to configure
@@ -30,13 +30,13 @@
   function config<%= classedName %>MainRoutes($stateProvider, mainMenuProvider) {
     // The main state configuration
     var mainState = {
-      name: '<%= name %>.main',
-      parent: '<%= name %>',
+      name: '<%= moduleName %>.main',
+      parent: '<%= moduleName %>',
       url: '/',<% if (secure) {%>
       authenticate: true,
       role: '<%= role %>',<%}%>
       views: {
-        '@<%= name %>': {
+        '@<%= moduleName %>': {
           templateUrl: '<%= mainHtmlUrl %>',
           controller: '<%= classedName %>MainController',
           controllerAs: 'main'

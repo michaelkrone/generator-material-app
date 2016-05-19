@@ -5,3 +5,4 @@ dist
 .tmp
 npm-debug.log
 .sass-cache
+bower_components

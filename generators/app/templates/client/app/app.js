@@ -10,8 +10,8 @@
 
   angular
     .module('<%= scriptAppName %>', [
-      // Add modules below
-      <%= angularModules %>
+      // Add modules below<% angularModules.forEach(function(angularModule) { %>
+      '<%= angularModule %>',<% }); %>
     ])
     .config(appConfig)<% if(features.auth) { %>
     .run(appRun)<% } %>;

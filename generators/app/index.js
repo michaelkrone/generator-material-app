@@ -91,22 +91,22 @@ module.exports = yeoman.generators.Base.extend({
     var appName = this.scriptAppName;
 
     function appModule(moduleName) {
-      return ["'", appName, '.', moduleName, "'"].join('');
+      return appName + '.' + moduleName;
     }
 
     // global modules
 
     var ngModules = [
-      "'ngCookies'",
-      "'ngResource'",
-      "'ngSanitize'",
-      "'ngMessages'",
-      "'ngMaterial'",
-      "'ui.router'"
+      "ngCookies",
+      "ngResource",
+      "ngSanitize",
+      "ngMessages",
+      "ngMaterial",
+      "ui.router"
     ];
 
     if (this.features.socketio) {
-      ngModules.push("'btford.socket-io'");
+      ngModules.push("btford.socket-io");
     }
 
     // app modules
@@ -134,7 +134,7 @@ module.exports = yeoman.generators.Base.extend({
     // add main module as last element
     ngModules.push(appModule('main'));
 
-    this.angularModules = ngModules.join(",\n\t\t\t");
+    this.angularModules = ngModules;
 
     if (this.skipConfig) {
       return;

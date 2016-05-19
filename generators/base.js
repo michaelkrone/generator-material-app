@@ -16,9 +16,11 @@ var Generator = module.exports = function Generator() {
   this.appname = this._.slugify(this._.humanize(this.appname));
   this.scriptAppName = this._.camelize(this.appname) + angularUtils.appName(this);
 
-  this.cameledName = this._.camelize(this.name);
   this.classedName = this._.classify(this.name);
-  this.modelName = this._.classify(this.name);
+  this.modelName = this.classedName;
+  this.cameledName = this.classedName[0].toLowerCase() + this.classedName.substr(1);
+  this.moduleName = this.name;
+  this.dashedName = this.name.replace(/\./g, '-');
 
   this.features = this.config.get('features');
   this.angularModules = this.config.get('angularModules');

@@ -8,6 +8,7 @@ module.exports = {
   appName: appName,
   processDirectory: processDirectory,
   copyTemplates: copyTemplates,
+  generateAncestorRoutes: generateAncestorRoutes,
   relativeUrl: relativeUrl
 };
 
@@ -112,8 +113,8 @@ function processDirectory(self, source, destination) {
   files.forEach(function (f) {
     try {
       var filteredFile = filterFile(f);
-      if (self.name) {
-        filteredFile.name = filteredFile.name.replace('name', self.name);
+      if (self.fileName || self.name) {
+        filteredFile.name = filteredFile.name.replace('name', self.fileName || self.name);
       }
       var name = filteredFile.name;
       var copy = false, stripped;
@@ -161,7 +162,7 @@ function copyTemplates(self, type, templateDir, configName) {
   fs.readdirSync(templateDir)
     .forEach(function (template) {
       try {
-        var processedName = createFileName(template, self.name);
+        var processedName = createFileName(template, self.fileName || self.name);
 
         var fileName = processedName.name;
         var templateFile = path.join(templateDir, template);
@@ -191,4 +192,34 @@ function createFileName(template, name) {
   }
 
   return {name: template.replace('name', name), filter: filter};
+}
+
+function generateAncestorRoutes(self, callback) {
+  var ancestors = self.ancestors;
+  console.log('ancestors', ancestors);
+  if (!ancestors || !ancestors.length) callback();
+  var totallyAuto = self.options.totallyAuto || false;
+
+  var prompts = [{
+    name: 'autoFather',
+    type: 'confirm',
+    message: 'Do you want to automatically generate the missing father routes?',
+    default: true,
+    when: function() {
+      return !totallyAuto && ancestors.length;
+    },
+  }];
+
+  self.prompt(prompts, function(props) {
+    console.log(totallyAuto || props.autoFather);
+    self.composeWith('material-app:route', {
+      args: [ancestors.join('.')],
+      options: {
+        autoRoute: true,
+        totallyAuto: totallyAuto || props.autoFather,
+        children: [self.name]
+      }
+    })
+    callback();
+  });
 }

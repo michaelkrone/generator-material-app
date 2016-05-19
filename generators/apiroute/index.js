@@ -42,7 +42,7 @@ Generator.prototype.askFor = function askFor() {
     {
       name: 'route',
       message: 'What will the url of your route be?',
-      default: '/' + this.fileName
+      default: '/' + (this.fileName || this.name)
     },
     {
       name: 'apiUrl',

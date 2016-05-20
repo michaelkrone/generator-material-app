@@ -2,19 +2,19 @@
 
   <span class="md-toolbar-tools md-toolbar-tools-top">
     <md-button ng-click="appController.openMainMenu()" aria-label="Open main menu">
-            <md-icon md-svg-icon="navigation:ic_menu_24px"></md-icon>
-        </md-button>
+      <md-icon md-svg-icon="navigation:ic_menu_24px"></md-icon>
+    </md-button>
   </span>
 
-    <span flex></span>
+  <span flex></span>
 
-    <h2 class="md-toolbar-tools md-toolbar-tools-bottom toolbar-tools-fab-overlap">
-        <span><%= menuItem %> List</span>
-    </h2>
+  <h2 class="md-toolbar-tools md-toolbar-tools-bottom toolbar-tools-fab-overlap">
+    <span><%= menuItem %> List</span>
+  </h2>
 
   <a ui-sref="<%= moduleName %>.list.create">
     <md-button hide show-gt-md ng-if="list.<%= cameledName %>s.length" class="md-fab md-accent md-fab-top-left fab-overlap" aria-label="Create a new <%= cameledName %>">
-        <md-icon md-svg-icon="content:ic_add_24px"></md-icon>
+      <md-icon md-svg-icon="content:ic_add_24px"></md-icon>
     </md-button>
   </a>
 
@@ -30,9 +30,9 @@
         <div class="md-tile-content" flex="66">
           <h4>Name</h4>
         </div>
-                <div class="md-tile-content" flex hide show-gt-md>
-                    <h4>Active</h4>
-                </div>
+        <div class="md-tile-content" flex hide show-gt-md>
+            <h4>Active</h4>
+        </div>
       </md-item-content>
 
       <md-divider md-inset></md-divider>
@@ -46,20 +46,20 @@
       <md-item-content>
 
         <div class="md-tile-left">
-            <list-image string="{{<%= cameledName %>.name}}"></list-image>
+          <list-image string="{{<%= cameledName %>.name}}"></list-image>
         </div>
 
         <div class="md-tile-content" flex="66">
           <h3>{{<%= cameledName %>.name}}</h3>
-                    <p ng-show="<%= cameledName %>.info">{{<%= cameledName %>.info}}</p>
+          <p ng-show="<%= cameledName %>.info">{{<%= cameledName %>.info}}</p>
         </div>
 
         <div class="md-tile-content" flex hide show-gt-md>
-                    <h3>
-                        <md-icon ng-show="<%= cameledName %>.active" class="list-info" md-svg-icon="toggle:ic_check_box_24px"></md-icon>
-                        <md-icon ng-show="!<%= cameledName %>.active" class="list-info" md-svg-icon="toggle:ic_check_box_outline_blank_24px"></md-icon>
-                    </h3>
-                </div>
+          <h3>
+            <md-icon ng-show="<%= cameledName %>.active" class="list-info" md-svg-icon="toggle:ic_check_box_24px"></md-icon>
+            <md-icon ng-show="!<%= cameledName %>.active" class="list-info" md-svg-icon="toggle:ic_check_box_outline_blank_24px"></md-icon>
+          </h3>
+        </div>
 
       </md-item-content>
 
@@ -85,6 +85,6 @@
 
 <a ui-sref="<%= moduleName %>.list.create">
   <md-button hide-gt-md ui-sref="<%= moduleName %>.list.create" class="md-fab md-accent md-fab-bottom-right" aria-label="Create a new <%= cameledName %>">
-      <md-icon md-svg-icon="content:ic_add_24px"></md-icon>
+    <md-icon md-svg-icon="content:ic_add_24px"></md-icon>
   </md-button>
 </a>

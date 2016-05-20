@@ -80,7 +80,7 @@
    * @returns {Object|null} The <%= cameledName %> whose value of the _id property equals $stateParams._id
    */
   function resolve<%= classedName %>FromArray(<%= cameledName %>s, $stateParams, _) {
-    return _.find(<%= moduleName %>s, {'_id': $stateParams.id});
+    return _.find(<%= cameledName %>s, {'_id': $stateParams.id});
   }
 
 })();

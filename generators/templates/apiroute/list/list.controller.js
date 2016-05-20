@@ -35,7 +35,7 @@
      * Register socket updates and unsync on scope $destroy event
      */
     function activate() {
-      socket.syncUpdates('<%= cameledName %>', vm.<%= cameledName %>s);
+      socket.syncUpdates('<%= syncUpdateUrl %>', vm.<%= cameledName %>s);
       $scope.$on('$destroy', unsync<%= classedName %>Updates);
 
       function unsync<%= classedName %>Updates() {
@@ -47,7 +47,7 @@
      * Toggle the detail view
      */
     function toggleDetails() {
-      ToggleComponent('<%= cameledName %>.detailView').toggle();
+      ToggleComponent('<%= moduleName %>.detailView').toggle();
     }
   }
 

@@ -50,6 +50,11 @@ Generator.prototype.askFor = function askFor() {
       default: '/api/' + this.slashedName
     },
     {
+      name: 'syncUpdateUrl',
+      message: 'What is the url for socket to sync this resource',
+      default: this.fileName || this.name,
+    },
+    {
       name: 'secure',
       type: 'confirm',
       message: 'May only authenticated users be able to access this route?',
@@ -82,6 +87,8 @@ Generator.prototype.askFor = function askFor() {
     this.secure = props.secure || false;
     this.role = props.role || false;
     this.menuItem = props.menuItem;
+    this.syncUpdateUrl = props.syncUpdateUrl;
+
     if (this.fatherMissed) {
       ngUtil.generateAncestorRoutes(this, done);
     } else {

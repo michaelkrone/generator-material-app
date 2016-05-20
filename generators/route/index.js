@@ -68,9 +68,11 @@ Generator.prototype.askFor = function askFor() {
 Generator.prototype.registerRoute = function registerRoute() {
   var ngModuleName = this.scriptAppName + '.' + this.name;
   var modules = this.config.get('angularModules');
-  modules.push(ngModuleName);
-  this.config.set('angularModules', modules);
-  this.config.save();
+  if (modules.indexOf(ngModuleName) === -1) {
+    modules.push(ngModuleName);
+    this.config.set('angularModules', modules);
+    this.config.save();
+  }
 
   var routeConfig = {
     file: path.join('client', 'app', 'app.js'),

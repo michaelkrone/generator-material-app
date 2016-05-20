@@ -47,7 +47,7 @@ Generator.prototype.askFor = function askFor() {
     {
       name: 'apiUrl',
       message: 'What is the main API the route shall communicate with?',
-      default: '/api/' + this.slashedName
+      default: '/api/' + this.slashedName + 's'
     },
     {
       name: 'syncUpdateUrl',

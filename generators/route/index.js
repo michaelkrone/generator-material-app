@@ -84,8 +84,7 @@ Generator.prototype.registerRoute = function registerRoute() {
 
 Generator.prototype.createFiles = function createFiles() {
   var basePath = this.config.get('basePath') || '';
-  // this.htmlUrl = ngUtil.relativeUrl(basePath, path.join(this.dir, this.name + '.html'));
-  this.htmlUrl = path.relative('client', path.join(this.dir, this.name + '.html'));
+  this.htmlUrl = ngUtil.relativeUrl(basePath, path.join(this.dir, (this.fileName || this.name) + '.html'));
   ngUtil.copyTemplates(this, 'route');
 };
 

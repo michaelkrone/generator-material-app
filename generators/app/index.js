@@ -162,7 +162,7 @@ module.exports = yeoman.generators.Base.extend({
     this.config.set('directiveDirectory', this.options.directiveDirectory || 'client/app/components');
     this.config.set('filterDirectory', this.options.filterDirectory || 'client/app/components');
     this.config.set('serviceDirectory', this.options.serviceDirectory || 'client/app/components');
-    this.config.set('basePath', this.options.basePath || 'app');
+    this.config.set('basePath', this.options.basePath || 'client');
     this.config.set('moduleName', this.options.moduleName || '');
     this.config.set('extensions', this.options.extensions || ['js', 'html', 'scss']);
     this.config.forceSave();

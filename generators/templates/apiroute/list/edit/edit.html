@@ -35,7 +35,7 @@
         <md-switch name="active" class="no-label" aria-label="<%= cameledName %> active" ng-model="edit.<%= cameledName %>.active"></md-switch>
       </span>
 
-      <span layout="row" layout-sm="column">
+      <!--<span layout="row" layout-sm="column">
         <md-input-container flex>
           <label>Name</label>
           <input name="name" ng-model="edit.<%= cameledName %>.name" required mongoose-error>
@@ -44,14 +44,9 @@
             <div ng-message="mongoose">Name is already taken</div>
           </div>
         </md-input-container>
-      </span>
+      </span>-->
 
-      <span layout="row" layout-sm="column">
-        <md-input-container flex>
-          <label>Info</label>
-          <textarea name="info" ng-model="edit.<%= cameledName %>.info"></textarea>
-        </md-input-container>
-      </span>
+      <model-input-group ng-model="edit.<%= cameledName %>" model-definition="index.<%= cameledName %>Definition"></model-input-group>
 
     </section>
 

@@ -24,7 +24,7 @@
 
       <section class="section" layout="column">
 
-        <span layout="row" layout-sm="column">
+        <!--<span layout="row" layout-sm="column">
           <md-input-container flex>
             <label>Name</label>
             <input name="name" ng-model="create.<%= cameledName %>.name"
@@ -36,14 +36,10 @@
               <div ng-message="remote-unique">Name already in use</div>
             </div>
           </md-input-container>
-        </span>
+        </span>-->
 
-        <span layout="row" layout-sm="column">
-          <md-input-container flex class="last">
-            <label>Info</label>
-            <textarea name="info" ng-model="create.<%= cameledName %>.info"></textarea>
-          </md-input-container>
-        </span>
+        <model-input-group ng-model="create.<%= cameledName %>" model-definition="create.<%= cameledName %>Definition"></model-input-group>
+
       </section>
     </form>
   </md-content>

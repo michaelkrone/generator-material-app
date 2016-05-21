@@ -26,13 +26,14 @@
    * @param {Service} $mdDialog The mdDialog service to use
    * @param {Service} <%= modelName %> The <%= modelName %> resource
    * @param {Service} <%= modelName %>Service The <%= modelName %> service to use
+   * @param {Service} <%= modelName %>Definition The model definition of <%= modelName %> resource
    * @param {Service} Toast The Toast service to use
    * @returns {Service} {@link <%= scriptAppName %>.<%= moduleName %>.create.controller:<%= modelName %>CreateController <%= modelName %>CreateController}
    */
 
-  <%= modelName %>CreateController.$inject = ['$mdDialog', '<%= modelName %>', '<%= modelName %>Service', 'Toast'];
+  <%= modelName %>CreateController.$inject = ['$mdDialog', '<%= modelName %>', '<%= modelName %>Service', '<%= modelName %>Definition', 'Toast'];
 
-  function <%= modelName %>CreateController($mdDialog, <%= modelName %>, <%= modelName %>Service, Toast) {
+  function <%= modelName %>CreateController($mdDialog, <%= modelName %>, <%= modelName %>Service, <%= modelName %>Definition, Toast) {
     var vm = this;
 
     /**
@@ -45,6 +46,7 @@
      * @returns {Object} The <%= cameledName %> data
      */
     vm.<%= cameledName %> = new <%= modelName %>();
+    vm.<%= cameledName %>Definition = <%= modelName %>Definition;
 
     // view model bindings (documented below)
     vm.create = create<%= modelName %>;

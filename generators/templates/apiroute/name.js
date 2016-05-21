@@ -7,6 +7,7 @@
    *
    * @requires ui.router
    * @requires ngResource
+   * @requires <%= scriptAppName %>.<%= moduleName %>.definition
    * @requires <%= scriptAppName %>.<%= moduleName %>.main
    * @requires <%= scriptAppName %>.<%= moduleName %>.list
    * @requires <%= scriptAppName %>.<%= moduleName %>.create
@@ -15,6 +16,7 @@
     .module('<%= scriptAppName %>.<%= moduleName %>', [
       'ngResource',
       'ui.router',
+      '<%= scriptAppName %>.<%= moduleName %>.definition',
       '<%= scriptAppName %>.<%= moduleName %>.main',
       '<%= scriptAppName %>.<%= moduleName %>.list',
       '<%= scriptAppName %>.<%= moduleName %>.create'

@@ -1,0 +1,8 @@
+<div ng-repeat="propDef in propDefinitions">
+  <span layout="row" layout-sm="column">
+    <md-input-container flex>
+      <label>{{propDef.desc}}</label>
+      <input name="{{propDef.name}}" ng-model="ngModel[propDef.name]" type="{{propDef.type}}" />
+    </md-input-container>
+  </span>
+</div>

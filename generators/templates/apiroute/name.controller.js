@@ -10,7 +10,7 @@
    * add <%= classedName %>Controller dependencies to inject
    * @param {Service} <%= modelName %>Definition The model definition of <%= modelName %> resource
    */
-  SensorController.$inject = ['<%= modelName %>Definition'];
+  <%= classedName %>Controller.$inject = ['<%= modelName %>Definition'];
 
   /**
    * <%= classedName %>Controller constructor. Main controller for the <%= scriptAppName %>.<%= moduleName %>

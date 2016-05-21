@@ -31,7 +31,6 @@ Generator.prototype.askFor = function askFor() {
   }
 
   var self = this;
-  var name = this.name;
 
   var defaults = {
     dir: self.config.get('routeDirectory') + this.slashedName,

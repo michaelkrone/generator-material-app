@@ -27,8 +27,8 @@
     <md-item class="list-head" hide-sm>
 
       <md-item-content>
-        <div class="md-tile-content" flex="66">
-          <h4>Name</h4>
+        <div ng-repeat="propDef in index.<%= cameledName %>Definition" class="md-tile-content" flex="66">
+          <h4>{{::propDef.desc}}</h4>
         </div>
         <div class="md-tile-content" flex hide show-gt-md>
             <h4>Active</h4>
@@ -49,9 +49,13 @@
           <list-image string="{{<%= cameledName %>.name}}"></list-image>
         </div>
 
-        <div class="md-tile-content" flex="66">
-          <h3>{{<%= cameledName %>.name}}</h3>
-          <p ng-show="<%= cameledName %>.info">{{<%= cameledName %>.info}}</p>
+        <div ng-repeat="propDef in index.<%= cameledName %>Definition" class="md-tile-content" flex="66">
+          <h4>{{
+            ::applyFilter(
+            index.ModelDefinitions.get(<%= cameledName %>, propDef.name),
+            propDef.ngFilter
+            )}}
+          </h4>
         </div>
 
         <div class="md-tile-content" flex hide show-gt-md>

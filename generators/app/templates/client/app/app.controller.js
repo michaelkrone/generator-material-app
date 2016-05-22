@@ -23,9 +23,18 @@
    * @param {$location} $mdSidenav - The sidenav service used to communicate with the sidenav components
    */
 
-  AppController.$inject = ['Auth', '$mdSidenav'];
+  AppController.$inject = ['Auth', '$mdSidenav', '$scope', '$filter'];
 
-  function AppController(Auth, $mdSidenav) {
+  function AppController(Auth, $mdSidenav, $scope, $filter) {
+    $scope.applyFilter = function(model, filterName) {
+      if (!filterName) return model;
+      var filter = angular.isString(filterName) ? {
+        name: filterName,
+      } : angular.copy(filterName);
+      filter.args = [model].concat(filter.args || []);
+      return $filter(filter.name).apply(null, filter.args);
+    };
+
     var vm = this;
 
     vm.sidenavId = 'mainMenu';

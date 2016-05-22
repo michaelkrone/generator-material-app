@@ -11,7 +11,8 @@
   angular
     .module('<%= scriptAppName %>.<%= moduleName %>.service', ['<%= scriptAppName %>.resource'])
     .factory('<%= classedName %>', <%= classedName %>)
-    .service('<%= classedName %>Service', <%= classedName %>Service);
+    .service('<%= classedName %>Service', <%= classedName %>Service)
+    .factory('<%= classedName %>Definition', <%= classedName %>Definition);
 
   // add <%= classedName %> dependencies to inject
   <%= classedName %>.$inject = ['Resource'];
@@ -101,4 +102,14 @@
         }).$promise;
     }
   };
+
+  // add <%= classedName %>Definition dependencies to inject
+  <%= classedName %>Definition.$inject = ['ModelDefinitions'];
+  function <%= classedName %>Definition (ModelDefinitions) {
+    return ModelDefinitions.flat({
+      name: {type: 'text', required: true},
+       info: 'text',
+      // active: 'boolean'
+    });
+  }
 })();

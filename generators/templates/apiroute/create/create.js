@@ -11,7 +11,6 @@
    * @requires {<%= scriptAppName %>.mongooseError}
    * @requires {<%= scriptAppName %>.remoteUnique}
    * @requires {<%= scriptAppName %>.<%= moduleName %>.service}
-   + @requires {<%= scriptAppName %>.<%= moduleName %>.definition}
    */
 
   angular
@@ -21,8 +20,7 @@
       'ngMaterial',
       '<%= scriptAppName %>.mongooseError',
       '<%= scriptAppName %>.remoteUnique',
-      '<%= scriptAppName %>.<%= moduleName %>.service',
-      '<%= scriptAppName %>.<%= moduleName %>.definition',
+      '<%= scriptAppName %>.<%= moduleName %>.service'
     ])
     .config(configure<%= classedName %>CreateRoutes);
 

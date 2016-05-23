@@ -96,7 +96,7 @@ CrudController.prototype = {
   index: function (req, res) {
     var query = req.query;
 
-    if (this.omit.lenght) {
+    if (this.omit.length) {
       query = _.omit(query, this.omit);
     }
 

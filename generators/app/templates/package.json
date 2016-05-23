@@ -17,7 +17,7 @@
     "lodash": "~2.4.1",
     "ejs": "~0.8.4",
     "request-context": "~0.1.1",
-    "mongoose": ">=3.8.8",
+    "mongoose": ">=4.4.19",
     "mongoose-createdmodified": "0.0.2",
     "composable-middleware": "^0.3.0",
     "connect-mongo": "^0.4.1",

@@ -18,6 +18,8 @@
     // public API
     return {
       flat: flat,
+      extend: extendDeep,
+      display: display,
       get: getDeepValue,
       set: setDeepValue
     };
@@ -68,6 +70,37 @@
       if (!propChain.length) return obj;
       var nextObj = obj[propChain[0]];
       return nextObj ? getDeepValue(nextObj, propChain.slice(1)) : nextObj;
+    }
+
+    function extendDeep(dst) {
+      angular.forEach(arguments, function(obj) {
+        if (obj === dst) return;
+
+        angular.forEach(obj, function(value, key) {
+          if (dst[key] && angular.isObject(dst[key])) {
+            extendDeep(dst[key], value);
+          } else {
+            dst[key] = value;
+          }
+        });
+      });
+      return dst;
+    }
+
+    function display(obj, propDef) {
+      if (!obj) return;
+      var value = getDeepValue(obj, propDef.name);
+      var displayValue = propDef.displayKey ? value[propDef.displayKey] : value;
+      return propDef.ngFilter ? applyFilter(displayValue, propDef.ngFilter) : displayValue;
+    }
+
+    function applyFilter(value, filterName) {
+      if (!filterName) return value;
+      var filter = angular.isString(filterName) ? {
+        name: filterName,
+      } : angular.copy(filterName);
+      filter.args = [value].concat(filter.args || []);
+      return $filter(filter.name).apply(null, filter.args);
     }
   }
 

@@ -34,8 +34,9 @@
       });
 
       angular.forEach(scope.deepFields, function watchDeepFields (fieldDef) {
-        scope.$watch('ngModel[\'' + fieldDef.name + '\']', function (value) {
-          setDeepFieldForViewValue(fieldDef, value);
+        scope.$watch('ngModel[\'' + fieldDef.name + '\']', function (newValue, oldValue) {
+          if (newValue === oldValue) return;
+          setDeepFieldForViewValue(fieldDef, newValue);
         });
       });
 
@@ -45,7 +46,6 @@
       };
 
       function setDeepFieldForViewValue (fieldDef, value) {
-        if (!value) return;
         ModelDefinitions.set(scope.ngModel, fieldDef.name, value);
         ngModel.$setViewValue(scope.ngModel);
       }

@@ -18,8 +18,9 @@
     // public API
     return {
       flat: flat,
-      get: getDeepValue,
+      extend: extendDeep,
       display: display,
+      get: getDeepValue,
       set: setDeepValue
     };
 
@@ -69,6 +70,21 @@
       if (!propChain.length) return obj;
       var nextObj = obj[propChain[0]];
       return nextObj ? getDeepValue(nextObj, propChain.slice(1)) : nextObj;
+    }
+
+    function extendDeep(dst) {
+      angular.forEach(arguments, function(obj) {
+        if (obj === dst) return;
+
+        angular.forEach(obj, function(value, key) {
+          if (dst[key] && angular.isObject(dst[key])) {
+            extendDeep(dst[key], value);
+          } else {
+            dst[key] = value;
+          }
+        });
+      });
+      return dst;
     }
 
     function display(obj, propDef) {

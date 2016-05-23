@@ -106,7 +106,7 @@
   // add <%= classedName %>Definition dependencies to inject
   <%= classedName %>Definition.$inject = ['ModelDefinitions'];
   function <%= classedName %>Definition (ModelDefinitions) {
-    return ModelDefinitions.flat({
+    return ModelDefinitions({
       name: {type: 'text', required: true},
        info: 'text',
       // active: 'boolean'

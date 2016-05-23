@@ -1,0 +1,10 @@
+<div style="padding-left: 4px;">
+  <md-select ng-model="ngModel[fieldDef.name]"
+             md-on-open="getOptions()"
+             placeholder="Select a {{fieldDef.desc}}"
+             flex>
+    <md-option ng-repeat="opt in options" ng-value="fieldDef.valueKey ? opt[fieldDef.valueKey] : opt">
+      {{fieldDef.displayKey ? opt[fieldDef.displayKey] : opt}}
+    </md-option>
+  </md-select>
+</div>

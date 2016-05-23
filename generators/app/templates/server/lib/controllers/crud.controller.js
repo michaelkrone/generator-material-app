@@ -70,6 +70,16 @@ CrudController.prototype = {
   select: [],
 
   /**
+   * Array of fields passed to the populate statement of the index query.
+   * The array is used for populate one by one
+   * Additional field methods {index: boolean, show: boolean} default true;
+   * method of the controller model.
+   * @type {Array}
+   * @default The empty Array
+   */
+  populations: [],
+
+  /**
    * Array of fields that should be omitted from the query.
    * The property names are stripped from the query object.
    * @type {Array}
@@ -96,7 +106,7 @@ CrudController.prototype = {
   index: function (req, res) {
     var query = req.query;
 
-    if (this.omit.lenght) {
+    if (this.omit.length) {
       query = _.omit(query, this.omit);
     }
 
@@ -109,6 +119,11 @@ CrudController.prototype = {
     if (this.select.length) {
       query.select(this.select.join(' '));
     }
+
+    _.forEach(this.populations, function(population) {
+      if (population.methods && !population.methods.index) return;
+      query.populate(population);
+    });
 
     query.exec(function (err, documents) {
       if (err) {
@@ -128,7 +143,14 @@ CrudController.prototype = {
   show: function (req, res) {
     var self = this;
 
-    this.model.findOne({'_id': req.params[this.idName]}, function (err, document) {
+    var query = this.model.findOne({'_id': req.params[this.idName]});
+
+    _.forEach(this.populations, function(population) {
+      if (population.methods && !population.methods.show) return;
+      query.populate(population);
+    });
+
+    query.exec(function (err, document) {
       if (err) {
         return res.handleError(err);
       }

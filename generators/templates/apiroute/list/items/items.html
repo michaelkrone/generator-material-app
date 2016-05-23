@@ -50,12 +50,7 @@
         </div>
 
         <div ng-repeat="propDef in index.<%= cameledName %>Definition" class="md-tile-content" flex="66">
-          <h4>{{
-            ::applyFilter(
-            index.ModelDefinitions.get(<%= cameledName %>, propDef.name),
-            propDef.ngFilter
-            )}}
-          </h4>
+          <h4>{{index.ModelDefinitions.display(<%= cameledName %>, propDef)}}</h4>
         </div>
 
         <div class="md-tile-content" flex hide show-gt-md>

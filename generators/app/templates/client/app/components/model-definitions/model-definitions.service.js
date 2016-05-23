@@ -19,6 +19,7 @@
     return {
       flat: flat,
       get: getDeepValue,
+      display: display,
       set: setDeepValue
     };
 
@@ -68,6 +69,22 @@
       if (!propChain.length) return obj;
       var nextObj = obj[propChain[0]];
       return nextObj ? getDeepValue(nextObj, propChain.slice(1)) : nextObj;
+    }
+
+    function display(obj, propDef) {
+      if (!obj) return;
+      var value = getDeepValue(obj, propDef.name);
+      var displayValue = propDef.displayKey ? value[propDef.displayKey] : value;
+      return propDef.ngFilter ? applyFilter(displayValue, propDef.ngFilter) : displayValue;
+    }
+
+    function applyFilter(value, filterName) {
+      if (!filterName) return value;
+      var filter = angular.isString(filterName) ? {
+        name: filterName,
+      } : angular.copy(filterName);
+      filter.args = [value].concat(filter.args || []);
+      return $filter(filter.name).apply(null, filter.args);
     }
   }
 

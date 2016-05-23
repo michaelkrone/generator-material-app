@@ -7,24 +7,52 @@
     .factory('ModelDefinitions', ModelDefinitions);
 
   // add ModelDefinitions dependencies to inject
-  // ModelDefinitions.$inject = [''];
+  ModelDefinitions.$inject = ['$filter', '$q'];
 
   /**
    * ModelDefinitions factory constructor
    * AngularJS will instantiate a singleton which is
    * an object that has the members of this factory
    */
-  function ModelDefinitions() {
+  function ModelDefinitions($filter, $q) {
     // public API
-    return {
+    angular.extend(createModelDefinition, {
       flat: flat,
       extend: extendDeep,
-      display: display,
       get: getDeepValue,
+      display: display,
       set: setDeepValue
-    };
+    });
 
-    // factory function definitions
+    return createModelDefinition;
+
+    function createModelDefinition(modelDef) {
+      var propDefs = flat(modelDef);
+      return propDefs.map(extendDefault);
+    }
+
+    function extendDefault(propDef) {
+      var defaultResourceDef = {
+        desc: propDef.name[0].toUpperCase() + propDef.name.slice(1)
+      };
+
+      if (propDef.type === 'select/resource') {
+        angular.extend(defaultResourceDef, {
+          getOptions: function() {
+            if (!propDef.resource || !propDef.resource.query) {
+              console.warn('type is select/resource, but resource is not set');
+              return $q.when([])
+            }
+            return propDef.resource.query().$promise;
+          },
+          valueKey: '_id',
+          displayKey: 'name',
+        });
+      }
+
+      return angular.extend({}, defaultResourceDef, propDef);
+    }
+
     function flat(nestedDef, preName) {
       var flattenDefs = [];
       angular.forEach(nestedDef, flatPropDefinition);
@@ -44,13 +72,13 @@
         } else {
           throw new Error('Model\'s property definition should be a string or an object');
         }
-        propDef.desc = propDef.desc || (name[0].toUpperCase() + name.slice(1));
         flattenDefs.push(propDef);
       }
       return flattenDefs;
     }
 
     function setDeepValue (obj, propChain, value) {
+      if (!obj) return;
       if (angular.isString(propChain)) {
         propChain = propChain.split('.');
       }
@@ -64,6 +92,7 @@
     }
 
     function getDeepValue (obj, propChain) {
+      if (!obj) return;
       if (angular.isString(propChain)) {
         propChain = propChain.split('.');
       }
@@ -90,6 +119,7 @@
     function display(obj, propDef) {
       if (!obj) return;
       var value = getDeepValue(obj, propDef.name);
+      if (!value) return value;
       var displayValue = propDef.displayKey ? value[propDef.displayKey] : value;
       return propDef.ngFilter ? applyFilter(displayValue, propDef.ngFilter) : displayValue;
     }

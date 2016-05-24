@@ -40,7 +40,7 @@ process
 function startServer() {
   var server = require('http').createServer(app);
   var socket = socketio(server, {
-    serveClient: (config.env !== 'production'),
+    serveClient: true,
     path: '/socket.io-client'
   });
   // Setup SocketIO

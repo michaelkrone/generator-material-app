@@ -11,6 +11,7 @@
 var mongoose = require('mongoose');
 var MongooseError = require('mongoose/lib/error');
 var crypto = require('crypto');
+var contextService = require('request-context');
 var requestContext = require('mongoose-request-context');
 var createdModifiedPlugin = require('mongoose-createdmodified').createdModifiedPlugin;
 var auth = require('../../lib/auth/auth.service');
@@ -339,7 +340,7 @@ function preSave(next) {
       delete self.role;
 
       // get the user role to check if a root user will perform the update
-      var userRole = self.getContext('request:acl.user.role');
+      var userRole = contextService.getContext('request:acl.user.role');
       if (!userRole) { // no user role - no root user check
         return next();
       }

@@ -44,7 +44,20 @@ mongoose.connection.once('open', function connectionOpen() {
     // module.parent === null means current command runs this script directly
     // Represents 'npm run seed'
     if (env !== 'production' || module.parent === null) {
-      seed();
+      seed(env, done);
     }
+
+		function done(err) {
+			if (err) {
+				console.log('There was an error while populating seed data');
+			} else {
+				console.log('All seed data populated successfully');
+			}
+
+			if (module.parent === null) {
+				// this script has been called by cli, exit after population
+				process.exit(err ? 1 : 0);
+			}
+		}
   }
 });

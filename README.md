@@ -55,11 +55,11 @@ gulp unit:client
 For now, run commands:
 
 ```
-gulp build
+NODE_ENV=production gulp build
 NODE_ENV=production npm start
 ```
 And manually seed database with `NODE_ENV=production npm run seed` if you choosed to auth your app.
-You can't sign into app without any users.
+You can't sign into app without any users. You can specify users and seed data in `server/config/seed.js`.
 
 ## List of Generators
 * Application scaffold

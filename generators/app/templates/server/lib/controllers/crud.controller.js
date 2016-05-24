@@ -166,13 +166,14 @@ CrudController.prototype = {
   create: function (req, res) {
     var self = this;
 
-    this.model.create(req.body, function (err, document) {
+    var populations = self.filterPopulations('create');
+
+    this.model.populate(req.body, populations, function (err, document) {
       if (err) {
         return res.handleError(err);
       }
 
-      var populations = self.filterPopulations('create');
-      document.populate(populations, function(err, document) {
+      self.model.create(document, function (err) {
         if (err) {
           return res.handleError(err);
         }

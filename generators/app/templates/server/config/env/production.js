@@ -8,9 +8,11 @@ module.exports = {
 
   port: process.env.PORT || 8080,
 
-  publicDir: 'public',
+  publicDir: 'client',
 
   mongo: {
     uri: 'mongodb://localhost/' + process.env.DATABASE_NAME
-  }
+  },
+
+  seedDB: true
 };

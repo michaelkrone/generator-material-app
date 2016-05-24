@@ -32,7 +32,8 @@
   },
   "scripts":{
     "start": "node bin/server.js",
-    "postinstall": "node ./node_modules/protractor/bin/webdriver-manager update"
+    "postinstall": "node ./node_modules/gulp-protractor/node_modules/.bin/webdriver-manager update",
+    "seed": "node server/config/mongoose.js"
   },
   "repository": {
     "type": "git",

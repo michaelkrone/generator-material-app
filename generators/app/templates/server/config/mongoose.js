@@ -7,6 +7,8 @@
 
 var mongoose = require('mongoose');
 var config = require('./index');
+var seed = require('./seed');
+var env = process.env.NODE_ENV || 'development';
 
 // connect to mongodb
 var connection = mongoose.connect(config.mongo.uri, config.mongo.options);
@@ -39,6 +41,10 @@ mongoose.connection.once('open', function connectionOpen() {
   console.log('Database connection open');
   // Populate DB with sample data
   if (config.seedDB) {
-    require('./seed');
+    // module.parent === null means current command runs this script directly
+    // Represents 'npm run seed'
+    if (env !== 'production' || module.parent === null) {
+      seed();
+    }
   }
 });

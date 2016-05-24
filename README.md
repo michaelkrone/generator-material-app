@@ -51,6 +51,16 @@ gulp unit:server
 gulp unit:client
 ```
 
+### Deploy
+For now, run commands:
+
+```
+gulp build
+NODE_ENV=production npm start
+```
+And manually seed database with `NODE_ENV=production npm run seed` if you choosed to auth your app.
+You can't sign into app without any users.
+
 ## List of Generators
 * Application scaffold
     - [`material-app`](#app) (alias for `material-app:app`) - The directory name will be used as the application name

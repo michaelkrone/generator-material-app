@@ -43,7 +43,7 @@
               console.warn('type is select/resource, but resource is not set');
               return $q.when([])
             }
-            return propDef.resource.query().$promise;
+            return propDef.resource.query(propDef.params).$promise;
           },
           valueKey: '_id',
           displayKey: 'name',

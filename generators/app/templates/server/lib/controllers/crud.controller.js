@@ -19,212 +19,257 @@ exports = module.exports = CrudController;
  * @param {String} [idName] - The name of the id request parameter to use
  */
 function CrudController(model, idName) {
-	// call super constructor
-	BaseController.call(this);
+  // call super constructor
+  BaseController.call(this);
 
-	// set the model instance to work on
-	this.model = model;
+  // set the model instance to work on
+  this.model = model;
 
-	// set id name if defined, defaults to 'id'
-	if (idName) {
-		this.idName = String(idName);
-	}
+  // set id name if defined, defaults to 'id'
+  if (idName) {
+    this.idName = String(idName);
+  }
 }
 
 CrudController.prototype = {
 
-	/**
-	 * Set our own constructor property for instanceof checks
-	 * @private
-	 */
-	constructor: CrudController,
+  /**
+   * Set our own constructor property for instanceof checks
+   * @private
+   */
+  constructor: CrudController,
 
-	/**
-	 * The model instance to perform operations with
-	 * @type {MongooseModel}
-	 */
-	model: null,
+  /**
+   * The model instance to perform operations with
+   * @type {MongooseModel}
+   */
+  model: null,
 
-	/**
-	 * The id  parameter name
-	 * @type {String}
-	 * @default 'id'
-	 */
-	idName: 'id',
+  /**
+   * The id  parameter name
+   * @type {String}
+   * @default 'id'
+   */
+  idName: 'id',
 
 
-	/**
-	 * Flag indicating whether the index query should be performed lean
-	 * @type {Boolean}
-	 * @default true
-	 */
-	lean: true,
+  /**
+   * Flag indicating whether the index query should be performed lean
+   * @type {Boolean}
+   * @default true
+   */
+  lean: true,
 
-	/**
-	 * Array of fields passed to the select statement of the index query.
-	 * The array is joined with a whitespace before passed to the select
-	 * method of the controller model.
-	 * @type {Array}
-	 * @default The empty Array
-	 */
-	select: [],
+  /**
+   * Array of fields passed to the select statement of the index query.
+   * The array is joined with a whitespace before passed to the select
+   * method of the controller model.
+   * @type {Array}
+   * @default The empty Array
+   */
+  select: [],
 
-	/**
-	 * Array of fields that should be omitted from the query.
-	 * The property names are stripped from the query object.
-	 * @type {Array}
-	 * @default The empty Array
-	 */
-	omit: [],
+  /**
+   * Array of fields passed to the populate statement of the index query.
+   * The array is used for populate one by one
+   * Additional field methods {index: boolean, show: boolean} default true;
+   * method of the controller model.
+   * @type {Array}
+   * @default The empty Array
+   */
+  populations: [],
 
-	/**
-	 * Name of the property (maybe a virtual) that should be returned
-	 * (send as response) by the methods.
-	 * @type {String}
-	 * @default The empty String
-	 */
-	defaultReturn: '',
+  /**
+   * Array of fields that should be omitted from the query.
+   * The property names are stripped from the query object.
+   * @type {Array}
+   * @default The empty Array
+   */
+  omit: [],
 
-	/**
-	 * Get a list of documents. If a request query is passed it is used as the
-	 * query object for the find method.
-	 * @param {IncomingMessage} req - The request message object
-	 * @param {ServerResponse} res - The outgoing response object the result is set to
-	 * @returns {ServerResponse} Array of all documents for the {@link CrudController#model} model
-	 * or the empty Array if no documents have been found
-	 */
-	index: function (req, res) {
-		var query = req.query;
+  /**
+   * Name of the property (maybe a virtual) that should be returned
+   * (send as response) by the methods.
+   * @type {String}
+   * @default The empty String
+   */
+  defaultReturn: '',
 
-		if (this.omit.lenght) {
-			query = _.omit(query, this.omit);
-		}
+  /**
+   * Get a list of documents. If a request query is passed it is used as the
+   * query object for the find method.
+   * @param {IncomingMessage} req - The request message object
+   * @param {ServerResponse} res - The outgoing response object the result is set to
+   * @returns {ServerResponse} Array of all documents for the {@link CrudController#model} model
+   * or the empty Array if no documents have been found
+   */
+  index: function (req, res) {
+    var query = req.query;
 
-		query = this.model.find(query);
+    if (this.omit.length) {
+      query = _.omit(query, this.omit);
+    }
 
-		if (this.lean) {
-			query.lean();
-		}
+    query = this.model.find(query);
 
-		if (this.select.length) {
-			query.select(this.select.join(' '));
-		}
+    if (this.lean) {
+      query.lean();
+    }
 
-		query.exec(function (err, documents) {
-			if (err) {
-				return res.handleError(err);
-			}
-			return res.ok(documents);
-		});
-	},
+    if (this.select.length) {
+      query.select(this.select.join(' '));
+    }
 
-	/**
-	 * Get a single document. The requested document id is read from the request parameters
-	 * by using the {@link CrudController#idName} property.
-	 * @param {IncomingMessage} req - The request message object the id is read from
-	 * @param {ServerResponse} res - The outgoing response object
-	 * @returns {ServerResponse} A single document or NOT FOUND if no document has been found
-	 */
-	show: function (req, res) {
-		var self = this;
+    this.populateQuery(query, this.filterPopulations('index'));
 
-		this.model.findOne({'_id': req.params[this.idName]}, function (err, document) {
-			if (err) {
-				return res.handleError(err);
-			}
+    query.exec(function (err, documents) {
+      if (err) {
+        return res.handleError(err);
+      }
+      return res.ok(documents);
+    });
+  },
 
-			if (!document) {
-				return res.notFound();
-			}
+  /**
+   * Get a single document. The requested document id is read from the request parameters
+   * by using the {@link CrudController#idName} property.
+   * @param {IncomingMessage} req - The request message object the id is read from
+   * @param {ServerResponse} res - The outgoing response object
+   * @returns {ServerResponse} A single document or NOT FOUND if no document has been found
+   */
+  show: function (req, res) {
+    var self = this;
 
-			return res.ok(self.getResponseObject(document));
-		});
-	},
+    var query = this.model.findOne({'_id': req.params[this.idName]});
 
-	/**
-	 * Creates a new document in the DB.
-	 * @param {IncomingMessage} req - The request message object containing the json document data
-	 * @param {ServerResponse} res - The outgoing response object
-	 * @returns {ServerResponse} The response status 201 CREATED or an error response
-	 */
-	create: function (req, res) {
-		var self = this;
+    this.populateQuery(query, this.filterPopulations('show'));
 
-		this.model.create(req.body, function (err, document) {
-			if (err) {
-				return res.handleError(err);
-			}
+    query.exec(function (err, document) {
+      if (err) {
+        return res.handleError(err);
+      }
 
-			return res.created(self.getResponseObject(document));
-		});
-	},
+      if (!document) {
+        return res.notFound();
+      }
 
-	/**
-	 * Updates an existing document in the DB. The requested document id is read from the
-	 * request parameters by using the {@link CrudController#idName} property.
-	 * @param {IncomingMessage} req - The request message object the id is read from
-	 * @param {ServerResponse} res - The outgoing response object
-	 * @returns {ServerResponse} The updated document or NOT FOUND if no document has been found
-	 */
-	update: function (req, res) {
-		if (req.body._id) {
-			delete req.body._id;
-		}
+      return res.ok(self.getResponseObject(document));
+    });
+  },
 
-		var self = this;
-		var bodyData = _.omit(req.body, this.omit);
+  /**
+   * Creates a new document in the DB.
+   * @param {IncomingMessage} req - The request message object containing the json document data
+   * @param {ServerResponse} res - The outgoing response object
+   * @returns {ServerResponse} The response status 201 CREATED or an error response
+   */
+  create: function (req, res) {
+    var self = this;
 
-		this.model.findOne({'_id': req.params[this.idName]}, function (err, document) {
-			if (err) {
-				return res.handleError(err);
-			}
+    var populations = self.filterPopulations('create');
 
-			if (!document) {
-				return res.notFound();
-			}
+    this.model.populate(req.body, populations, function (err, document) {
+      if (err) {
+        return res.handleError(err);
+      }
 
-			var updated = _.merge(document, bodyData);
-			updated.save(function (err) {
-				if (err) {
-					return res.handleError(err);
-				}
+      self.model.create(document, function (err) {
+        if (err) {
+          return res.handleError(err);
+        }
 
-				return res.ok(self.getResponseObject(document));
-			});
-		});
-	},
+        return res.created(self.getResponseObject(document));
+      })
+    });
+  },
 
-	/**
-	 * Deletes a document from the DB. The requested document id is read from the
-	 * request parameters by using the {@link CrudController#idName} property.
-	 * @param {IncomingMessage} req - The request message object the id is read from
-	 * @param {ServerResponse} res - The outgoing response object
-	 * @returns {ServerResponse} A NO CONTENT response or NOT FOUND if no document has
-	 * been found for the given id
-	 */
-	destroy: function (req, res) {
-		this.model.findOne({'_id': req.params[this.idName]}, function (err, document) {
-			if (err) {
-				return res.handleError(err);
-			}
+  /**
+   * Updates an existing document in the DB. The requested document id is read from the
+   * request parameters by using the {@link CrudController#idName} property.
+   * @param {IncomingMessage} req - The request message object the id is read from
+   * @param {ServerResponse} res - The outgoing response object
+   * @returns {ServerResponse} The updated document or NOT FOUND if no document has been found
+   */
+  update: function (req, res) {
+    if (req.body._id) {
+      delete req.body._id;
+    }
 
-			if (!document) {
-				return res.notFound();
-			}
+    var self = this;
+    var bodyData = _.omit(req.body, this.omit);
 
-			document.remove(function (err) {
-				if (err) {
-					return res.handleError(err);
-				}
+    this.model.findOne({'_id': req.params[this.idName]}, function (err, document) {
+      if (err) {
+        return res.handleError(err);
+      }
 
-				return res.noContent();
-			});
-		});
-	},
+      if (!document) {
+        return res.notFound();
+      }
 
-	getResponseObject: function (obj) {
-		return this.defaultReturn && obj[this.defaultReturn] || obj;
-	}
+      var updated = _.merge(document, bodyData);
+      var populations = self.filterPopulations('update');
+
+      updated.populate(populations, function(err, document) {
+        if (err) {
+          return res.handleError(err);
+        }
+
+        document.save(function (err) {
+          if (err) {
+            return res.handleError(err);
+          }
+
+          return res.ok(self.getResponseObject(document));
+        });
+      });
+
+    });
+  },
+
+  /**
+   * Deletes a document from the DB. The requested document id is read from the
+   * request parameters by using the {@link CrudController#idName} property.
+   * @param {IncomingMessage} req - The request message object the id is read from
+   * @param {ServerResponse} res - The outgoing response object
+   * @returns {ServerResponse} A NO CONTENT response or NOT FOUND if no document has
+   * been found for the given id
+   */
+  destroy: function (req, res) {
+    this.model.findOne({'_id': req.params[this.idName]}, function (err, document) {
+      if (err) {
+        return res.handleError(err);
+      }
+
+      if (!document) {
+        return res.notFound();
+      }
+
+      document.remove(function (err) {
+        if (err) {
+          return res.handleError(err);
+        }
+
+        return res.noContent();
+      });
+    });
+  },
+
+  getResponseObject: function (obj) {
+    return this.defaultReturn && obj[this.defaultReturn] || obj;
+  },
+
+  filterPopulations: function (method) {
+    return _.filter(this.populations, function(population) {
+      return typeof population === 'string' || !population.methods || population.methods[method]
+    });
+  },
+
+  populateQuery: function(query, populations) {
+    _.forEach(populations, function() {
+      query.populate(populations);
+    });
+  }
 };
 
 CrudController.prototype = _.create(BaseController.prototype, CrudController.prototype);

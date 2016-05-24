@@ -1,19 +1,19 @@
 'use strict';
 
-describe('Directive: <%= classedName %>', function () {
+describe('Directive: <%= cameledName %>', function () {
 
-	// load the directive's module
-	beforeEach(module('<%= scriptAppName %>'));
+  // load the directive's module
+  beforeEach(module('<%= scriptAppName %>'));
 
-	var element, scope;
+  var element, scope;
 
-	beforeEach(inject(function ($rootScope, $compile) {
-		scope = $rootScope.$new();
-		element = angular.element('<<%= _.dasherize(name) %>></<%= _.dasherize(name) %>>');
-		element = $compile(element)(scope);
-	}));
+  beforeEach(inject(function ($rootScope, $compile) {
+    scope = $rootScope.$new();
+    element = angular.element('<<%= _.dasherize(name) %>></<%= _.dasherize(name) %>>');
+    element = $compile(element)(scope);
+  }));
 
-	it('should set the element text', function () {
-		element.text().should.equal('this is the <%= classedName %> directive');
-	});
+  it('should set the element text', function () {
+    element.text().should.equal('this is the <%= cameledName %> directive');
+  });
 });

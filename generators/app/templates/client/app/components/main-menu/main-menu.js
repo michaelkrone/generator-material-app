@@ -11,11 +11,11 @@
  */
 
 (function () {
-	'use strict';
+  'use strict';
 
-	angular.module('<%= scriptAppName %>.mainMenu', [
-		'<%= scriptAppName %>.lodash'<% if (features.auth) { %>,
-		'<%= scriptAppName %>.auth'<% } %>
-	])
+  angular.module('<%= scriptAppName %>.mainMenu', [
+    '<%= scriptAppName %>.lodash'<% if (features.auth) { %>,
+    '<%= scriptAppName %>.auth'<% } %>
+  ])
 
 })();

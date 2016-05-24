@@ -1,4 +1,6 @@
-<div class="<%= name %>-view">
-	This is the <%= name %> view.
-	My controller can do something: "{{ vm.doSomething() }}"
-</div>
+<% if(autoRoute) { %><section id="<%= dashedName %>-content" layout="column" layout-fill flex>
+  <div ui-view layout="row" layout-fill flex></div>
+</section><% } else {%><div id="<%= dashedName %>-content">
+  This is the <%= name %> view.
+  My controller can do something: "{{ vm.doSomething() }}"
+</div><% }%>

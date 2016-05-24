@@ -20,9 +20,9 @@ var createdModifiedPlugin = require('mongoose-createdmodified').createdModifiedP
  * @property {Boolean} active - Flag indicating this <%= name %> is active
  */
 var <%= modelName %>Definition = {
-	name: {type: String, required: true},
-	info: String,
-	active: Boolean
+  name: {type: String, required: true},
+  info: String,
+  active: Boolean
 };
 
 /**
@@ -37,16 +37,16 @@ var <%= modelName %>Schema = new mongoose.Schema(<%= modelName %>Definition);<% 
 <%= modelName %>Schema.plugin(createdModifiedPlugin);
 
 <%= modelName %>Schema.plugin(requestContext, {
-	propertyName: 'modifiedBy',
-	contextPath: 'request:acl.user.name'
+  propertyName: 'modifiedBy',
+  contextPath: 'request:acl.user.name'
 });<% } %>
 
 /**
  * Validations
  */
 <%= modelName %>Schema
-	.path('name')
-	.validate(validateUniqueName, 'The specified name is already in use.');
+  .path('name')
+  .validate(validateUniqueName, 'The specified name is already in use.');
 
 /**
  *  The registered mongoose model instance of the <%= modelName %> model
@@ -56,25 +56,25 @@ var <%= modelName %> = mongoose.model('<%= modelName %>', <%= modelName %>Schema
 
 module.exports = {
 
-	/**
-	 * The <%= modelName %> model definition object
-	 * @type {Object}
-	 * @see <%= name %>:<%= modelName %>Model~<%= modelName %>Definition
-	 */
-	definition: <%= modelName %>Definition,
+  /**
+   * The <%= modelName %> model definition object
+   * @type {Object}
+   * @see <%= name %>:<%= modelName %>Model~<%= modelName %>Definition
+   */
+  definition: <%= modelName %>Definition,
 
-	/**
-	 * The <%= modelName %> model schema
-	 * @type {MongooseSchema}
-	 * @see <%= name %>:model~<%= modelName %>Schema
-	 */
-	schema: <%= modelName %>Schema,
+  /**
+   * The <%= modelName %> model schema
+   * @type {MongooseSchema}
+   * @see <%= name %>:model~<%= modelName %>Schema
+   */
+  schema: <%= modelName %>Schema,
 
-	/**
-	 * The <%= modelName %> model instance
-	 * @type {<%= name %>:model~<%= modelName %>}
-	 */
-	model: <%= modelName %>
+  /**
+   * The <%= modelName %> model instance
+   * @type {<%= name %>:model~<%= modelName %>}
+   */
+  model: <%= modelName %>
 
 };
 
@@ -86,20 +86,20 @@ module.exports = {
  * @param {Function} respond - The callback function
  */
 function validateUniqueName(value, respond) {
-	// jshint validthis: true
-	var self = this;
+  // jshint validthis: true
+  var self = this;
 
-	// check for uniqueness of user name
-	this.constructor.findOne({name: value}, function (err, <%= name %>) {
-		if (err) {
-			throw err;
-		}
+  // check for uniqueness of user name
+  this.constructor.findOne({name: value}, function (err, <%= name %>) {
+    if (err) {
+      throw err;
+    }
 
-		if (<%= name %>) {
-			// the searched name is my name or a duplicate
-			return respond(self.id === <%= name %>.id);
-		}
+    if (<%= name %>) {
+      // the searched name is my name or a duplicate
+      return respond(self.id === <%= name %>.id);
+    }
 
-		respond(true);
-	});
+    respond(true);
+  });
 }

@@ -20,25 +20,25 @@ module.exports = connection;
 // reconnect if connection is disconnected or disconnecting
 // throw any errors that occur while reconnecting
 if (connection.state === 0 || connection.state === 3) {
-	connection.open(function connectionReconnect(err) {
-		if (err) {
-			console.error('Error while reinitializing the database connection: %s', err);
-			throw err; // throw error to stop application launch
-		}
-		console.log('Database Connection reopened');
-	});
+  connection.open(function connectionReconnect(err) {
+    if (err) {
+      console.error('Error while reinitializing the database connection: %s', err);
+      throw err; // throw error to stop application launch
+    }
+    console.log('Database Connection reopened');
+  });
 }
 
 // register global database error handler
 mongoose.connection.on('error', function connectionError(err) {
-	console.error('Database Error: ', err);
+  console.error('Database Error: ', err);
 });
 
 // register the connection handler once only
 mongoose.connection.once('open', function connectionOpen() {
-	console.log('Database connection open');
-	// Populate DB with sample data
-	if (config.seedDB) {
-		require('./seed');
-	}
+  console.log('Database connection open');
+  // Populate DB with sample data
+  if (config.seedDB) {
+    require('./seed');
+  }
 });

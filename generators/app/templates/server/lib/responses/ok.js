@@ -6,47 +6,47 @@
 
 module.exports = {
 
-	/**
-	 * Handles default responses
-	 * @type {function}
-	 * @see responses:ok~sendOk
-	 */
-	ok: sendOk,
+  /**
+   * Handles default responses
+   * @type {function}
+   * @see responses:ok~sendOk
+   */
+  ok: sendOk,
 
-	/**
-	 * Handles default responses
-	 * @type {function}
-	 * @see responses:ok~sendOk
-	 */
-	200: sendOk,
+  /**
+   * Handles default responses
+   * @type {function}
+   * @see responses:ok~sendOk
+   */
+  200: sendOk,
 
-	/**
-	 * Handles created responses
-	 * @type {function}
-	 * @see responses:ok~created
-	 */
-	created: created,
+  /**
+   * Handles created responses
+   * @type {function}
+   * @see responses:ok~created
+   */
+  created: created,
 
-	/**
-	 * Handles created responses
-	 * @type {function}
-	 * @see responses:ok~created
-	 */
-	201: created,
+  /**
+   * Handles created responses
+   * @type {function}
+   * @see responses:ok~created
+   */
+  201: created,
 
-	/**
-	 * Handles content less responses
-	 * @type {function}
-	 * @see responses:ok~noContent
-	 */
-	noContent: noContent,
+  /**
+   * Handles content less responses
+   * @type {function}
+   * @see responses:ok~noContent
+   */
+  noContent: noContent,
 
-	/**
-	 * Handles content less responses
-	 * @type {function}
-	 * @see responses:ok~noContent
-	 */
-	204: noContent
+  /**
+   * Handles content less responses
+   * @type {function}
+   * @see responses:ok~noContent
+   */
+  204: noContent
 };
 
 // 200
@@ -58,8 +58,8 @@ module.exports = {
  * @return A Response with status 200 set
  */
 function sendOk(data, options) {
-	// jshint validthis: true
-	return this.res.status(200).sendData(data, options);
+  // jshint validthis: true
+  return this.res.status(200).sendData(data, options);
 }
 
 /**
@@ -69,8 +69,8 @@ function sendOk(data, options) {
  * @return A Response with status 201 set
  */
 function created(data, options) {
-	// jshint validthis: true
-	return this.res.status(201).sendData(data, options);
+  // jshint validthis: true
+  return this.res.status(201).sendData(data, options);
 }
 
 /**
@@ -80,6 +80,6 @@ function created(data, options) {
  * @return A Response with status 204 set
  */
 function noContent(data, options) {
-	// jshint validthis: true
-	return this.res.status(204).sendData(data, options);
+  // jshint validthis: true
+  return this.res.status(204).sendData(data, options);
 }

@@ -1,18 +1,18 @@
-<section id="<%= name %>-list-content" layout="row" layout-fill flex>
+<section id="<%= dashedName %>-list-content" layout="row" layout-fill flex>
 
-    <div ui-view="content" layout="column" flex></div>
+  <div ui-view="content" layout="column" flex></div>
 
-    <md-content
-            ui-view="detail"
-            toggle-component
-            id="<%= name %>-detail-content"
-            md-component-id="<%= name %>.detailView"
-            layout="column"
-            flex-sm="100"
-            flex-md="50"
-            flex-gt-md="33"
-            class="md-whiteframe-z1">
-    </md-content>
+  <md-content
+    ui-view="detail"
+    toggle-component
+    id="<%= dashedName %>-detail-content"
+    md-component-id="<%= moduleName %>.detailView"
+    layout="column"
+    flex-sm="100"
+    flex-md="50"
+    flex-gt-md="33"
+    class="md-whiteframe-z1">
+  </md-content>
 
 </section>
 

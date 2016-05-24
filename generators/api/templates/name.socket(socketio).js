@@ -22,13 +22,13 @@ exports.register = register<%= modelName %>Sockets;
  * @param {socket.io} socket - The socket object to register the <%= modelName %> model events on
  */
 function register<%= modelName %>Sockets(socket) {
-	<%= modelName %>.schema.post('save', function (doc) {
-		onSave(socket, doc);
-	});
+  <%= modelName %>.schema.post('save', function (doc) {
+    onSave(socket, doc);
+  });
 
-	<%= modelName %>.schema.post('remove', function (doc) {
-		onRemove(socket, doc);
-	});
+  <%= modelName %>.schema.post('remove', function (doc) {
+    onRemove(socket, doc);
+  });
 }
 
 /**
@@ -38,7 +38,7 @@ function register<%= modelName %>Sockets(socket) {
  * @param {function} cb - The callback function
  */
 function onSave(socket, doc, cb) {
-	socket.emit('<%= name %>:save', doc);
+  socket.emit('<%= name %>:save', doc);
 }
 
 /**
@@ -48,5 +48,5 @@ function onSave(socket, doc, cb) {
  * @param {function} cb - The callback function
  */
 function onRemove(socket, doc, cb) {
-	socket.emit('<%= name %>:remove', doc);
+  socket.emit('<%= name %>:remove', doc);
 }

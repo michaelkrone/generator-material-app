@@ -1,104 +1,115 @@
 (function () {
-	'use strict';
+  'use strict';
 
-	/**
-	 * Introduce the <%= scriptAppName %>.<%= _.slugify(name) %>.service module.
-	 * Register the <%= name %> resource as <%= classedName %>, register the
-	 * service as <%= classedName %>Service.
-	 *
-	 * @requires {<%= scriptAppName %>.resource}
-	 */
-	angular
-		.module('<%= scriptAppName %>.<%= _.slugify(name) %>.service', ['<%= scriptAppName %>.resource'])
-		.factory('<%= classedName %>', <%= classedName %>)
-		.service('<%= classedName %>Service', <%= classedName %>Service);
+  /**
+   * Introduce the <%= scriptAppName %>.<%= moduleName %>.service module.
+   * Register the <%= name %> resource as <%= classedName %>, register the
+   * service as <%= classedName %>Service.
+   *
+   * @requires {<%= scriptAppName %>.resource}
+   */
+  angular
+    .module('<%= scriptAppName %>.<%= moduleName %>.service', ['<%= scriptAppName %>.resource'])
+    .factory('<%= classedName %>', <%= classedName %>)
+    .service('<%= classedName %>Service', <%= classedName %>Service)
+    .factory('<%= classedName %>Definition', <%= classedName %>Definition);
 
-	// add <%= classedName %> dependencies to inject
-	<%= classedName %>.$inject = ['Resource'];
+  // add <%= classedName %> dependencies to inject
+  <%= classedName %>.$inject = ['Resource'];
 
-	/**
-	 * <%= classedName %> resource constructor
-	 */
-	function <%= classedName %>($resource) {
-		// factory members
-		var apiURL = '<%= apiURL%>';
-		// public API
-		return $resource(apiURL + '/:id/:controller');
-	}
+  /**
+   * <%= classedName %> resource constructor
+   */
+  function <%= classedName %>($resource) {
+    // factory members
+    var apiURL = '<%= apiURL%>';
+    // public API
+    return $resource(apiURL + '/:id/:controller');
+  }
 
-	// add <%= classedName %>Service dependencies to inject
-	<%= classedName %>Service.$inject = ['<%= classedName %>'];
+  // add <%= classedName %>Service dependencies to inject
+  <%= classedName %>Service.$inject = ['<%= classedName %>'];
 
-	/**
-	 * <%= classedName %>Service constructor
-	 * AngularJS will instantiate a singleton by calling "new" on this function
-	 *
-	 * @param {$resource} <%= classedName %> The resource provided by <%= scriptAppName %>.<%= _.slugify(name) %>.resource
-	 * @returns {Object} The service definition for the <%= classedName %>Service service
-	 */
-	function <%= classedName %>Service(<%= classedName %>) {
+  /**
+   * <%= classedName %>Service constructor
+   * AngularJS will instantiate a singleton by calling "new" on this function
+   *
+   * @param {$resource} <%= classedName %> The resource provided by <%= scriptAppName %>.<%= moduleName %>.resource
+   * @returns {Object} The service definition for the <%= classedName %>Service service
+   */
+  function <%= classedName %>Service(<%= classedName %>) {
 
-		return {
-			create: create,
-			update: update,
-			remove: remove
-		};
+    return {
+      create: create,
+      update: update,
+      remove: remove
+    };
 
-		/**
-		 * Save a new <%= name %>
-		 *
-		 * @param  {Object}   <%= name %> - <%= name %>Data
-		 * @param  {Function} callback - optional
-		 * @return {Promise}
-		 */
-		function create(<%= name %>, callback) {
-			var cb = callback || angular.noop;
+    /**
+     * Save a new <%= cameledName %>
+     *
+     * @param  {Object}   <%= cameledName %> - <%= cameledName %>Data
+     * @param  {Function} callback - optional
+     * @return {Promise}
+     */
+    function create(<%= cameledName %>, callback) {
+      var cb = callback || angular.noop;
 
-			return <%= classedName %>.create(<%= name %>,
-				function (<%= name %>) {
-					return cb(<%= name %>);
-				},
-				function (err) {
-					return cb(err);
-				}).$promise;
-		}
+      return <%= classedName %>.create(<%= cameledName %>,
+        function (<%= cameledName %>) {
+          return cb(<%= cameledName %>);
+        },
+        function (err) {
+          return cb(err);
+        }).$promise;
+    }
 
-		/**
-		 * Remove a <%= name %>
-		 *
-		 * @param  {Object}   <%= name %> - <%= name %>Data
-		 * @param  {Function} callback - optional
-		 * @return {Promise}
-		 */
-		function remove(<%= name %>, callback) {
-			var cb = callback || angular.noop;
+    /**
+     * Remove a <%= cameledName %>
+     *
+     * @param  {Object}   <%= cameledName %> - <%= cameledName %>Data
+     * @param  {Function} callback - optional
+     * @return {Promise}
+     */
+    function remove(<%= cameledName %>, callback) {
+      var cb = callback || angular.noop;
 
-			return <%= classedName %>.remove({id: <%= name %>._id},
-				function (<%= name %>) {
-					return cb(<%= name %>);
-				},
-				function (err) {
-					return cb(err);
-				}).$promise;
-		}
+      return <%= classedName %>.remove({id: <%= cameledName %>._id},
+        function (<%= cameledName %>) {
+          return cb(<%= cameledName %>);
+        },
+        function (err) {
+          return cb(err);
+        }).$promise;
+    }
 
-		/**
-		 * Create a new <%= name %>
-		 *
-		 * @param  {Object}   <%= name %> - <%= name %>Data
-		 * @param  {Function} callback - optional
-		 * @return {Promise}
-		 */
-		function update(<%= name %>, callback) {
-			var cb = callback || angular.noop;
+    /**
+     * Create a new <%= cameledName %>
+     *
+     * @param  {Object}   <%= cameledName %> - <%= cameledName %>Data
+     * @param  {Function} callback - optional
+     * @return {Promise}
+     */
+    function update(<%= cameledName %>, callback) {
+      var cb = callback || angular.noop;
 
-			return <%= classedName %>.update(<%= name %>,
-				function (<%= name %>) {
-					return cb(<%= name %>);
-				},
-				function (err) {
-					return cb(err);
-				}).$promise;
-		}
-	};
+      return <%= classedName %>.update(<%= cameledName %>,
+        function (<%= cameledName %>) {
+          return cb(<%= cameledName %>);
+        },
+        function (err) {
+          return cb(err);
+        }).$promise;
+    }
+  };
+
+  // add <%= classedName %>Definition dependencies to inject
+  <%= classedName %>Definition.$inject = ['ModelDefinitions'];
+  function <%= classedName %>Definition (ModelDefinitions) {
+    return ModelDefinitions({
+      name: {type: 'text', required: true},
+       info: 'text',
+      // active: 'boolean'
+    });
+  }
 })();

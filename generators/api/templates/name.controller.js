@@ -27,26 +27,29 @@ var <%= modelName %> = require('./<%= name %>.model').model;
  * @see <%= name %>:model~<%= modelName %>
  */
 function <%= modelName %>Controller(router) {
-	ParamController.call(this, <%= modelName %>,  router);
+  ParamController.call(this, <%= modelName %>,  router);
 
-	// modify select only properties
-	// this.select = ['-__v'];
+  // modify select only properties
+  // this.select = ['-__v'];
 
-	// omit properties on update
-	// this.omit = ['hashedPassword'];
+  // omit properties on update
+  // this.omit = ['hashedPassword'];
 
-	// property to return (maybe a virtual getter of the model)
-	// this.defaultReturn = 'profile';
+  // populate refs on get
+  // this.populations = [];
+
+  // property to return (maybe a virtual getter of the model)
+  // this.defaultReturn = 'profile';
 }
 
 // define properties for the <%= modelName %>Controller here
 <%= modelName %>Controller.prototype = {
 
-	/**
-	 * Set our own constructor property for instanceof checks
-	 * @private
-	 */
-	constructor: <%= modelName %>Controller
+  /**
+   * Set our own constructor property for instanceof checks
+   * @private
+   */
+  constructor: <%= modelName %>Controller
 
 };
 

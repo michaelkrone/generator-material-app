@@ -13,10 +13,10 @@ var conf = require('./gulp/config');
 // all known options that can be passed by --option
 // and their defaults
 var knownOptions = {
-	string: ['env'],
-	default: {
-		env: process.env.NODE_ENV || 'test'
-	}
+  string: ['env'],
+  default: {
+    env: process.env.NODE_ENV || 'test'
+  }
 };
 
 // parse optional arguments and set environment variables
@@ -35,7 +35,7 @@ requireDir('./gulp/tasks');
  * Removes the dist and build directories
  */
 gulp.task('clean', function () {
-	return del([conf.dirs.dist, conf.dirs.build]);
+  return del([conf.dirs.dist, conf.dirs.build]);
 });
 
 /**

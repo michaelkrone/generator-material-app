@@ -15,26 +15,26 @@ var roles = config.userRoles;
 
 // export the user role utility methods
 module.exports = {
-	/**
-	 * Return the name of the highest role
-	 * @type {function}
-	 * @see auth:roles~getMaxRole
-	 */
-	getMaxRole: getMaxRole,
+  /**
+   * Return the name of the highest role
+   * @type {function}
+   * @see auth:roles~getMaxRole
+   */
+  getMaxRole: getMaxRole,
 
-	/**
-	 * Check role access
-	 * @type {function}
-	 * @see auth:roles~hasRole
-	 */
-	hasRole: hasRole,
+  /**
+   * Check role access
+   * @type {function}
+   * @see auth:roles~hasRole
+   */
+  hasRole: hasRole,
 
-	/**
-	 * Check root access
-	 * @type {function}
-	 * @see auth:roles~isRoot
-	 */
-	isRoot: isRoot
+  /**
+   * Check root access
+   * @type {function}
+   * @see auth:roles~isRoot
+   */
+  isRoot: isRoot
 };
 
 
@@ -43,7 +43,7 @@ module.exports = {
  * @returns {String} The name of the role which is the last element in the user role array.
  */
 function getMaxRole() {
-	return roles[roles.length - 1];
+  return roles[roles.length - 1];
 }
 
 /**
@@ -52,7 +52,7 @@ function getMaxRole() {
  * @param {String} checkRole - The role to check for
  */
 function hasRole(role, checkRole) {
-	return roles.indexOf(role) >= roles.indexOf(checkRole);
+  return roles.indexOf(role) >= roles.indexOf(checkRole);
 }
 
 /**
@@ -61,5 +61,5 @@ function hasRole(role, checkRole) {
  * @param {String} role - The role of the user who claims to be root
  */
 function isRoot(role) {
-	return roles.indexOf(role) === roles.length - 1;
+  return roles.indexOf(role) === roles.length - 1;
 }

@@ -1,41 +1,41 @@
 
 md-input-container {
 
-	md-select {
-		-webkit-flex: 1;
-		-ms-flex: 1;
-		flex: 1;
-		-webkit-order: 2;
-		-ms-flex-order: 2;
-		order: 2;
-		display: block;
-		background: none;
-		padding: 12px 0 0 0;
-		//		border-bottom: 1px solid lightgray;
-		line-height: 26px;
-		-ms-flex-preferred-size: 26px;
-		border-radius: 0;
-		margin: 0;
+  md-select {
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    -webkit-order: 2;
+    -ms-flex-order: 2;
+    order: 2;
+    display: block;
+    background: none;
+    padding: 12px 0 0 0;
+    //    border-bottom: 1px solid lightgray;
+    line-height: 26px;
+    -ms-flex-preferred-size: 26px;
+    border-radius: 0;
+    margin: 0;
 
-		.md-select-label {
-			font-size: 14px;
-		}
+    .md-select-label {
+      font-size: 14px;
+    }
 
-		.md-select-icon {
-			display: none;
-		}
-	}
+    .md-select-icon {
+      display: none;
+    }
+  }
 
-	&.md-input-has-value md-select {
-		padding: 1px 0px 0px 0px;
-		border-bottom: none;
+  &.md-input-has-value md-select {
+    padding: 1px 0px 0px 0px;
+    border-bottom: none;
 
-		.md-select-icon {
-			display: block;
-		}
-	}
+    .md-select-icon {
+      display: block;
+    }
+  }
 }
 
 .md-select-label {
-	font-size: 14px;
+  font-size: 14px;
 }

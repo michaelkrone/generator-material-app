@@ -120,10 +120,7 @@ CrudController.prototype = {
       query.select(this.select.join(' '));
     }
 
-    _.forEach(this.populations, function(population) {
-      if (population.methods && !population.methods.index) return;
-      query.populate(population);
-    });
+    this.populateQuery(query, this.filterPopulations('index'));
 
     query.exec(function (err, documents) {
       if (err) {
@@ -145,10 +142,7 @@ CrudController.prototype = {
 
     var query = this.model.findOne({'_id': req.params[this.idName]});
 
-    _.forEach(this.populations, function(population) {
-      if (population.methods && !population.methods.show) return;
-      query.populate(population);
-    });
+    this.populateQuery(query, this.filterPopulations('show'));
 
     query.exec(function (err, document) {
       if (err) {
@@ -177,7 +171,14 @@ CrudController.prototype = {
         return res.handleError(err);
       }
 
-      return res.created(self.getResponseObject(document));
+      var populations = self.filterPopulations('create');
+      document.populate(populations, function(err, document) {
+        if (err) {
+          return res.handleError(err);
+        }
+
+        return res.created(self.getResponseObject(document));
+      })
     });
   },
 
@@ -206,13 +207,22 @@ CrudController.prototype = {
       }
 
       var updated = _.merge(document, bodyData);
-      updated.save(function (err) {
+      var populations = self.filterPopulations('update');
+
+      updated.populate(populations, function(err, document) {
         if (err) {
           return res.handleError(err);
         }
 
-        return res.ok(self.getResponseObject(document));
+        document.save(function (err) {
+          if (err) {
+            return res.handleError(err);
+          }
+
+          return res.ok(self.getResponseObject(document));
+        });
       });
+
     });
   },
 
@@ -246,6 +256,18 @@ CrudController.prototype = {
 
   getResponseObject: function (obj) {
     return this.defaultReturn && obj[this.defaultReturn] || obj;
+  },
+
+  filterPopulations: function (method) {
+    return _.filter(this.populations, function(population) {
+      return typeof population === 'string' || !population.methods || population.methods[method]
+    });
+  },
+
+  populateQuery: function(query, populations) {
+    _.forEach(populations, function() {
+      query.populate(populations);
+    });
   }
 };
 

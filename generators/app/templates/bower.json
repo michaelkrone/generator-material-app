@@ -25,5 +25,10 @@
   "resolutions": {
     "angular": ">=1.4.*",
     "angular-animate": ">=1.4.*"
+  },
+	"overrides": {
+    "material-design-icons": {
+      "main": []
+    }
   }
 }

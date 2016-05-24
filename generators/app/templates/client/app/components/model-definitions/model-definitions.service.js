@@ -117,7 +117,7 @@
     }
 
     function display(obj, propDef) {
-      if (!obj) return;
+      if (!obj || propDef.when && !propDef.when(obj)) return;
       var value = getDeepValue(obj, propDef.name);
       if (!value) return value;
       var displayValue = propDef.displayKey ? value[propDef.displayKey] : value;

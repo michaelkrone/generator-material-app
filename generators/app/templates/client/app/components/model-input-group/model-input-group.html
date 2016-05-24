@@ -1,4 +1,5 @@
 <model-input ng-repeat="fieldDef in fieldDefinitions"
+             ng-if="!fieldDef.when || fieldDef.when(ngModel)"
              ng-model="ngModel"
              field-definition="fieldDef"
              model-type="{{fieldDef.type}}"

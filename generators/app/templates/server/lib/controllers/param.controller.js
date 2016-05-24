@@ -83,10 +83,18 @@ ParamController.prototype = {
    * @returns {ServerResponse} A single document or NOT FOUND if no document has been found
    */
   show: function (req, res) {
-    if (req[this.paramName]) {
-      return res.ok(this.getResponseObject(req[this.paramName]));
+    if (!req[this.paramName]) {
+      return res.notFound();
     }
-    return res.notFound();
+
+    var populations = this.filterPopulations('show');
+    req[this.paramName].populate(populations, function(err, document) {
+      if (err) {
+        return res.handleError(err);
+      }
+
+      return res.ok(self.getResponseObject(document));
+    })
   },
 
   /**
@@ -97,6 +105,10 @@ ParamController.prototype = {
    * @returns {ServerResponse} The updated document or NOT FOUND if no document has been found
    */
   update: function (req, res) {
+    if (!req[this.paramName]) {
+      return res.notFound();
+    }
+
     if (req.body._id) {
       delete req.body._id;
     }
@@ -104,14 +116,20 @@ ParamController.prototype = {
     var self = this;
     var bodyData = _.omit(req.body, this.omit);
     var updated = _.merge(req[this.paramName], bodyData);
-
-    updated.save(function (err) {
+    var populations = this.filterPopulations('update');
+    updated.populate(populations, function(err, document) {
       if (err) {
         return res.handleError(err);
       }
 
-      req[self.paramName] = updated;
-      return res.ok(self.getResponseObject(updated));
+      document.save(function (err) {
+        if (err) {
+          return res.handleError(err);
+        }
+
+        req[self.paramName] = document;
+        return res.ok(self.getResponseObject(document));
+      });
     });
   },
 
@@ -123,6 +141,10 @@ ParamController.prototype = {
    * @returns {ServerResponse} The response status 201 CREATED or an error response
    */
   destroy: function (req, res) {
+    if (!req[this.paramName]) {
+      return res.notFound();
+    }
+
     var self = this;
 
     req[this.paramName].remove(function (err) {

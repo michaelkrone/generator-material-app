@@ -35,6 +35,9 @@ function <%= modelName %>Controller(router) {
   // omit properties on update
   // this.omit = ['hashedPassword'];
 
+  // populate refs on get
+  // this.populations = [];
+
   // property to return (maybe a virtual getter of the model)
   // this.defaultReturn = 'profile';
 }

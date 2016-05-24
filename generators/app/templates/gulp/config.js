@@ -5,7 +5,7 @@
 
 var path = require('path');
 var fs = require('fs');
-var rootPath = path.normalize(__dirname + '../../');
+var rootPath = path.normalize(__dirname + '/../');
 var bowerFiles = require('main-bower-files');
 
 bowerFiles = bowerFiles({bowerrc: '.bowerrc', bowerJson: 'bower.json'});

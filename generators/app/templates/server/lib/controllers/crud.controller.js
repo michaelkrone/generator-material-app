@@ -168,17 +168,18 @@ CrudController.prototype = {
 
     var populations = self.filterPopulations('create');
 
-    this.model.populate(req.body, populations, function (err, document) {
+    this.model.populate(req.body, populations, function (err, populated) {
       if (err) {
         return res.handleError(err);
       }
 
-      self.model.create(document, function (err) {
+      self.model.create(populated, function (err, document) {
         if (err) {
           return res.handleError(err);
         }
+        populated._id = document._id;
 
-        return res.created(self.getResponseObject(document));
+        return res.created(self.getResponseObject(populated));
       })
     });
   },

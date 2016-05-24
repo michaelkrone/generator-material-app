@@ -29,56 +29,56 @@
     "socket.io": "^1.0.6",
     "socket.io-client": "^1.0.6",
     "socketio-jwt": "^3.0.0"<%}%>
-    },
-    "scripts":{
-      "start": "node bin/server.js",
-      "postinstall": "node ./node_modules/protractor/bin/webdriver-manager update"
-    },
-    "repository": {
-      "type": "git",
-      "url": "git@localhost:apps/<%= _.slugify(appname) %>.git"
-    },
-    "keywords": [
-      "material design",
-      "<%= appname %>"
-    ],
-    "engines": {
-      "node": ">=0.10.33"
-    },
-    "author": "",
-    "devDependencies": {
-      "browser-sync": "^1.7.3",
-      "minimist": "^1.1.0",
-      "del": "^0.1.3",
-      "event-stream": "^3.1.7",
-      "gulp": "^3.8.9",
-      "gulp-angular-filesort": "^1.0.4",
-      "gulp-autoprefixer": "^2.0.0",
-      "gulp-concat": "^2.4.2",
-      "gulp-exit": "0.0.2",
-      "gulp-istanbul": "^0.3.1",
-      "gulp-jscs": "^1.2.1",
-      "gulp-jsdoc3": "^0.2.1",
-      "gulp-jshint": "^1.9.0",
-      "gulp-minify-css": "^0.3.11",
-      "gulp-mocha": "^1.1.1",
-      "gulp-nodemon": "^1.0.4",
-      "gulp-plato": "^1.0.1",
-      "gulp-ruby-sass": "^0.7.1",
-      "gulp-util": "^3.0.1",
-      "gulp-inject": "^1.0.2",
-      "gulp-if": "^1.2.5",
-      "gulp-protractor": "0.0.12",
-      "jshint-stylish": "^1.0.0",
-      "main-bower-files": "^2.4.1",
-      "mocha-jenkins-reporter": "^0.1.2",
-      "require-dir": "^0.1.0",
-      "should": "^3.3.2",
-      "supertest": "^0.13.0",
-      "karma": "^0.12.9",
-      "karma-mocha": "^0.1.10",
-      "karma-coverage": "^0.2.7",
-      "karma-chrome-launcher": "~0.1.3",
-      "karma-phantomjs-launcher": "^0.1.4"
-    }
+  },
+  "scripts":{
+    "start": "node bin/server.js",
+    "postinstall": "node ./node_modules/protractor/bin/webdriver-manager update"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@localhost:apps/<%= _.slugify(appname) %>.git"
+  },
+  "keywords": [
+    "material design",
+    "<%= appname %>"
+  ],
+  "engines": {
+    "node": ">=0.10.33"
+  },
+  "author": "",
+  "devDependencies": {
+    "browser-sync": "^1.7.3",
+    "minimist": "^1.1.0",
+    "del": "^0.1.3",
+    "event-stream": "^3.1.7",
+    "gulp": "^3.8.9",
+    "gulp-angular-filesort": "^1.0.4",
+    "gulp-autoprefixer": "^2.0.0",
+    "gulp-concat": "^2.4.2",
+    "gulp-exit": "0.0.2",
+    "gulp-istanbul": "^0.3.1",
+    "gulp-jscs": "^1.2.1",
+    "gulp-jsdoc3": "^0.2.1",
+    "gulp-jshint": "^1.9.0",
+    "gulp-minify-css": "^0.3.11",
+    "gulp-mocha": "^1.1.1",
+    "gulp-nodemon": "^1.0.4",
+    "gulp-plato": "^1.0.1",
+    "gulp-ruby-sass": "^0.7.1",
+    "gulp-util": "^3.0.1",
+    "gulp-inject": "^1.0.2",
+    "gulp-if": "^1.2.5",
+    "gulp-protractor": "0.0.12",
+    "jshint-stylish": "^1.0.0",
+    "main-bower-files": "^2.4.1",
+    "mocha-jenkins-reporter": "^0.1.2",
+    "require-dir": "^0.1.0",
+    "should": "^3.3.2",
+    "supertest": "^0.13.0",
+    "karma": "^0.12.9",
+    "karma-mocha": "^0.1.10",
+    "karma-coverage": "^0.2.7",
+    "karma-chrome-launcher": "~0.1.3",
+    "karma-phantomjs-launcher": "^0.1.4"
+  }
 }

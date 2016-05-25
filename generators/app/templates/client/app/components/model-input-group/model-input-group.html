@@ -1,6 +1,7 @@
 <model-input ng-repeat="fieldDef in fieldDefinitions"
-             ng-if="!fieldDef.when || fieldDef.when(ngModel)"
-             ng-model="ngModel"
+             ng-if="!fieldDef.when || fieldDef.when(flattenModel)"
+             ng-model="flattenModel"
+             ng-change="fieldChanged"
              field-definition="fieldDef"
              model-type="{{fieldDef.type}}"
              layout="row" layout-sm="column">

@@ -17,7 +17,8 @@
     var directive = {
       scope: {
         fieldDef: '=fieldDefinition',
-        ngModel: '=ngModel'
+        ngModel: '=ngModel',
+        ngChange: '=ngChange'
       },
       template: '<span ng-include="getContentUrl()"></span>',
       link: link,
@@ -32,6 +33,7 @@
       scope.getContentUrl = getContentUrl;
 
       switch (fieldDef.type) {
+        case 'select/resource':
         case 'select': {
           var originalValue = scope.ngModel[fieldDef.name];
           if (fieldDef.valueKey && originalValue && originalValue[fieldDef.valueKey]) {

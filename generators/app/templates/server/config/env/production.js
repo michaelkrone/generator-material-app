@@ -1,6 +1,8 @@
 'use strict';
 
 process.env.DATABASE_NAME = process.env.DATABASE_NAME || '<%= appname %>';
+process.env.MONGO_URI = process.env.MONGO_URI ||
+  ('mongodb://localhost/' + process.env.DATABASE_NAME);
 
 module.exports = {
 
@@ -11,7 +13,8 @@ module.exports = {
   publicDir: 'client',
 
   mongo: {
-    uri: 'mongodb://localhost/' + process.env.DATABASE_NAME
+    uri: process.env.MONGO_URI,
+    options: process.env.MONGO_OPTIONS && JSON.parse(process.env.MONGO_OPTIONS)
   },
 
   seedDB: true

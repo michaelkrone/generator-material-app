@@ -1,3 +1,9 @@
 // @import 'common';
 // @import 'forms';
 // @import 'sections';
+
+@media screen and (max-width: 1200px) {
+  .hide-in-narrow {
+    display: none;
+  }
+}

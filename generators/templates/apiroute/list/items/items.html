@@ -26,14 +26,13 @@
 
     <md-item class="list-head" hide-sm>
 
-      <md-item-content>
-        <div ng-repeat="propDef in index.<%= cameledName %>Definition" class="md-tile-content" flex="66">
-          <h4>{{::propDef.desc}}</h4>
-        </div>
+      <model-view-group definitions="index.<%= cameledName %>Definition"
+                        type="items-header"
+                        narrow-mode="index.inDetailState">
         <div class="md-tile-content" flex hide show-gt-md>
-            <h4>Active</h4>
+          <h4>Active</h4>
         </div>
-      </md-item-content>
+      </model-view-group>
 
       <md-divider md-inset></md-divider>
 
@@ -43,24 +42,18 @@
         ng-click="items.showInDetails(<%= cameledName %>)"
         ng-class="{'selected': items.isSelected(<%= cameledName %>)}">
 
-      <md-item-content>
-
-        <div class="md-tile-left">
-          <list-image string="{{<%= cameledName %>.name}}"></list-image>
-        </div>
-
-        <div ng-repeat="propDef in index.<%= cameledName %>Definition" class="md-tile-content" flex="66">
-          <h4>{{index.ModelDefinitions.display(<%= cameledName %>, propDef)}}</h4>
-        </div>
-
+      <model-view-group model="<%= cameledName %>"
+                        definitions="index.<%= cameledName %>Definition"
+                        icon-prop="name"
+                        type="items-content"
+                        narrow-mode="index.inDetailState">
         <div class="md-tile-content" flex hide show-gt-md>
           <h3>
             <md-icon ng-show="<%= cameledName %>.active" class="list-info" md-svg-icon="toggle:ic_check_box_24px"></md-icon>
             <md-icon ng-show="!<%= cameledName %>.active" class="list-info" md-svg-icon="toggle:ic_check_box_outline_blank_24px"></md-icon>
           </h3>
         </div>
-
-      </md-item-content>
+      </model-view-group>
 
       <md-divider md-inset></md-divider>
 

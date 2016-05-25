@@ -1,0 +1,9 @@
+<md-item-content>
+  <div ng-repeat="propDef in propDefinitions"
+       ng-if="showProp(propDef)"
+       class="md-tile-content"
+       ng-class="{'hide-in-narrow': propDef.displayPriority === 'low'}"
+       flex="{{propDef.flex || 66}}">
+    <h4>{{::propDef.desc}}</h4>
+  </div>
+</md-item-content>

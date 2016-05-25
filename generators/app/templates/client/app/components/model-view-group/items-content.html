@@ -1,0 +1,13 @@
+<md-item-content>
+  <div class="md-tile-left">
+    <list-image string="{{viewModel[iconProp || 'name']}}"></list-image>
+  </div>
+
+  <div ng-repeat="propDef in propDefinitions"
+       ng-if="showProp(propDef)"
+       class="md-tile-content"
+       ng-class="{'hide-in-narrow': propDef.displayPriority === 'low'}"
+       flex="{{propDef.flex || 66}}">
+    <h4>{{::display(viewModel, propDef)}}</h4>
+  </div>
+</md-item-content>

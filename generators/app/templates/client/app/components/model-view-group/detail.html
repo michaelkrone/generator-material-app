@@ -1,0 +1,9 @@
+<div>
+  <span ng-repeat="propDef in propDefinitions"
+        layout="row"
+        layout-sm="column"
+        class="detail-info">
+    <span flex="45">{{::propDef.desc}}</span>
+    <span flex>{{::display(viewModel, propDef)}}</span>
+  </span>
+</div>

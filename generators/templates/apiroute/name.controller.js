@@ -10,7 +10,7 @@
    * add <%= classedName %>Controller dependencies to inject
    * @param {Service} <%= modelName %>Definition The model definition of <%= modelName %> resource
    */
-  <%= classedName %>Controller.$inject = ['ModelDefinitions', '<%= modelName %>Definition'];
+  <%= classedName %>Controller.$inject = ['<%= modelName %>Definition', '$state', '$scope'];
 
   /**
    * <%= classedName %>Controller constructor. Main controller for the <%= scriptAppName %>.<%= moduleName %>
@@ -19,11 +19,15 @@
    * @param {$scope} $scope - The scope to listen for events<% if(features.socketio) { %>
    * @param {socket.io} socket - The socket to register updates<% } %>
    */
-  function <%= classedName %>Controller(ModelDefinitions, <%= modelName %>Definition) {
+  function <%= classedName %>Controller(<%= modelName %>Definition, $state, $scope) {
     var vm = this;
 
-    vm.ModelDefinitions = ModelDefinitions;
     vm.<%= cameledName %>Definition = <%= modelName %>Definition;
+    vm.inDetailState = $state.current.name.endsWith('.detail');
+
+    $scope.$on('$stateChangeStart', function updateInDetailState(event, toState) {
+      vm.inDetailState = toState.name.endsWith('.detail');
+    });
   }
 
 })();

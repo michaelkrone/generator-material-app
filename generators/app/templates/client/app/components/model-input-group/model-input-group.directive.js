@@ -18,7 +18,7 @@
       require: 'ngModel',
       scope: {
         fieldDefinitions: '=',
-        ngModel: '='
+        nestedModel: '=ngModel'
       },
       link: link,
       templateUrl: 'app/components/model-input-group/model-input-group.html',
@@ -28,31 +28,23 @@
     return directive;
 
     // directives link definition
-    function link(scope, element, attrs, ngModel) {
-      scope.deepFields = scope.fieldDefinitions.filter(function(fieldDef) {
-        return fieldDef.name.indexOf('.') !== -1;
-      });
+    function link(scope, element, attrs, ctrl) {
+      scope.fieldChanged = fieldChanged;
 
-      angular.forEach(scope.deepFields, function watchDeepFields (fieldDef) {
-        scope.$watch('ngModel[\'' + fieldDef.name + '\']', function (newValue, oldValue) {
-          if (newValue === oldValue) return;
-          setDeepFieldForViewValue(fieldDef, newValue);
+      ctrl.$render = function() {
+        if (!ctrl.$viewValue) return;
+        scope.nestedModel = ctrl.$viewValue;
+        scope.flattenModel = {};
+        angular.forEach(scope.fieldDefinitions, function(fieldDef) {
+          scope.flattenModel[fieldDef.name] = ModelDefinitions.get(scope.nestedModel, fieldDef.name);
         });
-      });
-
-      ngModel.$render = function() {
-        if (!ngModel.$viewValue) return;
-        angular.forEach(scope.deepFields, initDeepFieldFromViewValue);
       };
 
-      function setDeepFieldForViewValue (fieldDef, value) {
-        ModelDefinitions.set(scope.ngModel, fieldDef.name, value);
-        ngModel.$setViewValue(scope.ngModel);
+      function fieldChanged(name, value) {
+        ModelDefinitions.set(scope.nestedModel, name, value);
+        ctrl.$setViewValue(scope.nestedModel);
       }
 
-      function initDeepFieldFromViewValue (fieldDef) {
-        scope.ngModel[fieldDef.name] = ModelDefinitions.get(ngModel.$viewValue, fieldDef.name);
-      }
     }
   }
 

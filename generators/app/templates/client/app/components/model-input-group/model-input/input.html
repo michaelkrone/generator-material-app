@@ -1,4 +1,8 @@
 <md-input-container flex>
   <label>{{fieldDef.desc}}</label>
-  <input name="{{fieldDef.name}}" ng-model="ngModel[fieldDef.name]" type="{{fieldDef.type}}" />
+  <input name="{{fieldDef.name}}"
+         ng-model="ngModel[fieldDef.name]"
+         ng-change="ngChange(fieldDef.name, ngModel[fieldDef.name])"
+         type="{{fieldDef.type}}"
+         ng-required="fieldDef.required" />
 </md-input-container>

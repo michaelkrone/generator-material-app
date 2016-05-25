@@ -33,6 +33,7 @@
         }
         return 'app/components/model-view-group/' + attrs.type + '.html';
       },
+      transclude: true,
       replace: true,
       restrict: 'EA'
     };

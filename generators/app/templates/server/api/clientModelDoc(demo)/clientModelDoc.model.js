@@ -25,7 +25,7 @@ var ClientModelDocDefinition = {
   user: {type: ObjectId, ref: 'User'},
   rootUser: {type: ObjectId, ref: 'User'},
   anyType: {type: String},
-  anyTypeRef: {type: String, refPath: 'anyType'},
+  anyTypeRef: {type: ObjectId, refPath: 'anyType'},
   important: String,
   notImportant: String,
   nested: {

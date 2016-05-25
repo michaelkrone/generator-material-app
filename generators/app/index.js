@@ -64,6 +64,12 @@ module.exports = yeoman.generators.Base.extend({
         message: 'Shall I scaffold out a JWT authentication (with users and stuff)?',
         default: true
       },
+      {
+        type: 'confirm',
+        name: 'demo',
+        message: 'Shall I scaffold out a demo resource with full client model definition?',
+        default: false
+      },
       //{
       //  type: 'confirm',
       //  name: 'socketio',
@@ -78,6 +84,10 @@ module.exports = yeoman.generators.Base.extend({
 
       if (answers.auth) {
         this.features.auth = true;
+      }
+
+      if (answers.demo) {
+        this.features.demo = true;
       }
 
       this.features.socketio = true;
@@ -130,7 +140,10 @@ module.exports = yeoman.generators.Base.extend({
       ngModules.push(appModule('admin'));
       ngModules.push(appModule('account'));
     }
-    ngModules.push(appModule('clientModelDoc'))
+
+    if (this.features.demo) {
+      ngModules.push(appModule('clientModelDoc'))
+    }
 
     // add main module as last element
     ngModules.push(appModule('main'));

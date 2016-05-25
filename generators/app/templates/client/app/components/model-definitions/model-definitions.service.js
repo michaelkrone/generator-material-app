@@ -32,8 +32,10 @@
     }
 
     function extendDefault(propDef) {
+      var lastDot = propDef.name.lastIndexOf('.');
+      var lastName = lastDot === -1 ? propDef.name : propDef.name.substr(lastDot + 1);
       var defaultResourceDef = {
-        desc: propDef.name[0].toUpperCase() + propDef.name.slice(1)
+        desc: lastName[0].toUpperCase() + lastName.slice(1)
       };
 
       if (propDef.type === 'select/resource') {

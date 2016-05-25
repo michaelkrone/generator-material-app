@@ -9,9 +9,9 @@
   'use strict';
 
   angular
-    .module('<%= scriptAppName %>', [
-      // Add modules below<% angularModules.forEach(function(angularModule) { %>
+    .module('<%= scriptAppName %>', [<% angularModules.forEach(function(angularModule) { %>
       '<%= angularModule %>',<% }); %>
+      // Add modules below
     ])
     .config(appConfig)<% if(features.auth) { %>
     .run(appRun)<% } %>;

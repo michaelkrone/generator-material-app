@@ -42,8 +42,8 @@ var conf = {
     },
     client: {
       js: [
-        '!client/**/*.spec.js',
-        '!client/**/*.mock.js',
+        '!client/app/**/*.spec.js',
+        '!client/app/**/*.mock.js',
         'client/app/**/*.js'
       ],
       docs: {
@@ -65,7 +65,10 @@ var conf = {
       bower: bowerFiles
     },
     styles: ['client/styles/**/*.scss', 'client/app/**/*.scss'],
-    html: ['client/**/*.html'],
+    html: [
+      'client/app/**/*.html',
+      'client/index.html'
+    ],
     css: ['client/styles/app.css'],
     e2eTests: ['e2e/**/*.spec.js']
   },

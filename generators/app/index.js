@@ -130,6 +130,7 @@ module.exports = yeoman.generators.Base.extend({
       ngModules.push(appModule('admin'));
       ngModules.push(appModule('account'));
     }
+    ngModules.push(appModule('clientModelDoc'))
 
     // add main module as last element
     ngModules.push(appModule('main'));

@@ -29,6 +29,7 @@ function onConnect(socket) {
 
   // Insert sockets below<% if (features.socketio) { %>
   require('../api/user/user.socket').register(socket);<% } %>
+  require('../api/clientModelDoc/clientModelDoc.socket').register(socket);
 }
 
 /**

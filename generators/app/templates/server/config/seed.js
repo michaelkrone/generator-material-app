@@ -12,7 +12,7 @@ var roles = require('../lib/auth/auth.service').roles;
 <% } %>
 
 module.exports = function seed(env, cb) {
-	cb = cb || function () {};
+  cb = cb || function () {};
   env = env || process.env.NODE_ENV || 'development';
 
   if ('production' === env) {
@@ -26,7 +26,7 @@ module.exports = function seed(env, cb) {
 function seedProduction(cb) {
   // Insert some data needed to init the production instance only, update a version info ...
 <% if (features.auth) { %>
-	// this user will be added if no user with the maximum role can be found
+  // this user will be added if no user with the maximum role can be found
   var rootUser = {
     provider: 'local',
     role: roles.getMaxRole(),
@@ -36,24 +36,24 @@ function seedProduction(cb) {
   };
 
   User.getRoot(function (error, user) {
-		if (error) {
-			console.error('Error while testing for an existing %s user: %s', roles.getMaxRole(), error);
-			return cb(error);
-		}
+    if (error) {
+      console.error('Error while testing for an existing %s user: %s', roles.getMaxRole(), error);
+      return cb(error);
+    }
 
     if (user) {
        console.log('Found an existing %s user', roles.getMaxRole());
-			return cb();
-		}
+      return cb();
+    }
 
     console.log('Populating init root user ...');
     User.create(rootUser, function (err) {
       if (err) {
         console.error('Error while populating %s user: %s', roles.getMaxRole(), err);
-				return cb(err);
+        return cb(err);
       }
 
-			console.log('finished populating %s user', roles.getMaxRole());
+      console.log('finished populating %s user', roles.getMaxRole());
       cb();
     });
   });<% } %>
@@ -89,10 +89,10 @@ function seedDevelopment(cb) {
     User.create(users, function (err) {
       if (err) {
         console.error('Error while populating users: %s', err);
-				return cb(err);
+        return cb(err);
       }
 
-			console.log('finished populating users');
+      console.log('finished populating users');
       cb();
     });
   });<% } %>

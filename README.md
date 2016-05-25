@@ -61,6 +61,11 @@ NODE_ENV=production npm start
 And manually seed database with `NODE_ENV=production npm run seed` if you choosed to auth your app.
 You can't sign into app without any users. You can specify users and seed data in `server/config/seed.js`.
 
+#### Environment Variables
+- DATABASE_NAME
+- MONGO_URI || 'mongodb://localhost/' + process.env.DATABASE_NAME
+- MONGO_OPTIONS
+
 ## List of Generators
 * Application scaffold
     - [`material-app`](#app) (alias for `material-app:app`) - The directory name will be used as the application name

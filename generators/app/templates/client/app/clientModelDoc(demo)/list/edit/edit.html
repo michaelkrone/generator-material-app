@@ -1,0 +1,55 @@
+<md-toolbar class="md-hue-1 md-tall">
+
+  <span layout="row" layout-align="space-between" class="md-toolbar-tools md-toolbar-tools-top">
+    <md-button ng-click="edit.goBack()" aria-label="Back to detail view">
+      <md-icon md-svg-icon="navigation:ic_arrow_back_24px"></md-icon>
+    </md-button>
+    <md-button ng-click="edit.remove(editForm, $event)" aria-label="Delete clientModelDoc">
+      <md-icon md-svg-icon="action:ic_delete_24px"></md-icon>
+    </md-button>
+  </span>
+
+  <span class="md-toolbar-tools md-toolbar-tools-bottom" layout="column">
+    <h3>{{edit.displayName}}</h3>
+  </span>
+
+</md-toolbar>
+
+<md-button class="md-accent md-fab md-fab-bottom-right fab-overlap"
+           aria-label="Save clientModelDoc"
+           ng-click="edit.update(editForm)"
+           ng-disabled="!editForm.$dirty || editForm.$invalid">
+  <md-icon md-svg-icon="action:ic_done_24px"></md-icon>
+</md-button>
+
+<md-content class="md-padding" flex id="clientModelDoc-edit-content">
+
+  <form name="editForm">
+
+    <section class="section" layout="column">
+
+      <span class="section-title">ClientModelDoc data</span>
+
+      <span layout="row" layout-align="start center">
+        <span flex="33">ClientModelDoc is active</span>
+        <md-switch name="active" class="no-label" aria-label="clientModelDoc active" ng-model="edit.clientModelDoc.active"></md-switch>
+      </span>
+
+      <!--<span layout="row" layout-sm="column">
+        <md-input-container flex>
+          <label>Name</label>
+          <input name="name" ng-model="edit.clientModelDoc.name" required mongoose-error>
+          <div ng-messages="editForm.name.$error">
+            <div ng-message="required">Name is required</div>
+            <div ng-message="mongoose">Name is already taken</div>
+          </div>
+        </md-input-container>
+      </span>-->
+
+      <model-input-group ng-model="edit.clientModelDoc" field-definitions="index.clientModelDocDefinition"></model-input-group>
+
+    </section>
+
+  </form>
+
+</md-content>

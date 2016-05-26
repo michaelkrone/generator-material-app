@@ -22,11 +22,10 @@ module.exports = function (app) {
     .delete(middleware.removeReservedSchemaKeywords)
     .post(middleware.removeReservedSchemaKeywords);
 
-    // Insert routes below
-  <%if (features.auth) { %>
+  // Insert routes below<%if (features.auth) { %>
   app.use('/api/users', require('./api/user'));
-  app.use('/auth', require('./lib/auth'));
-  <%}%>
+  app.use('/auth', require('./lib/auth'));<%}%><%if (features.demo) { %>
+  app.use('/api/clientModelDocs', require('./api/clientModelDoc'));<%}%>
 
   // All undefined asset or api routes should return a 404
   app.route('/:url(api|auth|components|app|bower_components|assets)/*')

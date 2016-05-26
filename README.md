@@ -66,6 +66,24 @@ You can't sign into app without any users. You can specify users and seed data i
 - MONGO_URI || 'mongodb://localhost/' + process.env.DATABASE_NAME
 - MONGO_OPTIONS
 
+### ModelDefinition
+Modefy factory YourResourceDefinition in your-resource.service.js.
+For example:
+```
+ModelDefinitions({
+  name: {type: 'text', required: true},
+  info: 'text',
+  nested: {
+    name: {
+      type: 'text',
+      desc: 'Nested Name'
+    }
+  }
+})
+```
+For detail [options](#PropDefintion).
+
+
 ## List of Generators
 * Application scaffold
     - [`material-app`](#app) (alias for `material-app:app`) - The directory name will be used as the application name
@@ -83,6 +101,91 @@ You can't sign into app without any users. You can specify users and seed data i
     - [`material-app:service`](#service) - Pass the name of the service as an argument
     - [`material-app:provider`](#provider) - Pass the name of the provider as an argument
     - [`material-app:factory`](#factory) - Pass the name of the factory as an argument
+
+## APIs
+### PropDefintion
+- PropDef - object without a string property `type`
+  - type - different types of property
+    Some special types have special template html, others will pass into normal input tag `<input type="type" />`
+    - 'select' - use `md-select` for input
+    - 'select/resource' - use `md-select` for input, but options is a resource of another model
+
+    When we discuss types, let's say
+    1. `'select' == 'select/resource'` is true
+    2. `'select' === 'select/resource'` is false
+
+    Notice: `name: {type: 'text'}` can be short in `name: 'text'` but `type: {type: 'text'}` can't
+  - desc - name of prop displayed in form, detail and list
+    - default is capitalized last name of nested name
+  - options - static options for `type === 'select'`
+  - displayKey - key to display in `md-select`
+    - work when `type == 'select'`
+    - default is 'name' when `type === 'select/resource'`
+  - valueKey - key to value in `md-select`
+    - work when `type == 'select'`
+    - default is '_id' when `type === 'select/resource'`
+  - resource
+    - only work when `type === 'select/resource'`
+  - params
+    - only work when `type === 'select/resource'`
+  - getOptions - async function returns a promise to load options upon `md-select` is open, resource can be dynamic with this
+    - work when `type == 'select'`
+  - displayPriority - when set to `'low'`, prop in list will auto-hide when
+    1. screen width is less than 1200
+    2. detail state is open
+
+Below is an example with all options, which can be generated with a demo options
+```
+var typeMap = {
+  User: User,
+  ClientModelDoc: ClientModelDoc
+};
+
+return ModelDefinitions({
+  name: {type: 'text', required: true},
+  user: {
+    type: 'select/resource',
+    resource: User
+  },
+  rootUser: {
+    type: 'select/resource',
+    resource: User,
+    params: {
+      role: 'root'
+    },
+    displayKey: 'role'
+  },
+  anyType: {
+    type: 'select',
+    options: ['User', 'ClientModelDoc']
+  },
+  anyTypeRef: {
+    type: 'select',
+    getOptions: function(model) {
+      var resource = typeMap[model.anyType];
+      if (!resource || !resource.query) return $q.when([]);
+      return resource.query().$promise;
+    },
+    displayKey: 'name',
+    valueKey: '_id'
+  },
+  important: 'text',
+  notImportant: {
+    type: 'text',
+    desc: 'Not Important',
+    displayPriority: 'low'
+  },
+  nested: {
+    name: 'text',
+    firstName: {
+      type: 'text',
+      desc: 'First Name'
+    }
+  },
+  info: 'text',
+  //active: 'boolean'
+})
+```
 
 
 ## Purpose

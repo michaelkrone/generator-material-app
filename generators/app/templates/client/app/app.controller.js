@@ -23,9 +23,9 @@
    * @param {$location} $mdSidenav - The sidenav service used to communicate with the sidenav components
    */
 
-  AppController.$inject = ['Auth', '$mdSidenav'];
+  AppController.$inject = ['Auth', '$mdSidenav', '$state', '$scope'];
 
-  function AppController(Auth, $mdSidenav) {
+  function AppController(Auth, $mdSidenav, $state, $scope) {
     var vm = this;
 
     vm.sidenavId = 'mainMenu';
@@ -75,7 +75,14 @@
      * @description
      * See {@link components/auth.service:Auth#getCurrentUser getCurrentUser} of the Auth service
      */
+
     vm.currentUser = Auth.getCurrentUser();
+
+    vm.inDetailState = $state.current.name.endsWith('.detail');
+
+    $scope.$on('$stateChangeStart', function updateInDetailState(event, toState) {
+      vm.inDetailState = toState.name.endsWith('.detail');
+    });
 
     /**
      * Close the main menu sidenav component

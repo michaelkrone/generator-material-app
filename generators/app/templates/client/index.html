@@ -15,14 +15,14 @@
   <!-- app:css -->
   <!-- endinject -->
 </head>
-<body ng-app="<%= scriptAppName %>" ng-controller="AppController as appController" layout="column">
+<body ng-app="<%= scriptAppName %>" ng-controller="AppController as app" layout="column">
 
 <!--[if lt IE 9]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
   your browser</a> to improve your experience.</p>
 <![endif]-->
 
-<main-menu <%if (features.auth) {%>ng-show="appController.isLoggedIn()"<% } %>></main-menu>
+<main-menu <%if (features.auth) {%>ng-show="app.isLoggedIn()"<% } %>></main-menu>
 
 <!-- Add your site or application content here -->
 <main ng-cloak layout="column" layout-fill ui-view></main>

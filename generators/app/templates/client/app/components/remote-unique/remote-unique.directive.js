@@ -24,7 +24,7 @@
 
     // directives link definition
     function link(scope, element, attrs, ctrl) {
-      if (!attrs.remoteUnique)return;
+      if (!attrs.remoteUnique) return;
 
       var service = $injector.get(attrs.remoteUnique);
       var ignore;

@@ -78,11 +78,15 @@
 
     vm.currentUser = Auth.getCurrentUser();
 
-    vm.inDetailState = $state.current.name.endsWith('.detail');
+    vm.inDetailState = isStateInDetail($state.current);
 
     $scope.$on('$stateChangeStart', function updateInDetailState(event, toState) {
-      vm.inDetailState = toState.name.endsWith('.detail');
+      vm.inDetailState = isStateInDetail(toState);
     });
+
+    function isStateInDetail (state) {
+      return state.name.endsWith('.list.detail') || state.name.endsWith('.list.edit')
+    }
 
     /**
      * Close the main menu sidenav component

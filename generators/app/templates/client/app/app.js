@@ -19,7 +19,7 @@
   /* App configuration */
 
   // add appConfig dependencies to inject
-  appConfig.$inject = ['$urlRouterProvider', '$urlMatcherFactoryProvider', '$locationProvider', '$mdThemingProvider', '$mdIconProvider'<% if (features.auth) { %>, '$httpProvider'<% } %>];
+  appConfig.$inject = ['$urlRouterProvider', '$urlMatcherFactoryProvider', '$locationProvider', '$mdThemingProvider', '$mdIconProvider'<% if (features.auth) { %>, '$httpProvider'<% } %>, 'DateInterceptor'];
 
   /**
    * Application config function
@@ -28,10 +28,12 @@
    * @param $urlRouterProvider
    * @param $locationProvider
    */
-  function appConfig($urlRouterProvider, $urlMatcherFactoryProvider, $locationProvider, $mdThemingProvider, $mdIconProvider<% if (features.auth) { %>, $httpProvider<% } %>) {
+  function appConfig($urlRouterProvider, $urlMatcherFactoryProvider, $locationProvider, $mdThemingProvider, $mdIconProvider<% if (features.auth) { %>, $httpProvider<% } %>, DateInterceptor) {
     $urlRouterProvider.otherwise('/');
     $urlMatcherFactoryProvider.strictMode(false);
     $locationProvider.html5Mode(true);
+
+    $httpProvider.defaults.transformResponse.push(DateInterceptor);
   <% if(features.auth) { %>
     $httpProvider.interceptors.push('AuthInterceptor');<% } %>
 

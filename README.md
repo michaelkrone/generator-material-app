@@ -134,7 +134,7 @@ For detail [options](#PropDefintion).
     1. screen width is less than 1200
     2. detail state is open
 
-Below is an example with all options, which can be generated with a demo options
+Below is an example with all options, which can be generated into app with the demo option
 ```
 var typeMap = {
   User: User,
@@ -142,9 +142,35 @@ var typeMap = {
 };
 
 return ModelDefinitions({
-  name: {type: 'text', required: true},
+  name: {
+    type: 'text',
+    format: {
+      value: /^[a-zA-Z]{6,18}$/,
+      error: 'Should be 6-18 letters.'
+    },
+    required: true,
+    remoteUnique: 'ClientModelDoc'
+  },
+  repeatName: {
+    type: 'text',
+    repeatInput: 'name',
+    desc: 'Repeat Name',
+    displayPriority: 'low'
+  },
+  wholeName: {
+    type: 'text',
+    validators: {
+      required: true,
+      'remote-unique': {
+        value: 'ClientModelDoc',
+        error: 'Override default error'
+      },
+      pattern: /^[a-zA-Z0-9]{8,12}$/
+    }
+  },
   user: {
     type: 'select/resource',
+    required: true,
     resource: User
   },
   rootUser: {
@@ -153,7 +179,7 @@ return ModelDefinitions({
     params: {
       role: 'root'
     },
-    displayKey: 'role'
+    displayKey: '_id'
   },
   anyType: {
     type: 'select',
@@ -177,10 +203,17 @@ return ModelDefinitions({
   },
   nested: {
     name: 'text',
+    repeatName: {
+      type: 'text',
+      repeatInput: 'nested.name',
+      desc: 'Nested Repeat Name',
+      displayPriority: 'low'
+    },
     firstName: {
       type: 'text',
-      desc: 'First Name'
-    }
+      desc: 'First Name',
+      displayPriority: 'low'
+    },
   },
   info: 'text',
   //active: 'boolean'

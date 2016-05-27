@@ -24,21 +24,10 @@
 
       <section class="section" layout="column">
 
-        <!--<span layout="row" layout-sm="column">
-          <md-input-container flex>
-            <label>Name</label>
-            <input name="name" ng-model="create.clientModelDoc.name"
-                   ng-model-options="{updateOn: 'default blur', debounce: {'default': 500, 'blur': 0}}"
-                   required mongoose-error remote-unique="ClientModelDoc">
-            <div ng-messages="createForm.name.$error">
-              <div ng-message="required">Name is required</div>
-              <div ng-message="mongoose">Name already in use</div>
-              <div ng-message="remote-unique">Name already in use</div>
-            </div>
-          </md-input-container>
-        </span>-->
-
-        <model-input-group ng-model="create.clientModelDoc" field-definitions="create.clientModelDocDefinition"></model-input-group>
+        <model-input-group ng-model="create.clientModelDoc"
+                           form="createForm"
+                           field-definitions="create.clientModelDocDefinition">
+        </model-input-group>
 
       </section>
     </form>

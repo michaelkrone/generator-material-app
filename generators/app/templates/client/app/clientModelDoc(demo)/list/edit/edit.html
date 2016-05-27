@@ -35,18 +35,10 @@
         <md-switch name="active" class="no-label" aria-label="clientModelDoc active" ng-model="edit.clientModelDoc.active"></md-switch>
       </span>
 
-      <!--<span layout="row" layout-sm="column">
-        <md-input-container flex>
-          <label>Name</label>
-          <input name="name" ng-model="edit.clientModelDoc.name" required mongoose-error>
-          <div ng-messages="editForm.name.$error">
-            <div ng-message="required">Name is required</div>
-            <div ng-message="mongoose">Name is already taken</div>
-          </div>
-        </md-input-container>
-      </span>-->
-
-      <model-input-group ng-model="edit.clientModelDoc" field-definitions="index.clientModelDocDefinition"></model-input-group>
+      <model-input-group ng-model="edit.clientModelDoc"
+                         form="editForm"
+                         field-definitions="index.clientModelDocDefinition">
+      </model-input-group>
 
     </section>
 

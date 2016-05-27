@@ -1,9 +1,10 @@
 (function () {
   'use strict';
+  var regexIso8601 = /^(\d{4}|\+\d{6})(?:-(\d{2})(?:-(\d{2})(?:T(\d{2}):(\d{2}):(\d{2})\.(\d{1,})(Z|([\-+])(\d{2}):(\d{2}))?)?)?)?$/;
 
   // register the service as DateInterceptorService
   angular
-    .module('balanarApp')
+    .module('<%= scriptAppName %>')
     .constant('DateInterceptor', DateInterceptor);
 
   // add DateInterceptor dependencies to inject
@@ -15,8 +16,6 @@
    * an object that has the members of this factory
    */
   function DateInterceptor(input) {
-    var regexIso8601 = /^(\d{4}|\+\d{6})(?:-(\d{2})(?:-(\d{2})(?:T(\d{2}):(\d{2}):(\d{2})\.(\d{1,})(Z|([\-+])(\d{2}):(\d{2}))?)?)?)?$/;
-
     // Ignore things that aren't objects.
     if (!angular.isObject(input)) return input;
 

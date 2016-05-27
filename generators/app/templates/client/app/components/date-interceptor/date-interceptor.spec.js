@@ -1,23 +1,41 @@
 'use strict';
 
-describe('Factory: DateInterceptor', function () {
+describe('Constant: DateInterceptor', function () {
 
-  // load the resource's module
-  beforeEach(module('balanarApp'));
+  // load the constant's module
+  beforeEach(module('<%= scriptAppName %>'));
 
   // instantiate service
-  var resource;
+  var constant;
 
   beforeEach(inject(function (_DateInterceptor_) {
-    resource = _DateInterceptor_;
+    constant = _DateInterceptor_;
   }));
 
   it('should be defined', function () {
-    Should.exist(resource);
+    Should.exist(constant);
   });
 
-  it('should be a resource object', function () {
-    resource.doSomething().should.equal('date-interceptor');
+  it('should be a constant object', function () {
+    var normalString = 'normal string';
+    var normalObject = {normal: 'object'};
+
+    var now = new Date();
+    var input = {
+      str: normalString,
+      obj: normalObject,
+      date: now.toISOString(),
+      nested: {
+        date: now.toISOString(),
+      }
+    };
+    var output = constant(input);
+    output.str.should.equal(input.str);
+    output.obj.should.equal(input.obj);
+    output.nested.should.equal(input.nested);
+
+    output.date.should.eql(now);
+    output.nested.date.should.eql(now);
   });
 
 });

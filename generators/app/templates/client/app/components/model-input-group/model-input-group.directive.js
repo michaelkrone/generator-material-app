@@ -18,7 +18,8 @@
       require: 'ngModel',
       scope: {
         fieldDefinitions: '=',
-        nestedModel: '=ngModel'
+        nestedModel: '=ngModel',
+        form: '='
       },
       link: link,
       templateUrl: 'app/components/model-input-group/model-input-group.html',
@@ -44,7 +45,6 @@
         ModelDefinitions.set(scope.nestedModel, name, value);
         ctrl.$setViewValue(scope.nestedModel);
       }
-
     }
   }
 

@@ -35,18 +35,10 @@
         <md-switch name="active" class="no-label" aria-label="<%= cameledName %> active" ng-model="edit.<%= cameledName %>.active"></md-switch>
       </span>
 
-      <!--<span layout="row" layout-sm="column">
-        <md-input-container flex>
-          <label>Name</label>
-          <input name="name" ng-model="edit.<%= cameledName %>.name" required mongoose-error>
-          <div ng-messages="editForm.name.$error">
-            <div ng-message="required">Name is required</div>
-            <div ng-message="mongoose">Name is already taken</div>
-          </div>
-        </md-input-container>
-      </span>-->
-
-      <model-input-group ng-model="edit.<%= cameledName %>" field-definitions="index.<%= cameledName %>Definition"></model-input-group>
+      <model-input-group ng-model="edit.<%= cameledName %>"
+                         form="editForm"
+                         field-definitions="index.<%= cameledName %>Definition">
+      </model-input-group>
 
     </section>
 

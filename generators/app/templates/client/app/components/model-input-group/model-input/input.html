@@ -1,8 +1,21 @@
 <md-input-container flex>
-  <label>{{fieldDef.desc}}</label>
+  <label>
+    {{fieldDef.desc}}<span ng-if="fieldDef.validators.required">*</span>
+  </label>
+
   <input name="{{fieldDef.name}}"
          ng-model="ngModel[fieldDef.name]"
          ng-change="ngChange(fieldDef.name, ngModel[fieldDef.name])"
          type="{{fieldDef.type}}"
-         ng-required="fieldDef.required" />
+         mongoose-error="{{fieldDef.validators.mongoose.value}}"
+         remote-unique="{{fieldDef.validators['remote-unique'].value}}"
+         repeat-input="{{fieldDef.validators['repeat-input'] ? 'ngModel[\'' + fieldDef.validators['repeat-input'].value + '\']' : ''}}"
+         ng-pattern="fieldDef.validators.pattern.value"
+         ng-required="fieldDef.validators.required" />
+
+  <div ng-if="fieldDef.validators" ng-messages="form[fieldDef.name].$error">
+    <div ng-repeat="(name, validator) in fieldDef.validators" ng-message="{{name}}">
+      {{validator.error}}
+    </div>
+  </div>
 </md-input-container>

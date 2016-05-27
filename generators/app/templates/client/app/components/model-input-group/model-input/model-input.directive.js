@@ -16,6 +16,7 @@
     // directive definition members
     var directive = {
       scope: {
+        form: '=',
         fieldDef: '=fieldDefinition',
         ngModel: '=ngModel',
         ngChange: '=ngChange'

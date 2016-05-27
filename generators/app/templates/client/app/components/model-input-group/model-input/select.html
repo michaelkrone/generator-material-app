@@ -2,8 +2,8 @@
   <md-select ng-model="ngModel[fieldDef.name]"
              md-on-open="getOptions()"
              ng-change="ngChange(fieldDef.name, ngModel[fieldDef.name])"
-             placeholder="Select a {{fieldDef.desc}}"
-             ng-required="fieldDef.required"
+             placeholder="Select a {{fieldDef.desc}} {{fieldDef.validators && fieldDef.validators.required ? '*' : ''}}"
+             ng-required="fieldDef.validators.required"
              flex>
     <md-option ng-repeat="opt in options" ng-value="fieldDef.valueKey ? opt[fieldDef.valueKey] : opt">
       {{fieldDef.displayKey ? opt[fieldDef.displayKey] : opt}}

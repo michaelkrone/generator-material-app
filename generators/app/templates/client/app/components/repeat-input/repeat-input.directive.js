@@ -25,7 +25,6 @@
     // directives link definition
     function link(scope, elem, attrs, model) {
       if (!attrs.repeatInput) {
-        console.error('repeatInput expects a model as an argument!');
         return;
       }
 

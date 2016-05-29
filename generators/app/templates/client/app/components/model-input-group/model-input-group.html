@@ -2,6 +2,7 @@
              ng-if="!fieldDef.when || fieldDef.when(flattenModel)"
              ng-model="flattenModel"
              ng-change="fieldChanged"
+             form="form"
              field-definition="fieldDef"
              model-type="{{fieldDef.type}}"
              layout="row" layout-sm="column">

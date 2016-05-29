@@ -15,6 +15,28 @@
    * an object that has the members of this factory
    */
   function ModelDefinitions($filter, $q) {
+    var aliasAndShortHands = {
+      required: 'validators.required',
+      format: 'validators.pattern',
+      mongoose: 'validators.mongoose',
+      repeatInput: 'validators.repeat-input',
+      remoteUnique: 'validators.remote-unique'
+    };
+
+    var defaultValidatorErrors = {
+      required: 'Required',
+      pattern: function(validator) {
+        return 'Should fit regex ' + validator.value;
+      },
+      mongoose: 'Already in use',
+      'remote-unique': 'Already in use',
+      'repeat-input': function(validator, propDef, modelDef) {
+        var refDef = modelDef[validator.value];
+        var desc = refDef && refDef.desc || validator.value;
+        return 'Should repeat ' + desc;
+      }
+    };
+
     // public API
     angular.extend(createModelDefinition, {
       flat: flat,
@@ -28,18 +50,69 @@
 
     function createModelDefinition(modelDef) {
       var propDefs = flat(modelDef);
-      return propDefs.map(extendDefault);
+      return propDefs
+        .map(deAliasAndShorthand)
+        .map(normalize)
+        .map(extendDefaultRoot)
+        .map(extendDefaultChildren);
+
+      function extendDefaultChildren(propDef) {
+        extendDefaultValidators(propDef.validators);
+        return propDef;
+
+        function extendDefaultValidators(validators) {
+          angular.forEach(validators, function(validator, name) {
+            var error = validator.error || defaultValidatorErrors[name];
+            validator.error = angular.isFunction(error) ? error(validator, propDef, propDefs.$map) : error;
+          });
+        }
+      }
     }
 
-    function extendDefault(propDef) {
-      var lastDot = propDef.name.lastIndexOf('.');
-      var lastName = lastDot === -1 ? propDef.name : propDef.name.substr(lastDot + 1);
-      var defaultResourceDef = {
-        desc: lastName[0].toUpperCase() + lastName.slice(1)
+    function deAliasAndShorthand(propDef) {
+      angular.forEach(aliasAndShortHands, function (name, alias) {
+        if (propDef[alias]) {
+          var obj = getDeepValue(propDef, name) || {};
+          setDeepValue(propDef, name, propDef[alias]);
+          delete propDef[alias];
+        }
+      });
+      return propDef;
+    }
+
+    function normalize(propDef) {
+      normalizeValidators();
+
+      return propDef;
+
+      function normalizeValidators() {
+        if (propDef.validators) {
+          angular.forEach(propDef.validators, function(validator, name) {
+            propDef.validators[name] = angular.isObject(validator) && validator.toString() === '[object Object]'
+              ? validator
+              : {value: validator};
+          });
+        }
+      }
+    }
+
+    function extendDefaultRoot(propDef) {
+      var defaultDef = {
+        desc: capitalize(propDef.name.substr(propDef.name.lastIndexOf('.') + 1))
       };
 
-      if (propDef.type === 'select/resource') {
-        angular.extend(defaultResourceDef, {
+      switch(propDef.type) {
+        case 'select/resource': {
+          selectResource();
+          break;
+        }
+      }
+
+      var overrideDefaults = angular.extend(defaultDef, propDef);
+      return angular.extend(propDef, overrideDefaults);
+
+      function selectResource() {
+        angular.extend(defaultDef, {
           getOptions: function() {
             if (!propDef.resource || !propDef.resource.query) {
               console.warn('type is select/resource, but resource is not set');
@@ -51,32 +124,35 @@
           displayKey: 'name',
         });
       }
-
-      return angular.extend({}, defaultResourceDef, propDef);
     }
 
-    function flat(nestedDef, preName) {
+    function flat(nestedDef) {
       var flattenDefs = [];
-      angular.forEach(nestedDef, flatPropDefinition);
-
-      function flatPropDefinition(def, name) {
-        var propDef = {name: preName ? [preName, name].join('.') : name};
-
-        if (angular.isString(def)) {
-          propDef.type = def;
-        } else if (angular.isObject(def)) {
-          if (angular.isString(def.type)) {
-            angular.extend(propDef, def);
-          } else {
-            flattenDefs = flattenDefs.concat(flat(def, name));
-            return;
-          }
-        } else {
-          throw new Error('Model\'s property definition should be a string or an object');
-        }
-        flattenDefs.push(propDef);
-      }
+      flattenDefs.$map = {};
+      flatNestedPropDefinition(nestedDef);
       return flattenDefs;
+
+      function flatNestedPropDefinition(nestedDef, preName) {
+        angular.forEach(nestedDef, flatPropDefinition);
+
+        function flatPropDefinition(def, name) {
+          var propDef = {name: preName ? [preName, name].join('.') : name};
+
+          if (angular.isString(def)) {
+            propDef.type = def;
+          } else if (angular.isObject(def)) {
+            if (angular.isString(def.type)) {
+              angular.extend(propDef, def);
+            } else {
+              return flatNestedPropDefinition(def, name);
+            }
+          } else {
+            throw new Error('Model\'s property definition should be a string or an object');
+          }
+          flattenDefs.push(propDef);
+          flattenDefs.$map[propDef.name] = propDef;
+        }
+      }
     }
 
     function setDeepValue (obj, propChain, value) {
@@ -133,6 +209,10 @@
       } : angular.copy(filterName);
       filter.args = [value].concat(filter.args || []);
       return $filter(filter.name).apply(null, filter.args);
+    }
+
+    function capitalize(name) {
+      return name[0].toUpperCase() + name.slice(1)
     }
   }
 

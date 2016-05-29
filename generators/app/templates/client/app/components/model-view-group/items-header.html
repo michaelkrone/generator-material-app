@@ -1,11 +1,17 @@
-<md-item-content>
-  <div ng-repeat="propDef in propDefinitions"
-       ng-if="showProp(propDef)"
-       class="md-tile-content"
-       ng-class="{'hide-in-narrow': propDef.displayPriority === 'low'}"
-       flex="{{propDef.flex || 66}}">
-    <h4>{{::propDef.desc}}</h4>
-  </div>
+<md-subheader>
+		<span layout="row"
+			ng-repeat="propDef in propDefinitions"
+			ng-if="showProp(propDef)"
+			class="md-tile-content">
 
-  <ng-transclude></ng-transclude>
-</md-item-content>
+			<div class="md-avatar" style="margin-right: 20px">
+				<list-image></list-image>
+			</div>
+
+			<div class="md-body-2" flex="{{propDef.flex || 66}}" ng-class="{'hide-in-narrow': propDef.displayPriority === 'low'}">
+				{{::propDef.desc}}
+			</div>
+	</span>
+
+	<ng-transclude></ng-transclude>
+</md-subheader>

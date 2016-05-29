@@ -1,7 +1,7 @@
 <md-toolbar class="md-tall" scroll-shrink layout-align="start start">
 
   <span class="md-toolbar-tools md-toolbar-tools-top">
-    <md-button ng-click="app.openMainMenu()" aria-label="Open main menu">
+    <md-button ng-click="app.openMainMenu()" class="md-icon-button" aria-label="Open main menu">
       <md-icon md-svg-icon="navigation:ic_menu_24px"></md-icon>
     </md-button>
   </span>
@@ -22,25 +22,24 @@
 
 <md-content ng-if="list.clientModelDocs.length" id="clientModelDoc-items-content" flex>
 
-  <md-list layout="column">
+  <md-list flex>
 
-    <md-item class="list-head" hide-sm>
+	<md-subheader>
+		 <span layout="row">
+			 <div class="md-avatar" style="margin-right: 20px">
+          <list-image></list-image>
+       </div>
+		   <model-view-group definitions="index.clientModelDocDefinition"
+					type="items-header"
+					narrow-mode="index.inDetailState">
+   	   </model-view-group>
+		 </span>
+ 	</md-subheader>
 
-      <model-view-group definitions="index.clientModelDocDefinition"
-                        type="items-header"
-                        narrow-mode="index.inDetailState">
-        <div class="md-tile-content" flex hide show-gt-md>
-          <h4>Active</h4>
-        </div>
-      </model-view-group>
-
-      <md-divider md-inset></md-divider>
-
-    </md-item>
-
-    <md-item ng-repeat="clientModelDoc in list.clientModelDocs"
-        ng-click="items.showInDetails(clientModelDoc)"
-        ng-class="{'selected': items.isSelected(clientModelDoc)}">
+  <md-list-item class="md-3-line"
+		ng-repeat="clientModelDoc in list.clientModelDocs"
+    ng-click="items.showInDetails(clientModelDoc)"
+    ng-class="{'selected': items.isSelected(clientModelDoc)}">
 
       <model-view-group model="clientModelDoc"
                         definitions="index.clientModelDocDefinition"
@@ -49,18 +48,18 @@
                         narrow-mode="index.inDetailState">
         <div class="md-tile-content" flex hide show-gt-md>
           <h3>
-            <md-icon ng-show="clientModelDoc.active" class="list-info" md-svg-icon="toggle:ic_check_box_24px"></md-icon>
-            <md-icon ng-show="!clientModelDoc.active" class="list-info" md-svg-icon="toggle:ic_check_box_outline_blank_24px"></md-icon>
           </h3>
         </div>
+				<div class="md-list-item-text" layout="column" flex="33" show-gt-md>
+					<md-icon ng-show="clientModelDoc.active" class="list-info" md-svg-icon="toggle:ic_check_box_24px"></md-icon>
+					<md-icon ng-show="!clientModelDoc.active" class="list-info" md-svg-icon="toggle:ic_check_box_outline_blank_24px"></md-icon>
+    	  </div>
       </model-view-group>
 
       <md-divider md-inset></md-divider>
-
-    </md-item>
+    </md-list-item>
 
   </md-list>
-
 </md-content>
 
 <md-content ng-if="!list.clientModelDocs.length">

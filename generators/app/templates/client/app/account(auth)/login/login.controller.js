@@ -66,7 +66,6 @@
     function login(form) {
       if (form.$valid) {
         Auth.login({
-          customerId: vm.user.customerId,
           name: vm.user.name,
           password: vm.user.password
         }).then(function () {

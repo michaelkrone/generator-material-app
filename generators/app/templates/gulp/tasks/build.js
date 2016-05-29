@@ -10,8 +10,7 @@ var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var inject = require('gulp-inject');
 var sass = require('gulp-ruby-sass');
-var autoprefixer = require('gulp-autoprefixer');
-var minifycss = require('gulp-minify-css');
+var minifycss = require('gulp-clean-css');
 var concat = require('gulp-concat');
 var utils = require('gulp-util');
 var angularFilesort = require('gulp-angular-filesort');
@@ -35,10 +34,8 @@ gulp.task('inject', ['sass'], function () {
  * Compile scss files from the project into app/styles/app.css
  */
 gulp.task('sass', function () {
-  var css = gulp.src(conf.src.styles)
-    .pipe(sass(conf.options.sass))
-    .pipe(autoprefixer(conf.options.autoprefixer))
-    .pipe(gulpif(process.env.NODE_ENV === 'production', minifycss()))
+  var css = sass(conf.src.styles, conf.options.sass)
+    .pipe(gulpif(process.env.NODE_ENV === 'production', minifycss(conf.options.minifycss)))
     .on('error', utils.log);
 
   return css.pipe(concat(conf.targets.css.file))

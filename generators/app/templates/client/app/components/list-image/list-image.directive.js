@@ -62,7 +62,7 @@
 
       link: function ($scope, element, attrs) {
         $mdTheming(element);
-        $scope.firstLetter = attrs.string.charAt(0);
+        $scope.firstLetter = attrs.string && attrs.string.charAt(0);
         $scope.bgColor = AlphabetColor($scope.firstLetter);
       }
     };

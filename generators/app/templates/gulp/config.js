@@ -80,10 +80,6 @@ var conf = {
       style: 'expanded',
       'sourcemap=none': true
     },
-    autoprefixer: {
-      browsers: ['> 10%', 'IE 9'],
-      cascade: false
-    },
     livereload: {
       port: 9090
     },
@@ -148,7 +144,10 @@ var conf = {
         options: JSON.parse(fs.readFileSync('./client/.jshintrc'))
       }
     }
-  }
+  },
+	minifycss: {
+		compatibility: 'ie9'
+	}
 };
 
 // merge javascript source file configurations

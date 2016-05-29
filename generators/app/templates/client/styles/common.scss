@@ -46,7 +46,12 @@ md-list {
 }
 
 md-dialog {
-  max-height: 85%;
+	@media (max-width: 960px) {
+    min-width: 100%;
+    min-height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+	}
 }
 
 md-toolbar {

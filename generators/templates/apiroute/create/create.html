@@ -6,37 +6,39 @@
     </h3>
   </md-toolbar>
 
-  <md-content>
-    <section class="section slim" layout="column">
-      <p>
-          Create a new <%= cameledName %> for your application.
-      </p>
-    </section>
+  <md-dialog-content>
+    <div class="md-dialog-content">
+		<section class="section slim" layout="column">
+		<p>
+			Create a new <%= cameledName %> for your application.
+		</p>
+		</section>
 
-    <form name="createForm">
+		<form name="createForm">
 
-      <section class="section slim" layout="column">
-        <span layout="row" layout-align="start center">
-          <span flex="33"><%= modelName %> is active</span>
-          <md-switch name="active" class="no-label" aria-label="<%= cameledName %> active" ng-model="create.<%= cameledName %>.active"></md-switch>
-        </span>
-      </section>
+		<section class="section slim" layout="column">
+			<span layout="row" layout-align="start center">
+			<span flex="33"><%= modelName %> is active</span>
+			<md-switch name="active" class="no-label" aria-label="<%= cameledName %> active" ng-model="create.<%= cameledName %>.active"></md-switch>
+			</span>
+		</section>
 
-      <section class="section" layout="column">
+		<section class="section" layout="column">
 
-        <model-input-group ng-model="create.<%= cameledName %>"
-                           form="createForm"
-                           field-definitions="create.<%= cameledName %>Definition">
-        </model-input-group>
+			<model-input-group ng-model="create.<%= cameledName %>"
+							form="createForm"
+							field-definitions="create.<%= cameledName %>Definition">
+			</model-input-group>
 
-      </section>
-    </form>
-  </md-content>
+		</section>
+		</form>
+	</div>
+  </md-dialog-content>
 
-  <div class="md-actions" layout="row">
+   <md-dialog-actions layout="row">
     <span flex></span>
     <md-button ng-click="create.close()">Cancel</md-button>
     <md-button ng-disabled="createForm.$invalid" ng-click="create.create(createForm)" class="md-primary md-raised">Create <%= cameledName %></md-button>
-  </div>
+   </md-dialog-actions>
 
 </md-dialog>

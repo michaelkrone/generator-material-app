@@ -1,7 +1,7 @@
 <md-toolbar class="md-tall" scroll-shrink layout-align="start start">
 
   <span class="md-toolbar-tools md-toolbar-tools-top">
-    <md-button ng-click="app.openMainMenu()" aria-label="Open main menu">
+    <md-button ng-click="app.openMainMenu()" class="md-icon-button" aria-label="Open main menu">
       <md-icon md-svg-icon="navigation:ic_menu_24px"></md-icon>
     </md-button>
   </span>
@@ -21,52 +21,41 @@
 </md-toolbar>
 
 <md-content ng-if="list.users.length" id="user-items-content" flex>
-  <md-list layout="column">
+  <md-list flex>
 
-    <md-item class="list-head" hide-sm>
+		<md-subheader>
+			<span layout="row">
+				<div class="md-avatar" style="margin-right: 20px">
+						<list-image></list-image>
+					</div>
+				<h4 flex="66">Name</h4>
+				<h4 flex="33" hide show-gt-md>Active</h4>
+			</span>
+		</md-subheader>
 
-      <md-item-content>
-        <div class="md-tile-content" flex="66">
-          <h4>Name</h4>
-        </div>
-        <div class="md-tile-content" flex="33" hide show-gt-md>
-          <h4>Role</h4>
-        </div>
-        <div class="md-tile-content" flex="33" hide show-gt-md>
-          <h4>Active</h4>
-        </div>
-      </md-item-content>
 
-      <md-divider md-inset></md-divider>
-
-    </md-item>
-
-    <md-item
+    <md-list-item class="md-3-line"
         ng-repeat="user in list.users"
         ng-click="items.showInDetails(user)"
         ng-class="{'selected': items.isSelected(user)}">
 
-      <md-item-content>
-        <div class="md-tile-left">
+        <div class="md-avatar">
           <list-image ng-if="!user.image" string="{{user.name}}"></list-image>
         </div>
-        <div class="md-tile-content" flex="66">
+
+			 <div class="md-list-item-text" layout="column" flex="66">
           <h3>{{user.name}}</h3>
-        </div>
-        <div class="md-tile-content" flex="33" hide show-gt-md>
-          <h3>{{items.getRole(user).name}}</h3>
-        </div>
-        <div class="md-tile-content" flex="33" hide show-gt-md>
-          <h3>
-            <md-icon ng-show="user.active" class="list-info" md-svg-icon="toggle:ic_check_box_24px"></md-icon>
-            <md-icon ng-show="!user.active" class="list-info" md-svg-icon="toggle:ic_check_box_outline_blank_24px"></md-icon>
-          </h3>
-        </div>
-      </md-item-content>
+          <h4>{{items.getRole(user).name}}</h4>
+			 </div>
 
-      <md-divider md-inset></md-divider>
+			<div class="md-list-item-text" layout="column" flex="33" show-gt-md>
+				<md-icon ng-show="user.active" class="list-info" md-svg-icon="toggle:ic_check_box_24px"></md-icon>
+				<md-icon ng-show="!user.active" class="list-info" md-svg-icon="toggle:ic_check_box_outline_blank_24px"></md-icon>
+      </div>
 
-    </md-item>
+   		<md-divider md-inset></md-divider>
+    </md-list-item>
+
 
   </md-list>
 </md-content>

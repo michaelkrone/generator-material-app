@@ -2,28 +2,28 @@
   "name": "<%= _.slugify(_.humanize(appname)) %>",
   "version": "0.0.1",
   "dependencies": {
-    "angular": ">=1.4.*",
-    "angular-resource": ">=1.4.*",
-    "angular-animate": ">=1.4.*",
-    "angular-cookies": ">=1.4.*",
-    "angular-sanitize": ">=1.4.*",
-    "angular-messages": ">=1.4.*",
+    "angular": "~1.4",
+    "angular-resource": "~1.4",
+    "angular-animate": "~1.4",
+    "angular-cookies": "~1.4",
+    "angular-sanitize": "~1.4",
+    "angular-messages": "~1.4",
     "angular-ui-router": "latest",
-    "material-design-icons": ">=1.0.1",
-    "lodash": "~2.4.1",
-    "angular-material": "0.8.3",
+    "material-design-icons": "^1.0.1",
+    "lodash": "~3.0.0",
+    "angular-material": "1.0.9",
     "angular-socket-io": "~0.6.0",
-    "angular-i18n": "~1.3.14",
-    "angular-moment": "~0.9.0"
+    "angular-i18n": "~1.4",
+    "angular-moment": "~0.10.3"
   },
   "devDependencies": {
-    "angular-mocks": ">=1.2.*",
-    "angular-scenario": ">=1.2.*",
+    "angular-mocks": "~1.4",
+    "angular-scenario": "~1.4",
     "should": "shouldjs/should.js#~4.4.1"
   },
   "resolutions": {
-    "angular": ">=1.4.*",
-    "angular-animate": ">=1.4.*"
+    "angular": "~1.4",
+    "angular-animate": "~1.4"
   },
   "overrides": {
     "material-design-icons": {

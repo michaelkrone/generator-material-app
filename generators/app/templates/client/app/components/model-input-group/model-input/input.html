@@ -9,6 +9,7 @@
          type="{{fieldDef.type}}"
          mongoose-error="{{fieldDef.validators.mongoose.value}}"
          remote-unique="{{fieldDef.validators['remote-unique'].value}}"
+         remote-unique-ignore="{{::ngModel[fieldDef.name]}}"
          repeat-input="{{fieldDef.validators['repeat-input'] ? 'ngModel[\'' + fieldDef.validators['repeat-input'].value + '\']' : ''}}"
          ng-pattern="fieldDef.validators.pattern.value"
          ng-required="fieldDef.validators.required" />

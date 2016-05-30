@@ -123,6 +123,7 @@
       },
       repeatName: {
         type: 'text',
+        required: true,
         repeatInput: 'name',
         desc: 'Repeat Name',
         displayPriority: 'low'

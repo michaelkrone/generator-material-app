@@ -22,6 +22,8 @@ var createdModifiedPlugin = require('mongoose-createdmodified').createdModifiedP
  */
 var ClientModelDocDefinition = {
   name: {type: String, required: true},
+  repeatName: {type: String, required: true},
+  wholeName: {type: String, required: true},
   user: {type: ObjectId, ref: 'User'},
   rootUser: {type: ObjectId, ref: 'User'},
   anyType: {type: String},
@@ -30,6 +32,7 @@ var ClientModelDocDefinition = {
   notImportant: String,
   nested: {
     name: String,
+    repeatName: String,
     firstName: String,
   },
   info: String,

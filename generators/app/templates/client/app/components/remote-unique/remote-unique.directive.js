@@ -33,7 +33,10 @@
         ignore = newValue;
       });
 
-      ctrl.$parsers.unshift(function (viewValue) {
+      ctrl.$parsers.unshift(validateRemoteUnique);
+      ctrl.$formatters.unshift(validateRemoteUnique);
+
+      function validateRemoteUnique(viewValue) {
         var criteria = {};
 
         if (viewValue === ignore) {
@@ -44,11 +47,11 @@
         criteria[ctrl.$name] = viewValue;
 
         service.query(criteria, function (result) {
-          ctrl.$setValidity('remote-unique', !result.length);
+          ctrl.$setValidity('remote-unique', viewValue === ignore || !result.length);
         });
 
         return viewValue;
-      });
+      }
     }
   }
 })();

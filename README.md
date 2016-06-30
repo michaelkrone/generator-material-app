@@ -209,9 +209,22 @@ return ModelDefinitions({
       desc: 'Nested Repeat Name',
       displayPriority: 'low'
     },
+    wholeName: {
+      type: 'text',
+      desc: 'Whole Name',
+      remoteUnique: 'ClientModelDoc',
+      auto: function (nestedModel) {
+        return nestedModel.nested.firstName + ' ' + nestedModel.nested.secondName;
+      }
+    },
     firstName: {
       type: 'text',
       desc: 'First Name',
+      displayPriority: 'low'
+    },
+    secondName: {
+      type: 'text',
+      desc: 'Second Name',
       displayPriority: 'low'
     },
   },

@@ -33,7 +33,9 @@ var ClientModelDocDefinition = {
   nested: {
     name: String,
     repeatName: String,
+    wholeName: {type: String, required: true},
     firstName: String,
+    secondName: String,
   },
   info: String,
   active: Boolean

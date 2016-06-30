@@ -104,35 +104,40 @@ For detail [options](#PropDefintion).
 
 ## APIs
 ### PropDefintion
-- PropDef - object without a string property `type`
+- types supported now:
+  - **types for input**(corresponding Mongoose type in `()`), like `'text'`(`String`), `'url'`(`String`), `'number'`(`Number`), `'date'`(`Date`), `'password'`(`String`),
+  - `'select'` - type values in options array correspond to mongoose type
+  - `'select/resource'` - mongoose `ObjectId`, use `resource` to simulate mongoose `ref`
+- common options
   - type - different types of property
-    Some special types have special template html, others will pass into normal input tag `<input type="type" />`
-    - 'select' - use `md-select` for input
-    - 'select/resource' - use `md-select` for input, but options is a resource of another model
-
-    When we discuss types, let's say
-    1. `'select' == 'select/resource'` is true
-    2. `'select' === 'select/resource'` is false
-
     Notice: `name: {type: 'text'}` can be short in `name: 'text'` but `type: {type: 'text'}` can't
   - desc - name of prop displayed in form, detail and list
     - default is capitalized last name of nested name
-  - options - static options for `type === 'select'`
   - displayKey - key to display in `md-select`
     - work when `type == 'select'`
     - default is 'name' when `type === 'select/resource'`
-  - valueKey - key to value in `md-select`
-    - work when `type == 'select'`
-    - default is '_id' when `type === 'select/resource'`
-  - resource
-    - only work when `type === 'select/resource'`
-  - params
-    - only work when `type === 'select/resource'`
-  - getOptions - async function returns a promise to load options upon `md-select` is open, resource can be dynamic with this
-    - work when `type == 'select'`
   - displayPriority - when set to `'low'`, prop in list will auto-hide when
-    1. screen width is less than 1200
-    2. detail state is open
+    1. css class `.hide-in-narrow` added when screen width is less than 1200
+    2. `narrowMode` is true
+- validation options
+  - required - `ng-required`
+  - format - regex for `ng-validate`
+  - remoteUnique - resource name to check unique from server
+  - repeatInput - force repeat field, usually for `type=password`
+  - validators - for `ng-messages`, above validations can be written in `validators` uniformly
+    - required
+    - pattern
+    - remote-unique
+    - repeat-input
+- special config options for `'select'`
+  - options - static options for select
+  - valueKey - key to value in `md-select`
+      - default is '_id' when `type === 'select/resource'`
+
+  - resource - static resource for `'select/resource'`
+    - only work when `type === ''`
+  - params - static params for `'select/resource'`
+  - getOptions - async function returns a promise to load options upon `md-select` is open, resource and params can be dynamic with this
 
 Below is an example with all options, which can be generated into app with the demo option
 ```

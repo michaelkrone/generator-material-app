@@ -187,7 +187,7 @@
           if (dst[key] && angular.isObject(dst[key])) {
             extendDeep(dst[key], value);
           } else {
-            dst[key] = value;
+            dst[key] = angular.copy(value);
           }
         });
       });

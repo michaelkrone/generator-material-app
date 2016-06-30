@@ -32,6 +32,10 @@
     function link(scope, element, attrs, ctrl) {
       scope.fieldChanged = fieldChanged;
 
+      var autoFields = scope.fieldDefinitions.filter(function(def) {
+        return def.auto;
+      });
+
       ctrl.$render = function() {
         if (!ctrl.$viewValue) return;
         scope.nestedModel = ctrl.$viewValue;
@@ -41,9 +45,18 @@
         });
       };
 
-      function fieldChanged(name, value) {
+      function fieldChanged(name, value, dontSetViewValue) {
         ModelDefinitions.set(scope.nestedModel, name, value);
-        ctrl.$setViewValue(scope.nestedModel);
+        angular.forEach(autoFields, function(autoField) {
+          var newValue = autoField.auto(scope.nestedModel, scope.flattenModel);
+          if (newValue !== scope.flattenModel[autoField.name]) {
+            scope.flattenModel[autoField.name] = newValue;
+            fieldChanged(autoField.name, newValue, 'dontSetViewValue');
+          }
+        });
+        if (!dontSetViewValue) {
+          ctrl.$setViewValue(scope.nestedModel);
+        }
       }
     }
   }

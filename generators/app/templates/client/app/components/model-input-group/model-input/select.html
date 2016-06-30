@@ -1,11 +1,11 @@
 <div style="padding-left: 4px;">
   <md-select ng-model="ngModel[fieldDef.name]"
              md-on-open="getOptions()"
-             ng-change="ngChange(fieldDef.name, ngModel[fieldDef.name])"
+             ng-change="selectChanged()"
              placeholder="Select a {{fieldDef.desc}} {{fieldDef.validators && fieldDef.validators.required ? '*' : ''}}"
              ng-required="fieldDef.validators.required"
              flex>
-    <md-option ng-repeat="opt in options" ng-value="fieldDef.valueKey ? opt[fieldDef.valueKey] : opt">
+    <md-option ng-repeat="opt in options" ng-value="opt">
       {{fieldDef.displayKey ? opt[fieldDef.displayKey] : opt}}
     </md-option>
   </md-select>

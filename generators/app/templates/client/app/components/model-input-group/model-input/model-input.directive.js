@@ -32,15 +32,12 @@
     function link(scope) {
       var fieldDef = scope.fieldDef;
       scope.getContentUrl = getContentUrl;
+      scope.selectChanged = selectChanged;
 
       switch (fieldDef.type) {
         case 'select/resource':
         case 'select': {
           var originalValue = scope.ngModel[fieldDef.name];
-          if (fieldDef.valueKey && originalValue && originalValue[fieldDef.valueKey]) {
-            scope.ngModel[fieldDef.name] = originalValue[fieldDef.valueKey];
-            scope.options = [originalValue];
-          }
           scope.options = fieldDef.options || [originalValue];
           scope.getOptions = getOptions;
           scope.contentUrl = 'select.html';
@@ -51,6 +48,11 @@
         }
       }
 
+      function selectChanged() {
+        var field = scope.ngModel[fieldDef.name];
+        scope.ngChange(fieldDef.name, fieldDef.valueKey ? field[fieldDef.valueKey] : field);
+      }
+
       function getContentUrl() {
         return 'app/components/model-input-group/model-input/' + scope.contentUrl;
       }
@@ -58,8 +60,20 @@
       function getOptions() {
         if (!fieldDef.getOptions) return $q.when();
         return fieldDef.getOptions(scope.ngModel).then(function(options) {
+          scope.ngModel[fieldDef.name] = refreshOptionRef(options, scope.ngModel[fieldDef.name]);
           scope.options = options;
         });
+      }
+
+      function refreshOptionRef(options, field) {
+        if (field && field[fieldDef.valueKey]) {
+          for (var i in options) {
+            if (option[i][fieldDef.valueKey] === field[fieldDef.valueKey]) {
+              return option[i];
+            }
+          }
+        }
+        return field;
       }
     }
   }

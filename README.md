@@ -114,11 +114,10 @@ For detail [options](#PropDefintion).
   - desc - name of prop displayed in form, detail and list
     - default is capitalized last name of nested name
   - displayKey - key to display in `md-select`
-    - work when `type == 'select'`
     - default is 'name' when `type === 'select/resource'`
-  - displayPriority - when set to `'low'`, prop in list will auto-hide when
-    1. css class `.hide-in-narrow` added when screen width is less than 1200
-    2. `narrowMode` is true
+  - displayPriority - when set to `'low'`, field in list will auto-hide when
+    1. when screen width is less than 1200 because of css class `.hide-in-narrow`
+    2. `narrowMode` in ModelViewGroup is true
 - validation options
   - required - `ng-required`
   - format - regex for `ng-validate`

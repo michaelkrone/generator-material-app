@@ -14,9 +14,10 @@
          ng-pattern="fieldDef.validators.pattern.value"
          ng-required="fieldDef.validators.required" />
 
-  <div ng-if="fieldDef.validators" ng-messages="form[fieldDef.name].$error">
+  <div ng-messages="form[fieldDef.name].$error" ng-if="form[fieldDef.name].$dirty">
     <div ng-repeat="(name, validator) in fieldDef.validators" ng-message="{{name}}">
       {{validator.error}}
     </div>
+    <div ng-if="fieldDef.type === 'url'" ng-message="url">Should be a url</div>
   </div>
 </md-input-container>

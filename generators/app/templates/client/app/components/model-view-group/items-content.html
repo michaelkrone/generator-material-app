@@ -8,7 +8,13 @@
        class="md-tile-content"
        ng-class="{'hide-in-narrow': propDef.displayPriority === 'low'}"
        flex="{{propDef.flex || 66}}">
-    <h4>{{::display(viewModel, propDef)}}</h4>
+    <h4 ng-if="propDef.type !== 'url'">{{::display(viewModel, propDef)}}</h4>
+    <a ng-if="propDef.type === 'url'"
+       ng-click="$event.stopPropagation()"
+       target="_blank"
+       ng-href="{{display(viewModel, propDef)}}">
+      {{propDef.urlDesc || 'link'}}
+    </a>
   </div>
 
   <ng-transclude></ng-transclude>

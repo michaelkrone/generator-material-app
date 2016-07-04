@@ -102,6 +102,16 @@
       };
 
       switch(propDef.type) {
+        case 'cad':
+        case 'pdf':
+        case 'hex':
+        case 'zip':
+        case 'img':
+        case 'excel': {
+          propDef.urlDesc = propDef.urlDesc || propDef.type;
+          propDef.type = 'url';
+          break;
+        }
         case 'select/resource': {
           selectResource();
           break;

@@ -9,6 +9,7 @@ var mongoose = require('mongoose');
 <% if (features.auth) { %>
 var User = require('../api/user/user.model').model;
 var roles = require('../lib/auth/auth.service').roles;
+var testUsers = require('./testUsers');
 <% } %>
 
 module.exports = function seed(env, cb) {
@@ -66,27 +67,8 @@ function seedProduction(cb) {
 function seedDevelopment(cb) {
   console.log('Populating test and development data ...');
 <% if (features.auth) { %>
-  var users = [{
-    provider: 'local',
-    name: 'Test User',
-    password: 'password',
-    active: true
-  }, {
-    provider: 'local',
-    role: 'admin',
-    name: 'Admin',
-    password: 'password',
-    active: true
-  }, {
-    provider: 'local',
-    role: 'root',
-    name: 'Root',
-    password: 'password',
-    active: true
-  }];
-
   User.find({}).remove(function () {
-    User.create(users, function (err) {
+    User.create(testUsers, function (err) {
       if (err) {
         console.error('Error while populating users: %s', err);
         return cb(err);

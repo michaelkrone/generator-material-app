@@ -1,2 +1,27 @@
-model-input {
+.model-input {
+
+  &.select {
+    padding-left: 2px;
+    width: 100%;
+
+    md-select {
+      width: 100%;
+    }
+
+    md-select-label {
+      & > span {
+        margin-left: 2px;
+      }
+    }
+
+    md-input-container {
+      padding-left: 0;
+    }
+
+    $error-red: rgb(244,67,54);
+    &.error md-select-label {
+      color: $error-red;
+      border-color: $error-red;
+    }
+  }
 }

@@ -15,7 +15,7 @@
          ng-pattern="fieldDef.validators.pattern.value"
          ng-required="fieldDef.validators.required" />
 
-  <div ng-messages="form[fieldDef.name].$error" ng-if="form[fieldDef.name].$dirty">
+  <div ng-messages="form[fieldDef.name].$error" ng-if="form[fieldDef.name].$touched">
     <div ng-repeat="(name, validator) in fieldDef.validators" ng-message="{{name}}">
       {{validator.error}}
     </div>

@@ -1,5 +1,6 @@
-<div style="padding-left: 4px;">
-  <md-select ng-model="ngModel[fieldDef.name]"
+<div class="model-input select" ng-class="{error: form[fieldDef.name].$touched && form[fieldDef.name].$invalid}">
+  <md-select name="{{fieldDef.name}}"
+             ng-model="ngModel[fieldDef.name]"
              md-on-open="getOptions()"
              ng-change="selectChanged()"
              ng-disabled="fieldDef.disabled"
@@ -10,4 +11,12 @@
       {{fieldDef.displayKey ? opt[fieldDef.displayKey] : opt}}
     </md-option>
   </md-select>
+  <md-input-container class="md-input-invalid">
+    <div ng-messages="form[fieldDef.name].$error" ng-if="form[fieldDef.name].$touched">
+      <div ng-repeat="(name, validator) in fieldDef.validators" ng-message="{{name}}">
+        {{validator.error}}
+      </div>
+      <div ng-if="fieldDef.type === 'url'" ng-message="url">Should be a url</div>
+    </div>
+  </md-input-container>
 </div>

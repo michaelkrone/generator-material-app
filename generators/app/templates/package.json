@@ -69,7 +69,7 @@
     "gulp-util": "^3.0.1",
     "gulp-inject": "^1.0.2",
     "gulp-if": "^1.2.5",
-    "gulp-protractor": "0.0.12",
+    "gulp-protractor": "^2.0.0",
     "protractor": "^3.3.0",
     "jshint-stylish": "^1.0.0",
     "main-bower-files": "^2.4.1",

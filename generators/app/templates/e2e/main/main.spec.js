@@ -4,7 +4,10 @@ describe('Main View', function() {
   var page;
 
   beforeEach(function() {
-    browser.get('/');
+    <% if (features.auth) { %>browser.get('/');
+    <% } else { %>var loginPage = require('../login/login.po');
+    loginPage.login('/');
+    <% } %>
     page = require('./main.po');
   });
 

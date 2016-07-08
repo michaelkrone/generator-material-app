@@ -33,7 +33,7 @@
       scope.fieldChanged = fieldChanged;
 
       var autoFields = scope.fieldDefinitions.filter(function(def) {
-        return def.auto;
+        return def.auto && angular.isFunction(def.auto);
       });
 
       ctrl.$render = function() {

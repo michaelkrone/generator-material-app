@@ -48,6 +48,11 @@
         }
       }
 
+      if (fieldDef.auto && !angular.isFunction(fieldDef.auto)) {
+        scope.ngModel[fieldDef.name] = fieldDef.auto;
+        scope.ngChange(fieldDef.name, fieldDef.auto);
+      }
+
       function selectChanged() {
         var field = scope.ngModel[fieldDef.name];
         scope.ngChange(fieldDef.name, fieldDef.valueKey ? field[fieldDef.valueKey] : field);

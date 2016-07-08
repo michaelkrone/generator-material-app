@@ -32,7 +32,7 @@
     function link(scope) {
       var fieldDef = scope.fieldDef;
       scope.getContentUrl = getContentUrl;
-      scope.selectChanged = selectChanged;
+      scope.fieldChanged = fieldChanged;
 
       switch (fieldDef.type) {
         case 'select/resource':
@@ -53,9 +53,18 @@
         scope.ngChange(fieldDef.name, fieldDef.auto);
       }
 
-      function selectChanged() {
-        var field = scope.ngModel[fieldDef.name];
-        scope.ngChange(fieldDef.name, fieldDef.valueKey ? field[fieldDef.valueKey] : field);
+      function fieldChanged(name, value, dontSetViewValue) {
+        ModelDefinitions.set(scope.nestedModel, name, value);
+        angular.forEach(autoFields, function(autoField) {
+          var newValue = autoField.auto(scope.nestedModel, scope.flattenModel);
+          if (newValue !== scope.flattenModel[autoField.name]) {
+            scope.flattenModel[autoField.name] = newValue;
+            fieldChanged(autoField.name, newValue, 'dontSetViewValue');
+          }
+        });
+        if (!dontSetViewValue) {
+          ctrl.$setViewValue(scope.nestedModel);
+        }
       }
 
       function getContentUrl() {

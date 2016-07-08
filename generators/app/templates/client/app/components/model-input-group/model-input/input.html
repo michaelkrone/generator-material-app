@@ -5,7 +5,7 @@
 
   <input name="{{fieldDef.name}}"
          ng-model="ngModel[fieldDef.name]"
-         ng-change="ngChange(fieldDef.name, ngModel[fieldDef.name])"
+         ng-change="fieldChanged()"
          type="{{fieldDef.type}}"
          mongoose-error="{{fieldDef.validators.mongoose.value}}"
          remote-unique="{{fieldDef.validators['remote-unique'].value}}"

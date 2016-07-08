@@ -41,7 +41,11 @@
         scope.nestedModel = ctrl.$viewValue;
         scope.flattenModel = {};
         angular.forEach(scope.fieldDefinitions, function(fieldDef) {
-          scope.flattenModel[fieldDef.name] = ModelDefinitions.get(scope.nestedModel, fieldDef.name);
+          var value = ModelDefinitions.get(scope.nestedModel, fieldDef.name);
+          if (fieldDef.value2model) {
+            value = fieldDef.value2model(value, fieldDef);
+          }
+          scope.flattenModel[fieldDef.name] = value;
         });
       };
 

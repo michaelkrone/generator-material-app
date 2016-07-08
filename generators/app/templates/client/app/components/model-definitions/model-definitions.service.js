@@ -98,7 +98,7 @@
 
     function extendDefaultRoot(propDef) {
       var defaultDef = {
-        desc: capitalize(propDef.name.substr(propDef.name.lastIndexOf('.') + 1))
+        desc: convertToDefaultDesc(propDef.name.substr(propDef.name.lastIndexOf('.') + 1))
       };
 
       switch(propDef.type) {
@@ -221,8 +221,10 @@
       return $filter(filter.name).apply(null, filter.args);
     }
 
-    function capitalize(name) {
-      return name[0].toUpperCase() + name.slice(1)
+    function convertToDefaultDesc(name) {
+      return name
+        .replace(/([A-Z])/g, ' $1')// insert a space before all caps
+        .replace(/^./, function(str){ return str.toUpperCase(); });// uppercase the first character
     }
   }
 

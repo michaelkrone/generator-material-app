@@ -2,6 +2,7 @@
   <md-select ng-model="ngModel[fieldDef.name]"
              md-on-open="getOptions()"
              ng-change="selectChanged()"
+             ng-disabled="fieldDef.disabled"
              placeholder="Select a {{fieldDef.desc}} {{fieldDef.validators && fieldDef.validators.required ? '*' : ''}}"
              ng-required="fieldDef.validators.required"
              flex>

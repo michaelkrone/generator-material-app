@@ -30,7 +30,7 @@
       var ignore;
 
       attrs.$observe('remoteUniqueIgnore', function (newValue) {
-        ignore = newValue;
+        if (typeof ignore === 'undefined') ignore = newValue;
       });
 
       ctrl.$parsers.unshift(validateRemoteUnique);

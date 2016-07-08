@@ -25,12 +25,13 @@
 
     var defaultValidatorErrors = {
       required: 'Required',
-      pattern: function(validator) {
-        return 'Should fit regex ' + validator.value;
+      pattern: function(propDef) {
+        return 'Should fit regex ' + propDef.validators['repeat-input'].value;
       },
       mongoose: 'Already in use',
       'remote-unique': 'Already in use',
-      'repeat-input': function(validator, propDef, modelDef) {
+      'repeat-input': function(propDef, modelDef) {
+        var validator = propDef.validators['repeat-input'];
         var refDef = modelDef[validator.value];
         var desc = refDef && refDef.desc || validator.value;
         return 'Should repeat ' + desc;
@@ -63,7 +64,7 @@
         function extendDefaultValidators(validators) {
           angular.forEach(validators, function(validator, name) {
             var error = validator.error || defaultValidatorErrors[name];
-            validator.error = angular.isFunction(error) ? error(validator, propDef, propDefs.$map) : error;
+            validator.error = angular.isFunction(error) ? error(propDef, propDefs.$map) : error;
           });
         }
       }

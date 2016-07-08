@@ -63,6 +63,14 @@
 
         function extendDefaultValidators(validators) {
           angular.forEach(validators, function(validator, name) {
+            switch (name) {
+              case 'pattern': {
+                if (angular.isFunction(validator.value)) {
+                  validator.value = validator.value(propDef);
+                }
+                break;
+              }
+            }
             var error = validator.error || defaultValidatorErrors[name];
             validator.error = angular.isFunction(error) ? error(propDef, propDefs.$map) : error;
           });
@@ -117,6 +125,10 @@
           selectResource();
           break;
         }
+      }
+
+      if (angular.isFunction(propDef.desc)) {
+        propDef.desc = propDef.desc(propDef);
       }
 
       var overrideDefaults = angular.extend(defaultDef, propDef);
@@ -210,7 +222,13 @@
       var value = getDeepValue(obj, propDef.name);
       if (!value) return value;
       var displayValue = propDef.displayKey ? value[propDef.displayKey] : value;
-      return propDef.ngFilter ? applyFilter(displayValue, propDef.ngFilter) : displayValue;
+      if (propDef.ngFilter) {
+        if (angular.isFunction(propDef.ngFilter)) {
+          return propDef.ngFilter(displayValue, propDef);
+        }
+        return applyFilter(displayValue, propDef.ngFilter);
+      }
+      return displayValue;
     }
 
     function applyFilter(value, filterName) {

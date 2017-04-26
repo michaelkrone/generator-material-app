@@ -25,7 +25,7 @@
 	<%= controllerName %>.$inject = [];
 
 	function <%= controllerName %>() {
-		var vm = this;
+		const vm = this;
 
 		/**
 		 * @ngdoc property

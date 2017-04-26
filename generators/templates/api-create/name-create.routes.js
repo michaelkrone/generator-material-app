@@ -38,7 +38,7 @@
 	config<%= classedName %>Route.$inject = ['$stateProvider'<% if (menuItem) { %>, 'mainMenuProvider'<% } %>];
 
 	function config<%= classedName %>Route($stateProvider<% if (menuItem) { %>, mainMenuProvider<% } %>) {
-		var states = [{
+		const states = [{
 			name: '<%= stateName() %>',
 			url: '<%= route %>',
 			templateUrl: '<%= htmlUrl %>',
@@ -47,7 +47,7 @@
 			resolve: {<%= lowerCameledName %>s: resolve<%= classedName %>s}
 		}];<% if (menuItem) { %>
 
-		var menuItems = [{
+		const menuItems = [{
 			name: '<%= menuItem %>',
 			state: '<%= stateName() %>',
 			icon: '<%= icon %>'<% if (secure) {%>,

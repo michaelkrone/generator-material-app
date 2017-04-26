@@ -11,7 +11,7 @@ var Generator = module.exports = function Generator() {
 	this.option('moduleName');
 	this.option('createModuleFile');
 	this.option('composed');
-	this.option('dontRegister');
+	this.option('noRegister');
 	this.soloModule = false;
 	this.recipe = 'Controller';
 };
@@ -50,7 +50,7 @@ Generator.prototype.install = function build() {
 };
 
 function createModule() {
-	if (this.options.dontRegister) {
+	if (this.options.noRegister) {
 		return;
 	}
 

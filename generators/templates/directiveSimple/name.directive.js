@@ -1,7 +1,7 @@
 /**
  * @ngdoc directive
  * @name <%= moduleName %>.directive:<%= _.camelize(name) %>
- * @restrict EA
+ * @restrict E
  *
  * @description
  * A description of the simple <%= _.camelize(name) %> directive.
@@ -31,8 +31,8 @@
 	function <%= controllerName %>() {
 		// directive definition members
 		return {
-			link: link,
-			restrict: 'EA'
+			link,
+			restrict: 'E'
 		};
 
 		/**

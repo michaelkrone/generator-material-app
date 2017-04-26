@@ -12,7 +12,7 @@ var ApiGenerator = module.exports = function ApiGenerator() {
 	this.option('moduleName');
 	this.option('createModuleFile');
 	this.option('composed');
-	this.option('dontRegister');
+	this.option('noRegister');
 	this.option('route');
 	this.option('apiUrl');
 	this.option('secure');
@@ -120,9 +120,9 @@ var ApiGenerator = module.exports = function ApiGenerator() {
 			if (props.dir.indexOf(slug, props.dir.length - slug.length) === -1) {
 				props.dir = path.join(props.dir, slug);
 			}
-			
+
 			this.mainDir = path.join(props.dir || this.options.dir);
-			this.mainModuleName = this.getModuleNameForPath(this.mainDir, this.config.get('routeDirectory'));	
+			this.mainModuleName = this.getModuleNameForPath(this.mainDir, this.config.get('routeDirectory'));
 			this.dir = path.join(this.mainDir, this.subPath);
 			props.dir = this.dir;
 
@@ -154,7 +154,7 @@ var ApiGenerator = module.exports = function ApiGenerator() {
 	};
 
 	this.createModule = function createModule() {
-		if (this.options.dontRegister) {
+		if (this.options.noRegister) {
 			return;
 		}
 
@@ -170,7 +170,7 @@ var ApiGenerator = module.exports = function ApiGenerator() {
 	};
 
 	this.createMainModule = function createModule() {
-		if (this.options.dontRegister) {
+		if (this.options.noRegister) {
 			return;
 		}
 

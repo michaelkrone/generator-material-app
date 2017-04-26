@@ -25,5 +25,4 @@ describe('Controller: <%= controllerName %>', function () {
 		Should.exist(controller.title);
 		controller.title.should.be.a.String;
 	});
-
 });

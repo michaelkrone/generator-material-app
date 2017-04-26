@@ -22,16 +22,16 @@
 	 * @description
 	 * Provider of the {@link <%= moduleName %>.service:<%= controllerName %> <%= controllerName %>} resource.
 	 *
-	 * @extends <%= componentModule %>.apiservice:ApiService
+	 * @extends <%= componentModule %>.service:apiService
 	 */
 
 	// add <%= controllerName %> dependencies to inject
-	<%= controllerName %>.$inject  = ['ApiService', '<%= wrappedResource %>'];
+	<%= controllerName %>.$inject  = ['apiService', '<%= wrappedResource %>'];
 
-	function <%= controllerName %>(ApiService, <%= wrappedResource %>) {
+	function <%= controllerName %>(apiService, <%= wrappedResource %>) {
 		// extend from ApiService, you might want to extend this with
 		// methods which are useful for <%= wrappedResource %> related work
-		ApiService.call(this, <%= wrappedResource %>);
+		angular.extend(this, apiService.create(<%= wrappedResource %>));
 	}
 
 })();

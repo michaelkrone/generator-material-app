@@ -72,7 +72,7 @@ function appName(self) {
 }
 
 function filterFile(template) {
-	// Find matches for parans
+	// Find matches for params
 	var filterMatches = template.match(/\(([^)]+)\)/g);
 	var features = [];
 	if (filterMatches) {
@@ -180,7 +180,7 @@ function relativeUrl(basePath, targetPath) {
 }
 
 function createFileName(template, name) {
-	// Find matches for parans
+	// Find matches for params
 	var filterMatches = template.match(/\(([^)]+)\)/g);
 	var filter = '';
 	if (filterMatches) {

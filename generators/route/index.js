@@ -146,7 +146,7 @@ function createController() {
 	this.composeWith('material-app:controller', {
 		args: [this.controllerName],
 		options: {
-			dontRegister: true,
+			noRegister: true,
 			dir: this.dir,
 			moduleName: this.options.moduleName,
 			composed: true,
